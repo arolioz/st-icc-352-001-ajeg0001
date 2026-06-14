@@ -4,19 +4,19 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class VentasProductos {
+public class VentaProductos {
 
     private long id;
     private Date fechaCompra;
     private String nombreCliente;
     private List<ProductoCarrito> listaProductos;
 
-    public VentasProductos() {
+    public VentaProductos() {
         fechaCompra = new Date();
         listaProductos = new ArrayList<>();
     }
 
-    public VentasProductos(long id, String nombreCliente) {
+    public VentaProductos(long id, String nombreCliente) {
         this.id = id;
         this.nombreCliente = nombreCliente;
         this.fechaCompra = new Date();
