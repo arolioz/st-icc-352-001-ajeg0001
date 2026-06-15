@@ -33,6 +33,7 @@ public class Main {
                     post("/agregar/{id}",CrudControladorProducto::agregar);
                     get("/crear",CrudControladorProducto::crear);
                     get("/administrar",CrudControladorProducto::administrar);
+                    post("/crear",CrudControladorProducto::procesarCrear);
                 });
             });
 

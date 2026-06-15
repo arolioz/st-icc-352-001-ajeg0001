@@ -6,6 +6,7 @@ import edu.pucmm.eict.P2.Service.Controladora;
 import io.javalin.http.Context;
 import org.jetbrains.annotations.NotNull;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,5 +58,19 @@ public class CrudControladorProducto {
         modelo.put("lista", lista);
 
         ctx.render("/templates/crud/CrudProductos.html",modelo);
+    }
+
+    public static void procesarCrear(@NotNull Context ctx) {
+        String nombre = ctx.formParam("nombre");
+        int precio = Integer.parseInt(Objects.requireNonNull(ctx.formParam("precio")));
+
+        Producto producto = new Producto();
+
+        producto.setNombre(nombre);
+        producto.setPrecio(new BigDecimal(precio));
+
+        controladora.agregarProducto(producto);
+
+        ctx.redirect("/crud-producto/administrar");
     }
 }
