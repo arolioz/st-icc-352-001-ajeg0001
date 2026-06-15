@@ -15,7 +15,7 @@
             <h1 class="bold">Listado de productos</h1>
         </div>
 
-        <a href="/crud-producto/crear" class="btn btn-primary shadow">Nuevo producto</a>
+
         <table class="table table-striped">
             <thead>
                 <th scope="col">Producto</th>
@@ -25,7 +25,7 @@
             </thead>
             <tbody class="table-group-divider">
             <tr th:each="producto : ${lista}">
-                <form th:action="'/agregar-producto/'+${producto.idProducto}" method="post">
+                <form th:action="'/crud-producto/agregar/'+${producto.idProducto}" method="post">
 
                     <td th:text="${producto.nombre}">Nombre</td>
 
@@ -36,7 +36,6 @@
                     </td>
 
                     <td>
-                        <input type="hidden" name="idProducto" th:value="${producto.idProducto}">
                         <button type="submit"
                                 class="btn btn-secondary shadow">
                             Agregar

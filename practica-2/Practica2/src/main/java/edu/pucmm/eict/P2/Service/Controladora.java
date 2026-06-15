@@ -1,5 +1,6 @@
 package edu.pucmm.eict.P2.Service;
 
+import edu.pucmm.eict.P2.Logico.CarroCompra;
 import edu.pucmm.eict.P2.Logico.Producto;
 import edu.pucmm.eict.P2.Logico.Usuario;
 import edu.pucmm.eict.P2.Logico.VentaProductos;
@@ -62,6 +63,17 @@ public class Controladora {
 
     public List<Producto> listarProductos(){
         return listaProductos;
+    }
+
+    public CarroCompra agregandoProductoACarrito(CarroCompra carrito, int idProducto, int cantidad){
+        Producto producto = buscarProductoPorId(idProducto);
+
+        if (producto != null){
+            carrito.agregarProducto(producto,cantidad);
+        }
+
+        return carrito;
+
     }
 
 }

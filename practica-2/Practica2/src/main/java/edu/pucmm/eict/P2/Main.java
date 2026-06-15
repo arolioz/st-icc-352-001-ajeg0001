@@ -1,6 +1,7 @@
 package edu.pucmm.eict.P2;
 
 import edu.pucmm.eict.P2.Controladora.CrudControladorProducto;
+import edu.pucmm.eict.P2.Logico.CarroCompra;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
 
@@ -19,14 +20,17 @@ public class Main {
                 staticFileConfig.hostedPath = "/";
             });
 
-            config.routes.get("/", ctx -> {
-                ctx.result("HOLA!");
+            config.routes.before("/**", ctx -> {
+                if (ctx.sessionAttribute("carrito") == null){
+                    ctx.sessionAttribute("carrito",new CarroCompra());
+                }
             });
 
             config.routes.apiBuilder(() ->{
                 path("/crud-producto/", () -> {
                     get(ctx -> ctx.redirect("/crud-producto/listar"));
                     get("/listar", CrudControladorProducto::listar);
+                    post("/agregar/{id}",CrudControladorProducto::agregar);
                 });
             });
 

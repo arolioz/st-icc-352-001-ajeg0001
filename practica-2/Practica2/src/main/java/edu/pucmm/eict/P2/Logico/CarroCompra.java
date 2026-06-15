@@ -10,7 +10,12 @@ public class CarroCompra {
 
 
     public CarroCompra(int id) {
-        this.id = id;listaProductos = new ArrayList<>();
+        this.id = id;
+        listaProductos = new ArrayList<>();
+    }
+
+    public CarroCompra() {
+        listaProductos = new ArrayList<>();
     }
 
     public int getId() {return id;}
@@ -20,4 +25,25 @@ public class CarroCompra {
     public void setId(int id) {this.id = id;}
 
     public void setListaProductos(List<ProductoCarrito> listaProductos) {this.listaProductos = listaProductos;}
+
+    public void agregarProducto(Producto producto, int cantidad){
+        boolean encontrado = false;
+
+
+
+        for (ProductoCarrito p : listaProductos){
+            if (producto.getIdProducto() == p.getIdProducto()){
+                int n = p.getCantidad();
+
+                p.setCantidad(n + cantidad);
+
+                encontrado = true;
+                break;
+            }
+        }
+
+        if (!encontrado){
+            listaProductos.add(new ProductoCarrito(producto.getIdProducto(),cantidad));
+        }
+    }
 }
