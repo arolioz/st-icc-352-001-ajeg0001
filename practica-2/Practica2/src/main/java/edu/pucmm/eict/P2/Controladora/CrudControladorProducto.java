@@ -45,7 +45,17 @@ public class CrudControladorProducto {
 
     }
 
-    public static void crear(@NotNull Context context) {
+    public static void crear(@NotNull Context ctx) {
+        ctx.render("/templates/Crear/productos.html");
+    }
 
+    public static void administrar(@NotNull Context ctx) {
+        List<Producto> lista = controladora.listarProductos();
+
+
+        Map<String, Object> modelo = new HashMap<>();
+        modelo.put("lista", lista);
+
+        ctx.render("/templates/crud/CrudProductos.html",modelo);
     }
 }

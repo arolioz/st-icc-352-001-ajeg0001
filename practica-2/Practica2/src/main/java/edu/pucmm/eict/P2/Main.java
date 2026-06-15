@@ -32,6 +32,7 @@ public class Main {
                     get("/listar", CrudControladorProducto::listar);
                     post("/agregar/{id}",CrudControladorProducto::agregar);
                     get("/crear",CrudControladorProducto::crear);
+                    get("/administrar",CrudControladorProducto::administrar);
                 });
             });
 
