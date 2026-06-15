@@ -18,6 +18,7 @@ public class Controladora {
 
     private Controladora(){
         listaUsuarios.add(new Usuario("admin","admin","admin"));
+        listaProductos.add(new Producto(0,"Huevo",new BigDecimal(100)));
     }
 
     public static Controladora getInstance(){
@@ -57,6 +58,10 @@ public class Controladora {
             }
         }
         return null;
+    }
+
+    public List<Producto> listarProductos(){
+        return listaProductos;
     }
 
 }

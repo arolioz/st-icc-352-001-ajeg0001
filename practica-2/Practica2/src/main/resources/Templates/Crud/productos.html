@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Listar productos</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+</head>
+<body>
+
+
+    <div class="container">
+        <div class="px-4 py-5 my-5 text-center">
+            <h1 class="bold">Listado de productos</h1>
+        </div>
+
+        <a href="/crud-producto/crear" class="btn btn-primary shadow">Nuevo producto</a>
+        <table class="table table-striped">
+            <thead>
+                <th scope="col">Producto</th>
+                <th scope="col">Precio(RD$)</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col">Accion</th>
+            </thead>
+            <tbody class="table-group-divider">
+            <tr th:each="producto : ${lista}">
+                <form th:action="'/agregar-producto/'+${producto.idProducto}" method="post">
+
+                    <td th:text="${producto.nombre}">Nombre</td>
+
+                    <td th:text="${producto.precio}">0</td>
+
+                    <td>
+                        <input type="number" name="cantidad" min="1" value="1" class="form-control">
+                    </td>
+
+                    <td>
+                        <input type="hidden" name="idProducto" th:value="${producto.idProducto}">
+                        <button type="submit"
+                                class="btn btn-secondary shadow">
+                            Agregar
+                        </button>
+                    </td>
+
+                </form>
+            </tr>
+            </tbody>
+        </table>
+
+
+    </div>
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
+</html>
