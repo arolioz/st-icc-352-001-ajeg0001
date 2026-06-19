@@ -26,6 +26,12 @@ public class Main {
                 }
             });
 
+            config.routes.get("/login", ctx -> {
+                ctx.redirect("/login.html");
+            });
+
+
+
             config.routes.apiBuilder(() ->{
                 path("/crud-producto/", () -> {
                     get(ctx -> ctx.redirect("/crud-producto/listar"));
@@ -34,6 +40,15 @@ public class Main {
                     get("/crear",CrudControladorProducto::crear);
                     get("/administrar",CrudControladorProducto::administrar);
                     post("/crear",CrudControladorProducto::procesarCrear);
+                });
+            });
+
+
+
+            config.routes.apiBuilder(() ->{
+                path("/", () -> {
+                    get(ctx -> ctx.redirect("/crud-producto/listar"));
+                    post("/procesar-login", CrudControladorProducto::procesarLogin);
                 });
             });
 
