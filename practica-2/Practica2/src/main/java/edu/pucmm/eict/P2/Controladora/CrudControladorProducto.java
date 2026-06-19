@@ -22,7 +22,18 @@ public class CrudControladorProducto {
 
         Usuario user = ctx.sessionAttribute("usuario");
 
+        boolean deshabilitado = true;
+
         Map<String, Object> modelo = new HashMap<>();
+
+        if(user != null){
+            if (user.getUsuario().equals("admin") && user.getPassword().equals("admin")){
+                deshabilitado = false;
+            }
+        }
+
+        modelo.put("deshabilitado",deshabilitado);
+
         modelo.put("lista", lista);
         modelo.put("usuario",user);
         //enviando al sistema de plantilla.
