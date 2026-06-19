@@ -49,6 +49,7 @@ public class Main {
                 path("/", () -> {
                     get(ctx -> ctx.redirect("/crud-producto/listar"));
                     post("/procesar-login", CrudControladorProducto::procesarLogin);
+                    get("/cerrar-sesion", CrudControladorProducto::cerrarSesion);
                 });
             });
 
