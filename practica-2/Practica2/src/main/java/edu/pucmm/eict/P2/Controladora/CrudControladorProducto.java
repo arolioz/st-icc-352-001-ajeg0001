@@ -94,4 +94,9 @@ public class CrudControladorProducto {
 
 
     }
+
+    public static void cerrarSesion(@NotNull Context ctx) {
+        ctx.req().getSession().invalidate();
+        ctx.redirect("/");
+    }
 }

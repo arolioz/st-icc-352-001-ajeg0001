@@ -76,4 +76,15 @@ public class Controladora {
 
     }
 
+    public Usuario ValidarUsuario(String usuario, String password){
+
+        for (Usuario u : listaUsuarios){
+            if (u.getUsuario().equals(usuario) && u.getPassword().equals(password)){
+                return u;
+            }
+        }
+
+        return null;
+    }
+
 }
