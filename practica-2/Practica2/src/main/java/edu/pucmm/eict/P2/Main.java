@@ -38,11 +38,18 @@ public class Main {
                     get("/listar", CrudControladorProducto::listar);
                     post("/agregar/{id}",CrudControladorProducto::agregar);
                     get("/crear",CrudControladorProducto::crear);
-                    get("/administrar",CrudControladorProducto::administrar);
                     post("/crear",CrudControladorProducto::procesarCrear);
                 });
             });
 
+            config.routes.apiBuilder(() ->{
+                path("/administracion/", () -> {
+                    get(ctx -> ctx.redirect("/administracion/administrar"));
+                    get("/administrar",CrudControladorProducto::administrar);
+                    get("/crear",CrudControladorProducto::crear);
+                    post("/crear",CrudControladorProducto::procesarCrear);
+                });
+            });
 
 
             config.routes.apiBuilder(() ->{

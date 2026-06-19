@@ -55,7 +55,7 @@ public class CrudControladorProducto {
 
         //IO.println("Id: " + carrito.getListaProductos().get(0).getIdProducto());
         //IO.println("Cantidad: " + carrito.getListaProductos().get(0).getCantidad());
-        ctx.redirect("/crud-producto");
+        ctx.redirect("/");
 
 
     }
@@ -85,7 +85,7 @@ public class CrudControladorProducto {
 
         controladora.agregarProducto(producto);
 
-        ctx.redirect("/crud-producto/administrar");
+        ctx.redirect("/administracion/");
     }
 
     public static void procesarLogin(@NotNull Context ctx) {
