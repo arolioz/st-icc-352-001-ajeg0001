@@ -34,7 +34,13 @@
 
                     <td class="mb-3">
                         <a th:href="'/administracion/modificar/'+${producto.idProducto}" class="btn btn-primary col-auto">Modificar</a>
-                        <a th:href="'/administracion/eliminar/'+${producto.idProducto}" class="btn btn-danger col-auto">Eliminar</a>
+                        <form th:action="'/administracion/eliminar/' + ${producto.idProducto}"
+                              method="post"
+                              style="display:inline;">
+                            <button type="submit" class="btn btn-danger">
+                                Eliminar
+                            </button>
+                        </form>
                     </td>
 
                 </tr>

@@ -48,6 +48,7 @@ public class Main {
                     post("/crear",CrudControladorProducto::procesarCrear);
                     get("/modificar/{id}",CrudControladorProducto::Modificar);
                     post("modificar/{id}", CrudControladorProducto::ProcesarModificar);
+                    post("/eliminar/{id}",CrudControladorProducto::ProcesarEliminar);
                 });
             });
 

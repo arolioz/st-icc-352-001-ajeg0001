@@ -148,4 +148,13 @@ public class CrudControladorProducto {
 
         ctx.redirect("/administracion");
     }
+
+    public static void ProcesarEliminar(@NotNull Context ctx){
+        int id = Integer.parseInt(ctx.pathParam("id"));
+
+        controladora.eliminarProducto(id);
+
+        ctx.redirect("/administracion");
+
+    }
 }
