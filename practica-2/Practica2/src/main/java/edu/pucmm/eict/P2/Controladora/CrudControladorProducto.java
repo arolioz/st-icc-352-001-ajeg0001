@@ -44,6 +44,7 @@ public class CrudControladorProducto {
 
     public static void crear(@NotNull Context ctx) {
         Map<String, Object> modelo = construirModeloBase(ctx);
+        modelo.put("titulo","Crear productos");
 
         ctx.render("/templates/Crear/productos.html",modelo);
     }
@@ -101,6 +102,8 @@ public class CrudControladorProducto {
         Producto p = controladora.buscarProductoPorId(id);
 
         Map<String, Object> modelo = construirModeloBase(ctx);
+
+        modelo.put("titulo","Modificar productos");
 
         if (p != null){
             modelo.put("producto",p);
@@ -231,6 +234,6 @@ public class CrudControladorProducto {
         ctx.render("/templates/crud/ventas.html",modelo);
 
 
-        
+
     }
 }
