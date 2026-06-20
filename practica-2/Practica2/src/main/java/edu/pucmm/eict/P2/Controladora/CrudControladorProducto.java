@@ -1,17 +1,12 @@
 package edu.pucmm.eict.P2.Controladora;
 
-import edu.pucmm.eict.P2.Logico.CarroCompra;
-import edu.pucmm.eict.P2.Logico.Producto;
-import edu.pucmm.eict.P2.Logico.Usuario;
+import edu.pucmm.eict.P2.Logico.*;
 import edu.pucmm.eict.P2.Service.Controladora;
 import io.javalin.http.Context;
 import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class CrudControladorProducto {
 
@@ -156,5 +151,51 @@ public class CrudControladorProducto {
 
         ctx.redirect("/administracion");
 
+    }
+
+    public static void cargarCarrito(@NotNull Context ctx) {
+        CarroCompra carrito = ctx.sessionAttribute("carrito");
+
+        Usuario user = ctx.sessionAttribute("usuario");
+
+        boolean deshabilitado = true;
+
+        Map<String, Object> modelo = new HashMap<>();
+
+        if(user != null){
+            if (user.getUsuario().equals("admin") && user.getPassword().equals("admin")){
+                deshabilitado = false;
+            }
+        }
+
+        int cantProductos = 0;
+
+        if (carrito != null){
+            cantProductos = carrito.cantProductos();
+        }
+
+        modelo.put("cantCarrito",cantProductos);
+
+        modelo.put("deshabilitado",deshabilitado);
+
+        assert carrito != null;
+        List <ProductoVista> lista = new ArrayList<>();
+
+        for (ProductoCarrito p : carrito.getListaProductos()){
+            Producto producto = controladora.buscarProductoPorId(p.getIdProducto());
+
+            if (producto != null){
+                lista.add(new ProductoVista(p.getIdProducto(),p.getCantidad(),producto.getNombre(),producto.getPrecio()));
+            }
+
+        }
+
+        BigDecimal total = controladora.calcularPrecioTotal(lista);
+
+        modelo.put("lista", lista);
+        modelo.put("usuario",user);
+        modelo.put("total", total);
+        //enviando al sistema de plantilla.
+        ctx.render("/templates/crud/carritoCompra.html", modelo);
     }
 }

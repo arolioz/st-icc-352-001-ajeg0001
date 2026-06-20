@@ -16,10 +16,10 @@ public class ProductoCarrito {
 
     public int getCantidad() {return cantidad;}
 
-    public void setIdCarrito(int id) {idCarrito = id;}
+    public void setIdCarrito(int id) {this.idCarrito = id;}
 
-    public void setIdProducto(int id) {idProducto = id;}
+    public void setIdProducto(int id) {this.idProducto = id;}
 
-    public void setCantidad(int n) {cantidad = n;}
+    public void setCantidad(int n) {this.cantidad = n;}
 
 }

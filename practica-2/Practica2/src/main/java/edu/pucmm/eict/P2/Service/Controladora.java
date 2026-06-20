@@ -1,9 +1,6 @@
 package edu.pucmm.eict.P2.Service;
 
-import edu.pucmm.eict.P2.Logico.CarroCompra;
-import edu.pucmm.eict.P2.Logico.Producto;
-import edu.pucmm.eict.P2.Logico.Usuario;
-import edu.pucmm.eict.P2.Logico.VentaProductos;
+import edu.pucmm.eict.P2.Logico.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -94,6 +91,21 @@ public class Controladora {
                 p.setNombre(nombre);
             }
         }
+    }
+
+    public BigDecimal calcularPrecioTotal(List<ProductoVista> productos) {
+        BigDecimal n = BigDecimal.ZERO;
+
+        if (productos != null) {
+            for (ProductoVista pv : productos) {
+                n = n.add(
+                        pv.getPrecio().multiply(
+                                BigDecimal.valueOf(pv.getCantidad())
+                        )
+                );
+            }
+        }
+        return n;
     }
 
 

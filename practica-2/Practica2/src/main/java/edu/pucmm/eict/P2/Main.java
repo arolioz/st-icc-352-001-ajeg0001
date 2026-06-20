@@ -38,6 +38,7 @@ public class Main {
                     get(ctx -> ctx.redirect("/crud-producto/listar"));
                     get("/listar", CrudControladorProducto::listar);
                     post("/agregar/{id}",CrudControladorProducto::agregar);
+                    get("/carrito",CrudControladorProducto::cargarCarrito);
                 });
             });
 
