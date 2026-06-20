@@ -211,6 +211,7 @@ public class CrudControladorProducto {
         CarroCompra carrito = ctx.sessionAttribute("carrito");
 
         if (nombre != null){
+            assert carrito != null;
             controladora.procesarCompra(carrito,nombre);
 
             ctx.redirect("/crud-producto/limpiar-carrito");
@@ -218,5 +219,16 @@ public class CrudControladorProducto {
         else{
             ctx.redirect("/crud-producto/carrito");
         }
+    }
+
+    public static void ventas(@NotNull Context ctx) {
+        Map<String, Object> modelo = construirModeloBase(ctx);
+
+        List<VentaProductos> ventas = controladora.listarVentas();
+
+        modelo.put("listaVentas",ventas);
+
+        ctx.render("/templates/crud/ventas.html",modelo);
+
     }
 }

@@ -150,4 +150,6 @@ public class Controladora {
 
         contadorVentas += 1;
     }
+
+    public List<VentaProductos> listarVentas() {return listaVentas;}
 }

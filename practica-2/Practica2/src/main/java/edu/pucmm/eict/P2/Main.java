@@ -54,6 +54,7 @@ public class Main {
                     get("/modificar/{id}",CrudControladorProducto::Modificar);
                     post("modificar/{id}", CrudControladorProducto::ProcesarModificar);
                     post("/eliminar/{id}",CrudControladorProducto::ProcesarEliminar);
+                    get("/ventas",CrudControladorProducto::ventas);
                 });
             });
 
