@@ -17,12 +17,11 @@
 
                 <a class="btn btn-outline-light" href="/">
                     <i class="bi bi-shop"></i>
-                    Inicio
+                    Comprar
                 </a>
 
 
                 <div class="navbar-nav ms-auto gap-5">
-                    <a class="nav-link" href="#">Comprar</a>
                     <a class="nav-link" th:classappend="${deshabilitado} ? ' disabled pe-none' : ''" href="/">Ventas</a>
                     <a class="nav-link" th:classappend="${deshabilitado} ? ' disabled pe-none' : ''" href="/administracion/">Administrar productos</a>
                     <a class="nav-link" href="#"><i class="bi bi-cart3"></i><span th:text="'(' + ${cantCarrito} + ')'"></span></a>
