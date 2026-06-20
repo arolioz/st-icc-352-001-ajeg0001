@@ -2,6 +2,7 @@ package edu.pucmm.eict.P2;
 
 import edu.pucmm.eict.P2.Controladora.CrudControladorProducto;
 import edu.pucmm.eict.P2.Logico.CarroCompra;
+import edu.pucmm.eict.P2.Logico.Usuario;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
 
@@ -60,6 +61,19 @@ public class Main {
                     get("/cerrar-sesion", CrudControladorProducto::cerrarSesion);
                 });
             });
+
+            config.routes.before("/administracion/**",ctx -> {
+                Usuario user = ctx.sessionAttribute("usuario");
+
+
+                if (user == null ||  (!user.getUsuario().equals("admin") && !user.getPassword().equals("admin"))){
+                    ctx.redirect("/login.html");
+                    return;
+                }
+
+            });
+
+
 
         });
 
