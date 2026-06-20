@@ -24,7 +24,7 @@
                     <a class="nav-link" href="#">Comprar</a>
                     <a class="nav-link" th:classappend="${deshabilitado} ? ' disabled pe-none' : ''" href="/">Ventas</a>
                     <a class="nav-link" th:classappend="${deshabilitado} ? ' disabled pe-none' : ''" href="/administracion/">Administrar productos</a>
-                    <a class="nav-link" href="#"><i class="bi bi-cart3"></i>(1)</a>
+                    <a class="nav-link" href="#"><i class="bi bi-cart3"></i><span th:text="'(' + ${cantCarrito} + ')'"></span></a>
                     <li class="nav-item dropdown" th:if="${usuario != null}">
 
                         <a class="nav-link dropdown-toggle"

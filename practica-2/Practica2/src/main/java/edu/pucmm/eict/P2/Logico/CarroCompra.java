@@ -46,4 +46,13 @@ public class CarroCompra {
             listaProductos.add(new ProductoCarrito(producto.getIdProducto(),cantidad));
         }
     }
+
+    public int cantProductos(){
+        int n = 0;
+        for (ProductoCarrito p : listaProductos){
+            n += p.getCantidad();
+        }
+
+        return n;
+    }
 }

@@ -32,6 +32,16 @@ public class CrudControladorProducto {
             }
         }
 
+        CarroCompra carrito = ctx.sessionAttribute("carrito");
+
+        int cantProductos = 0;
+
+        if (carrito != null){
+            cantProductos = carrito.cantProductos();
+        }
+
+        modelo.put("cantCarrito",cantProductos);
+
         modelo.put("deshabilitado",deshabilitado);
 
         modelo.put("lista", lista);
