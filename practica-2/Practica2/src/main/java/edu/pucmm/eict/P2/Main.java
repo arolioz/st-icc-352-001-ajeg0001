@@ -37,8 +37,6 @@ public class Main {
                     get(ctx -> ctx.redirect("/crud-producto/listar"));
                     get("/listar", CrudControladorProducto::listar);
                     post("/agregar/{id}",CrudControladorProducto::agregar);
-                    get("/crear",CrudControladorProducto::crear);
-                    post("/crear",CrudControladorProducto::procesarCrear);
                 });
             });
 
@@ -48,6 +46,8 @@ public class Main {
                     get("/administrar",CrudControladorProducto::administrar);
                     get("/crear",CrudControladorProducto::crear);
                     post("/crear",CrudControladorProducto::procesarCrear);
+                    get("/modificar/{id}",CrudControladorProducto::Modificar);
+                    post("modificar/{id}", CrudControladorProducto::ProcesarModificar);
                 });
             });
 

@@ -120,4 +120,24 @@ public class CrudControladorProducto {
         ctx.req().getSession().invalidate();
         ctx.redirect("/");
     }
+
+    public static void Modificar(@NotNull Context ctx) {
+        int id = Integer.parseInt(ctx.pathParam("id"));
+
+        Producto p = controladora.buscarProductoPorId(id);
+
+        Map<String, Object> modelo = new HashMap<>();
+
+        if (p != null){
+            modelo.put("producto",p);
+            ctx.render("/templates/Crear/productos.html",modelo);
+        }
+        else{
+            ctx.redirect("/administracion");
+        }
+
+    }
+
+    public static void ProcesarModificar(@NotNull Context context) {
+    }
 }
