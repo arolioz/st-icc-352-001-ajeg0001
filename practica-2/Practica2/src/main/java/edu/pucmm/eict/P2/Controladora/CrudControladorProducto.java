@@ -46,14 +46,16 @@ public class CrudControladorProducto {
     }
 
     public static void crear(@NotNull Context ctx) {
-        ctx.render("/templates/Crear/productos.html");
+        Map<String, Object> modelo = construirModeloBase(ctx);
+
+        ctx.render("/templates/Crear/productos.html",modelo);
     }
 
     public static void administrar(@NotNull Context ctx) {
         List<Producto> lista = controladora.listarProductos();
 
 
-        Map<String, Object> modelo = new HashMap<>();
+        Map<String, Object> modelo = construirModeloBase(ctx);
         modelo.put("lista", lista);
 
         ctx.render("/templates/crud/CrudProductos.html",modelo);
