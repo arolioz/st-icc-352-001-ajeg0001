@@ -198,4 +198,10 @@ public class CrudControladorProducto {
         //enviando al sistema de plantilla.
         ctx.render("/templates/crud/carritoCompra.html", modelo);
     }
+
+    public static void LimpiarCarrito(@NotNull Context ctx) {
+        ctx.sessionAttribute("carrito",new CarroCompra());
+
+        ctx.redirect("/crud-producto/carrito");
+    }
 }
