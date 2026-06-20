@@ -54,7 +54,7 @@
 
     <div class="container" th:each="venta : ${listaVentas}">
         <div class="px-4 text-left">
-            <h3 class="bold" th:text="${venta.nombreCliente} + ' - ' + ${venta.fechaCompra}">Aaron - 30/08/2005</h3>
+            <h3 class="bold" th:text="${venta.nombreCliente} + ' - ' + ${#dates.format(venta.fechaCompra, 'dd/MM/yyyy')}">Aaron - 30/08/2005</h3>
         </div>
         <div class="card">
             <div class="card-body">
