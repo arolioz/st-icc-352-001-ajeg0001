@@ -138,6 +138,14 @@ public class CrudControladorProducto {
 
     }
 
-    public static void ProcesarModificar(@NotNull Context context) {
+    public static void ProcesarModificar(@NotNull Context ctx) {
+        int id = Integer.parseInt(ctx.pathParam("id"));
+        String nombre = ctx.formParam("nombre");
+        int precio = Integer.parseInt(Objects.requireNonNull(ctx.formParam("precio")));
+
+
+        controladora.modificarProducto(id,nombre, new BigDecimal(precio));
+
+        ctx.redirect("/administracion");
     }
 }

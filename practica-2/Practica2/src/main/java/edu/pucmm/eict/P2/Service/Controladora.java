@@ -87,4 +87,12 @@ public class Controladora {
         return null;
     }
 
+    public void modificarProducto(int id, String nombre, BigDecimal precio) {
+        for (Producto p : listaProductos){
+            if (id == p.getIdProducto()){
+                p.setPrecio(precio);
+                p.setNombre(nombre);
+            }
+        }
+    }
 }
