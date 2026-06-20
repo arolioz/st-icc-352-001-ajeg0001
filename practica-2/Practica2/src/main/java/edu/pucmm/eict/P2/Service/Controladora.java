@@ -13,6 +13,7 @@ public class Controladora {
     private List<VentaProductos> listaVentas = new ArrayList<>();
 
     private static int contadorProductos = 1;
+    private static int contadorVentas = 1;
 
     private Controladora(){
         listaUsuarios.add(new Usuario("admin","admin","admin"));
@@ -125,5 +126,28 @@ public class Controladora {
         }
 
         return n;
+    }
+
+    public void procesarCompra(CarroCompra carrito,String nombreCliente) {
+        List<ProductoVista> lista = new ArrayList<>();
+
+        for (ProductoCarrito p : carrito.getListaProductos()){
+            Producto producto = buscarProductoPorId(p.getIdProducto());
+
+            if (producto != null){
+                lista.add(new ProductoVista(p.getIdProducto(),p.getCantidad(),producto.getNombre(),producto.getPrecio()));
+            }
+        }
+
+        crearVenta(lista,nombreCliente);
+    }
+
+    public void crearVenta(List<ProductoVista> lista, String nombreCliente){
+        VentaProductos venta = new VentaProductos();
+        venta.setListaProductos(lista);
+        venta.setNombreCliente(nombreCliente);
+        venta.setId(contadorVentas);
+
+        contadorVentas += 1;
     }
 }

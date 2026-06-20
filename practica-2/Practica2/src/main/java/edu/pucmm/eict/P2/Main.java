@@ -41,6 +41,7 @@ public class Main {
                     get("/carrito",CrudControladorProducto::cargarCarrito);
                     get("/limpiar-carrito",CrudControladorProducto::LimpiarCarrito);
                     post("/eliminar-producto-carrito/{id}",CrudControladorProducto::EliminarProductoCarrito);
+                    post("/procesar-compra", CrudControladorProducto::ProcesarCompra);
                 });
             });
 

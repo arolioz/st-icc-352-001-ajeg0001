@@ -15,9 +15,6 @@ public class CrudControladorProducto {
     public static void listar(@NotNull Context ctx) {
         List<Producto> lista = controladora.listarProductos();
 
-        Usuario user = ctx.sessionAttribute("usuario");
-
-
         Map<String, Object> modelo = construirModeloBase(ctx);
 
 
@@ -206,5 +203,20 @@ public class CrudControladorProducto {
         modelo.put("deshabilitado",deshabilitado);
 
         return modelo;
+    }
+
+    public static void ProcesarCompra(@NotNull Context ctx) {
+        String nombre = ctx.formParam("nombreCliente");
+
+        CarroCompra carrito = ctx.sessionAttribute("carrito");
+
+        if (nombre != null){
+            controladora.procesarCompra(carrito,nombre);
+
+            ctx.redirect("/crud-producto/limpiar-carrito");
+        }
+        else{
+            ctx.redirect("/crud-producto/carrito");
+        }
     }
 }
