@@ -230,5 +230,7 @@ public class CrudControladorProducto {
 
         ctx.render("/templates/crud/ventas.html",modelo);
 
+
+        
     }
 }

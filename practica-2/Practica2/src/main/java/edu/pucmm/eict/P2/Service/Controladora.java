@@ -148,6 +148,8 @@ public class Controladora {
         venta.setNombreCliente(nombreCliente);
         venta.setId(contadorVentas);
 
+        listaVentas.add(venta);
+
         contadorVentas += 1;
     }
 

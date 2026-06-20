@@ -1,5 +1,6 @@
 package edu.pucmm.eict.P2.Logico;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -38,4 +39,21 @@ public class VentaProductos {
     public void setNombreCliente(String nombreCliente) {this.nombreCliente = nombreCliente;}
 
     public void setListaProductos(List<ProductoVista> listaProductos) {this.listaProductos = listaProductos;}
+
+    public BigDecimal getTotal(){
+        BigDecimal n = BigDecimal.ZERO;
+
+
+        if (!listaProductos.isEmpty()){
+            for (ProductoVista pv : listaProductos) {
+                n = n.add(
+                        pv.getPrecio().multiply(
+                                BigDecimal.valueOf(pv.getCantidad())
+                        )
+                );
+            }
+        }
+        
+        return n;
+    }
 }
