@@ -108,5 +108,22 @@ public class Controladora {
         return n;
     }
 
+    public void eliminarProductoCarrito(CarroCompra carrito, int id) {
+        if (carrito != null) {
+            carrito.getListaProductos()
+                    .removeIf(p -> p.getIdProducto() == id);
+        }
+    }
 
+    public int cantProductosCarrito(CarroCompra carrito){
+        int n = 0;
+
+        for (ProductoCarrito p : carrito.getListaProductos()){
+            if (buscarProductoPorId(p.getIdProducto()) != null){
+                n += p.getCantidad();
+            }
+        }
+
+        return n;
+    }
 }

@@ -17,31 +17,11 @@ public class CrudControladorProducto {
 
         Usuario user = ctx.sessionAttribute("usuario");
 
-        boolean deshabilitado = true;
 
-        Map<String, Object> modelo = new HashMap<>();
+        Map<String, Object> modelo = construirModeloBase(ctx);
 
-        if(user != null){
-            if (user.getUsuario().equals("admin") && user.getPassword().equals("admin")){
-                deshabilitado = false;
-            }
-        }
-
-        CarroCompra carrito = ctx.sessionAttribute("carrito");
-
-        int cantProductos = 0;
-
-        if (carrito != null){
-            cantProductos = carrito.cantProductos();
-        }
-
-        modelo.put("cantCarrito",cantProductos);
-
-        modelo.put("deshabilitado",deshabilitado);
 
         modelo.put("lista", lista);
-        modelo.put("usuario",user);
-        //enviando al sistema de plantilla.
         ctx.render("/templates/crud/ListaProductos.html", modelo);
     }
 
@@ -121,7 +101,7 @@ public class CrudControladorProducto {
 
         Producto p = controladora.buscarProductoPorId(id);
 
-        Map<String, Object> modelo = new HashMap<>();
+        Map<String, Object> modelo = construirModeloBase(ctx);
 
         if (p != null){
             modelo.put("producto",p);
@@ -156,27 +136,9 @@ public class CrudControladorProducto {
     public static void cargarCarrito(@NotNull Context ctx) {
         CarroCompra carrito = ctx.sessionAttribute("carrito");
 
-        Usuario user = ctx.sessionAttribute("usuario");
 
-        boolean deshabilitado = true;
+        Map<String, Object> modelo = construirModeloBase(ctx);
 
-        Map<String, Object> modelo = new HashMap<>();
-
-        if(user != null){
-            if (user.getUsuario().equals("admin") && user.getPassword().equals("admin")){
-                deshabilitado = false;
-            }
-        }
-
-        int cantProductos = 0;
-
-        if (carrito != null){
-            cantProductos = carrito.cantProductos();
-        }
-
-        modelo.put("cantCarrito",cantProductos);
-
-        modelo.put("deshabilitado",deshabilitado);
 
         assert carrito != null;
         List <ProductoVista> lista = new ArrayList<>();
@@ -193,7 +155,6 @@ public class CrudControladorProducto {
         BigDecimal total = controladora.calcularPrecioTotal(lista);
 
         modelo.put("lista", lista);
-        modelo.put("usuario",user);
         modelo.put("total", total);
         //enviando al sistema de plantilla.
         ctx.render("/templates/crud/carritoCompra.html", modelo);
@@ -203,5 +164,45 @@ public class CrudControladorProducto {
         ctx.sessionAttribute("carrito",new CarroCompra());
 
         ctx.redirect("/crud-producto/carrito");
+    }
+
+    public static void EliminarProductoCarrito(@NotNull Context ctx) {
+        CarroCompra carrito = ctx.sessionAttribute("carrito");
+        int id = Integer.parseInt(ctx.pathParam("id"));
+
+        if (carrito != null){
+            controladora.eliminarProductoCarrito(carrito,id);
+            ctx.sessionAttribute("carroto",carrito);
+        }
+
+        ctx.redirect("/crud-producto/carrito");
+    }
+
+    public static Map<String, Object> construirModeloBase(Context ctx){
+        Map<String, Object> modelo = new HashMap<>();
+
+        Usuario user = ctx.sessionAttribute("usuario");
+
+        boolean deshabilitado = true;
+
+        if(user != null){
+            if (user.getUsuario().equals("admin") && user.getPassword().equals("admin")){
+                deshabilitado = false;
+            }
+        }
+
+        CarroCompra carrito = ctx.sessionAttribute("carrito");
+
+        int cantProductos = 0;
+
+        if (carrito != null){
+            cantProductos = controladora.cantProductosCarrito(carrito);
+        }
+
+        modelo.put("usuario",user);
+        modelo.put("cantCarrito",cantProductos);
+        modelo.put("deshabilitado",deshabilitado);
+
+        return modelo;
     }
 }

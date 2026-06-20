@@ -40,6 +40,7 @@ public class Main {
                     post("/agregar/{id}",CrudControladorProducto::agregar);
                     get("/carrito",CrudControladorProducto::cargarCarrito);
                     get("/limpiar-carrito",CrudControladorProducto::LimpiarCarrito);
+                    post("/eliminar-producto-carrito/{id}",CrudControladorProducto::EliminarProductoCarrito);
                 });
             });
 

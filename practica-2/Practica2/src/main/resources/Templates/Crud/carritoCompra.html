@@ -52,8 +52,7 @@
     <h1 class="bold">Carrito de compra</h1>
   </div>
 
-
-  <form action="">
+  <form action="/procesar-compra" method="post" id="formProcesarCompra">
     <div class="container">
       <div class="card shadow">
         <div class="card-header">
@@ -65,52 +64,48 @@
         </div>
       </div>
     </div>
-
-    <br><br>
-
-    <table class="table table-striped table-bordered text-center">
-      <thead>
-      <th scope="col">Producto</th>
-      <th scope="col">Precio(RD$)</th>
-      <th scope="col">Cantidad</th>
-      <th scope="col">Total(RD$)</th>
-      <th scope="col">Accion</th>
-      </thead>
-      <tbody class="table-group-divider">
-      <tr th:each="producto : ${lista}">
-        <form th:action="'/crud-producto/eliminar-producto-carrito/'+${producto.idProducto}" method="post">
-
-          <td th:text="${producto.nombre}">Nombre</td>
-
-          <td th:text="${producto.precio}">0</td>
-
-          <td th:text="${producto.cantidad}">0</td>
-
-          <td th:text="${producto.cantidad * producto.precio}">0</td>
-          <td>
-            <button type="submit"
-                    class="btn btn-danger shadow">
-              Eliminar
-            </button>
-          </td>
-
-        </form>
-      </tr>
-      </tbody>
-    </table>
-
-    <div class="container d-flex justify-content-end gap-5">
-      <h3 th:text="'Total: '+ ${total}">Total: 100</h3>
-    </div>
-
-    <div class="container d-flex justify-content-center gap-5">
-      <button type="submit" class="btn btn-primary">Procesar compra</button>
-      <a class="btn btn-danger" href="/crud-producto/limpiar-carrito">Limpiar carrito</a>
-    </div>
   </form>
 
+  <br><br>
 
+  <table class="table table-striped table-bordered text-center">
+    <thead>
+    <th scope="col">Producto</th>
+    <th scope="col">Precio(RD$)</th>
+    <th scope="col">Cantidad</th>
+    <th scope="col">Total(RD$)</th>
+    <th scope="col">Accion</th>
+    </thead>
+    <tbody class="table-group-divider">
+    <tr th:each="producto : ${lista}">
+      <td th:text="${producto.nombre}"></td>
 
+      <td th:text="${producto.precio}"></td>
+
+      <td th:text="${producto.cantidad}"></td>
+
+      <td th:text="${producto.cantidad * producto.precio}"></td>
+
+      <td>
+        <form th:action="'/crud-producto/eliminar-producto-carrito/'+${producto.idProducto}"
+              method="post">
+          <button type="submit" class="btn btn-danger shadow">
+            Eliminar
+          </button>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div class="container d-flex justify-content-end gap-5">
+    <h3 th:text="'Total: '+ ${total}">Total: 100</h3>
+  </div>
+
+  <div class="container d-flex justify-content-center gap-5">
+    <button type="submit" class="btn btn-primary" form="formProcesarCompra">Procesar compra</button>
+    <a class="btn btn-danger" href="/crud-producto/limpiar-carrito">Limpiar carrito</a>
+  </div>
 </div>
 
 
