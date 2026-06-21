@@ -1,4 +1,4 @@
-package edu.pucmm.eict.P3.Logico;
+package edu.pucmm.eict.P3.Entidades;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

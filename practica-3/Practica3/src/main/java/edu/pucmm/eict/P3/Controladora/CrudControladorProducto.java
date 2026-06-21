@@ -1,6 +1,6 @@
 package edu.pucmm.eict.P3.Controladora;
 
-import edu.pucmm.eict.P3.Logico.*;
+import edu.pucmm.eict.P3.Entidades.*;
 import edu.pucmm.eict.P3.Service.Controladora;
 import io.javalin.http.Context;
 import org.jetbrains.annotations.NotNull;

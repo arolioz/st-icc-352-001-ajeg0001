@@ -1,8 +1,8 @@
 package edu.pucmm.eict.P3;
 
 import edu.pucmm.eict.P3.Controladora.CrudControladorProducto;
-import edu.pucmm.eict.P3.Logico.CarroCompra;
-import edu.pucmm.eict.P3.Logico.Usuario;
+import edu.pucmm.eict.P3.Entidades.CarroCompra;
+import edu.pucmm.eict.P3.Entidades.Usuario;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
 

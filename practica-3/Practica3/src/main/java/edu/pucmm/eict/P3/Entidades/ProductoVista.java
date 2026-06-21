@@ -1,32 +1,36 @@
-package edu.pucmm.eict.P3.Logico;
+package edu.pucmm.eict.P3.Entidades;
 
 import java.math.BigDecimal;
 
-public class Producto {
+public class ProductoVista {
 
     private int idProducto;
+    private int cantidad;
     private String nombre;
     private BigDecimal precio;
 
-    public Producto() {
-
-    }
-
-    public Producto(int idProducto, String nombre, BigDecimal precio) {
+    public ProductoVista(int idProducto, int cantidad, String nombre, BigDecimal precio) {
         this.idProducto = idProducto;
+        this.cantidad = cantidad;
         this.nombre = nombre;
         this.precio = precio;
     }
 
+
     public int getIdProducto() {return idProducto;}
 
-    public String getNombre() {return nombre;}
+    public int getCantidad() {return cantidad;}
+
+    public String getNombre(){return  nombre;}
 
     public BigDecimal getPrecio() {return precio;}
 
-    public void setIdProducto(int idProducto) {this.idProducto = idProducto;}
+    public void setIdProducto(int id) {this.idProducto = id;}
+
+    public void setCantidad(int n) {this.cantidad = n;}
 
     public void setNombre(String nombre) {this.nombre = nombre;}
 
     public void setPrecio(BigDecimal precio) {this.precio = precio;}
+
 }
