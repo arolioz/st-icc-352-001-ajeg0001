@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${titulo}">Crear-Modificar</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+
+
+<body>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg bg-dark border-bottom border-body" data-bs-theme="dark">
+            <div class="container-fluid">
+                <a class="btn btn-outline-light" href="/">
+                    <i class="bi bi-shop"></i>
+                    Comprar
+                </a>
+
+                <div class="navbar-nav ms-auto gap-5">
+                    <a class="nav-link" th:classappend="${deshabilitado} ? ' disabled pe-none' : ''" href="/administracion/ventas">Ventas</a>
+                    <a class="nav-link" th:classappend="${deshabilitado} ? ' disabled pe-none' : ''" href="/administracion/">Administrar productos</a>
+                    <a class="nav-link" href="/crud-producto/carrito"><i class="bi bi-cart3"></i><span th:text="'(' + ${cantCarrito} + ')'"></span></a>
+                    <li class="nav-item dropdown" th:if="${usuario != null}">
+
+                        <a class="nav-link dropdown-toggle"
+                           data-bs-toggle="dropdown"
+                           href="#">
+                            <i class="bi bi-person-fill"></i>
+                            <span th:text="${usuario != null ? usuario.usuario : 'Iniciar sesión'}">
+                                Iniciar sesión
+                            </span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/login">Cambiar Usuario</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="/cerrar-sesion">Cerrar sesion</a></li>
+                        </ul>
+                    </li>
+                    <a class="nav-link" th:unless="${usuario != null}" href="/login">
+                        <i class="bi bi-person-fill"></i>
+                        Iniciar sesión
+                    </a>
+                </div>
+
+            </div>
+        </nav>
+        <br><br><br><br><br><br>
+        <div class="container d-flex justify-content-center">
+            <div class="card p-4 shadow" style="width: 720px;">
+
+                <div class="card-header shadow mb-3">
+                    <h1 class="text-center mb-2" th:text="${producto != null ? 'Modificar producto' : 'Crear producto'}">Crear-Editar producto</h1>
+                </div>
+
+
+                <form method="post" th:action="${producto != null ? '/administracion/modificar/' + producto.idProducto : '/administracion/crear'}">
+                    <div class="mb-3">
+                        <label for="userInput" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="userInput" name="nombre" required th:value="${producto != null ? producto.nombre : ''}">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="InputPrecio" class="form-label">Precio</label>
+                        <input type="number" class="form-control" id="InputPrecio" name="precio" min="1" required th:value="${producto != null ? producto.precio : ''}">
+                    </div>
+                    <div class="d-flex justify-content-center gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            Aceptar
+                        </button>
+
+                        <a href="/administracion/" class="btn btn-danger">
+                            Cancelar
+                        </a>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
+</html>
