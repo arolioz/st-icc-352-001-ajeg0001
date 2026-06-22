@@ -3,15 +3,28 @@ package edu.pucmm.eict.P3;
 import edu.pucmm.eict.P3.Controladora.CrudControladorProducto;
 import edu.pucmm.eict.P3.Entidades.CarroCompra;
 import edu.pucmm.eict.P3.Entidades.Usuario;
+import edu.pucmm.eict.P3.Servicios.BootStrapServices;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
+import org.h2.tools.Server;
+
+import java.sql.SQLException;
 
 import static io.javalin.apibuilder.ApiBuilder.*;
 import static io.javalin.apibuilder.ApiBuilder.get;
 import static io.javalin.apibuilder.ApiBuilder.post;
 
 public class Main {
-    void main(){
+    void main()  {
+
+        BootStrapServices.getInstancia().startDb();
+
+
+        //EntityManagerFactory em = Persistence.createEntityManagerFactory("MiUnidadPersistencia");
+
+
         var app = Javalin.create(config -> {
 
             config.fileRenderer(new JavalinThymeleaf());
