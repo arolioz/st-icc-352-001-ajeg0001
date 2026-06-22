@@ -3,11 +3,6 @@
     <persistence-unit name="MiUnidadPersistencia" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>edu.pucmm.eict.P3.Entidades.Producto</class>
-        <class>edu.pucmm.eict.P3.Entidades.CarroCompra</class>
-        <class>edu.pucmm.eict.P3.Entidades.ProductoCarrito</class>
-        <class>edu.pucmm.eict.P3.Entidades.ProductoVista</class>
-        <class>edu.pucmm.eict.P3.Entidades.Usuario</class>
-        <class>edu.pucmm.eict.P3.Entidades.VentaProductos</class>
         <properties>
             <!--<property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:test" />-->
             <property name="jakarta.persistence.jdbc.url" value="jdbc:h2:tcp://localhost:9092/./db/carrito" />

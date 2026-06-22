@@ -2,14 +2,17 @@ package edu.pucmm.eict.P3;
 
 import edu.pucmm.eict.P3.Controladora.CrudControladorProducto;
 import edu.pucmm.eict.P3.Entidades.CarroCompra;
+import edu.pucmm.eict.P3.Entidades.Producto;
 import edu.pucmm.eict.P3.Entidades.Usuario;
 import edu.pucmm.eict.P3.Servicios.BootStrapServices;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import org.h2.tools.Server;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 
 import static io.javalin.apibuilder.ApiBuilder.*;
@@ -19,10 +22,18 @@ import static io.javalin.apibuilder.ApiBuilder.post;
 public class Main {
     void main()  {
 
+
+
         BootStrapServices.getInstancia().startDb();
 
 
-        //EntityManagerFactory em = Persistence.createEntityManagerFactory("MiUnidadPersistencia");
+        EntityManager em = Persistence.createEntityManagerFactory("MiUnidadPersistencia").createEntityManager();
+
+        em.getTransaction().begin();
+
+        em.persist(new Producto(1,"Test",new BigDecimal(200)));
+
+        em.getTransaction().commit();
 
 
         var app = Javalin.create(config -> {

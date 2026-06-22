@@ -1,11 +1,15 @@
 package edu.pucmm.eict.P3.Entidades;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
 import java.math.BigDecimal;
-import jakarta.persistence.*;
+
 
 @Entity
 public class Producto {
 
+    @Id
     private int idProducto;
     private String nombre;
     private BigDecimal precio;
