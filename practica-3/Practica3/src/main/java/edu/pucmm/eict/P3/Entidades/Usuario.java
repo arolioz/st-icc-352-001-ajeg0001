@@ -1,7 +1,14 @@
 package edu.pucmm.eict.P3.Entidades;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity
 public class Usuario {
 
+
+    @Id
+    private Long id;
     private String usuario;
     private String nombre;
     private String password;
@@ -10,6 +17,18 @@ public class Usuario {
         this.usuario = usuario;
         this.nombre = nombre;
         this.password = password;
+    }
+
+    public Usuario() {
+
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getUsuario () {return usuario;}

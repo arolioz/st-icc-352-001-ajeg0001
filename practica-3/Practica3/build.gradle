@@ -23,6 +23,13 @@ dependencies {
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    //ORM - Hibernate.
+    implementation 'org.hibernate.orm:hibernate-core:7.4.0.Final'
+
+    //Driver de la conexión en h2...
+    implementation 'com.h2database:h2:2.4.240'
+    implementation 'org.postgresql:postgresql:42.7.11'
 }
 
 test {

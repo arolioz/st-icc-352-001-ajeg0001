@@ -1,6 +1,7 @@
 package edu.pucmm.eict.P3;
 
 import edu.pucmm.eict.P3.Controladora.CrudControladorProducto;
+import edu.pucmm.eict.P3.Controladora.ProductoControlador;
 import edu.pucmm.eict.P3.Entidades.CarroCompra;
 import edu.pucmm.eict.P3.Entidades.Producto;
 import edu.pucmm.eict.P3.Entidades.Usuario;
@@ -29,13 +30,6 @@ public class Main {
 
         EntityManager em = Persistence.createEntityManagerFactory("MiUnidadPersistencia").createEntityManager();
 
-        em.getTransaction().begin();
-
-        em.persist(new Producto(1,"Test",new BigDecimal(200)));
-
-        em.getTransaction().commit();
-
-
         var app = Javalin.create(config -> {
 
             config.fileRenderer(new JavalinThymeleaf());
@@ -60,7 +54,7 @@ public class Main {
             config.routes.apiBuilder(() ->{
                 path("/crud-producto/", () -> {
                     get(ctx -> ctx.redirect("/crud-producto/listar"));
-                    get("/listar", CrudControladorProducto::listar);
+                    get("/listar", ProductoControlador::listar);
                     post("/agregar/{id}",CrudControladorProducto::agregar);
                     get("/carrito",CrudControladorProducto::cargarCarrito);
                     get("/limpiar-carrito",CrudControladorProducto::LimpiarCarrito);
@@ -73,8 +67,8 @@ public class Main {
                 path("/administracion/", () -> {
                     get(ctx -> ctx.redirect("/administracion/administrar"));
                     get("/administrar",CrudControladorProducto::administrar);
-                    get("/crear",CrudControladorProducto::crear);
-                    post("/crear",CrudControladorProducto::procesarCrear);
+                    get("/crear", ProductoControlador::crear);
+                    post("/crear",ProductoControlador::procesarCrear);
                     get("/modificar/{id}",CrudControladorProducto::Modificar);
                     post("modificar/{id}", CrudControladorProducto::ProcesarModificar);
                     post("/eliminar/{id}",CrudControladorProducto::ProcesarEliminar);

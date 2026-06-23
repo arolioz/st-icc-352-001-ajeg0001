@@ -1,4 +1,4 @@
-package edu.pucmm.eict.P3.Service;
+package edu.pucmm.eict.P3.Servicios;
 
 import edu.pucmm.eict.P3.Entidades.*;
 

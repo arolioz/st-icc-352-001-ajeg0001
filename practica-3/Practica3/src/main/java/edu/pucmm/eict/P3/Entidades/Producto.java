@@ -1,6 +1,8 @@
 package edu.pucmm.eict.P3.Entidades;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 import java.math.BigDecimal;
@@ -10,6 +12,7 @@ import java.math.BigDecimal;
 public class Producto {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idProducto;
     private String nombre;
     private BigDecimal precio;
