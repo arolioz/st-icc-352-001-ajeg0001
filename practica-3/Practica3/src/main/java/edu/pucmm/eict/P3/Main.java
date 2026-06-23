@@ -1,5 +1,6 @@
 package edu.pucmm.eict.P3;
 
+import edu.pucmm.eict.P3.Controladora.CarritoControlador;
 import edu.pucmm.eict.P3.Controladora.CrudControladorProducto;
 import edu.pucmm.eict.P3.Controladora.ProductoControlador;
 import edu.pucmm.eict.P3.Controladora.VentaControladora;
@@ -56,10 +57,10 @@ public class Main {
                 path("/crud-producto/", () -> {
                     get(ctx -> ctx.redirect("/crud-producto/listar"));
                     get("/listar", ProductoControlador::listar);
-                    post("/agregar/{id}",CrudControladorProducto::agregar);
-                    get("/carrito",CrudControladorProducto::cargarCarrito);
-                    get("/limpiar-carrito",CrudControladorProducto::LimpiarCarrito);
-                    post("/eliminar-producto-carrito/{id}",CrudControladorProducto::EliminarProductoCarrito);
+                    post("/agregar/{id}", CarritoControlador::agregar);
+                    get("/carrito",CarritoControlador::cargarCarrito);
+                    get("/limpiar-carrito",CarritoControlador::LimpiarCarrito);
+                    post("/eliminar-producto-carrito/{id}",CarritoControlador::EliminarProductoCarrito);
                     post("/procesar-compra", VentaControladora::ProcesarCompra);
                 });
             });

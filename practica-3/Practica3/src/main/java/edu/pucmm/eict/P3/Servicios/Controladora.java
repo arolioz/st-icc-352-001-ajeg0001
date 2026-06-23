@@ -33,26 +33,7 @@ public class Controladora {
         return instancia;
     }
 
-    public Producto agregarProducto(Producto producto){
 
-        producto.setIdProducto(contadorProductos);
-        listaProductos.add(producto);
-
-        contadorProductos += 1;
-
-        return producto;
-    }
-
-
-    public Producto eliminarProducto(int id){
-        Producto tmp = buscarProductoPorId(id);
-
-        if (tmp != null){
-            listaProductos.remove(tmp);
-        }
-
-        return tmp;
-    }
 
     public static Producto buscarProductoPorId(int id){
 
@@ -87,14 +68,6 @@ public class Controladora {
         return null;
     }
 
-    public void modificarProducto(int id, String nombre, BigDecimal precio) {
-        for (Producto p : listaProductos){
-            if (id == p.getIdProducto()){
-                p.setPrecio(precio);
-                p.setNombre(nombre);
-            }
-        }
-    }
 
     public BigDecimal calcularPrecioTotal(List<ProductoVista> productos) {
         BigDecimal n = BigDecimal.ZERO;
@@ -111,12 +84,6 @@ public class Controladora {
         return n;
     }
 
-    public void eliminarProductoCarrito(CarroCompra carrito, int id) {
-        if (carrito != null) {
-            carrito.getListaProductos()
-                    .removeIf(p -> p.getIdProducto() == id);
-        }
-    }
 
     public static int cantProductosCarrito(CarroCompra carrito){
         int n = 0;
@@ -130,31 +97,7 @@ public class Controladora {
         return n;
     }
 
-    public void procesarCompra(CarroCompra carrito,String nombreCliente) {
-        List<ProductoVista> lista = new ArrayList<>();
 
-        for (ProductoCarrito p : carrito.getListaProductos()){
-            Producto producto = buscarProductoPorId(p.getIdProducto());
-
-            if (producto != null){
-                lista.add(new ProductoVista(p.getIdProducto(),p.getCantidad(),producto.getNombre(),producto.getPrecio()));
-            }
-        }
-
-        if (!lista.isEmpty()){
-            crearVenta(lista,nombreCliente);
-        }
-    }
-    public void crearVenta(List<ProductoVista> lista, String nombreCliente){
-        VentaProductos venta = new VentaProductos();
-        venta.setListaProductos(lista);
-        venta.setNombreCliente(nombreCliente);
-        venta.setId(contadorVentas);
-
-        listaVentas.add(venta);
-
-        contadorVentas += 1;
-    }
 
     public Map<String, Object> construirModeloBase(Context ctx){
         Map<String, Object> modelo = new HashMap<>();
