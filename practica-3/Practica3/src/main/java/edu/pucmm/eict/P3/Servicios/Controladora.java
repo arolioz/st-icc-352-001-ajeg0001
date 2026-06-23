@@ -1,16 +1,22 @@
 package edu.pucmm.eict.P3.Servicios;
 
 import edu.pucmm.eict.P3.Entidades.*;
+import io.javalin.http.Context;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+
 
 public class Controladora {
     private static Controladora instancia;
     private List<Usuario> listaUsuarios = new ArrayList<>();
-    private List<Producto> listaProductos = new ArrayList<>();
+    private static List<Producto> listaProductos = new ArrayList<>();
     private List<VentaProductos> listaVentas = new ArrayList<>();
+    private final static ProductoServices productoServices = ProductoServices.getInstancia();
 
     private static int contadorProductos = 1;
     private static int contadorVentas = 1;
@@ -48,15 +54,11 @@ public class Controladora {
         return tmp;
     }
 
-    public Producto buscarProductoPorId(int id){
+    public static Producto buscarProductoPorId(int id){
 
 
-        for (Producto p : listaProductos){
-            if (p.getIdProducto() == id){
-                return p;
-            }
-        }
-        return null;
+        Producto p = ProductoServices.getInstancia().find(id);
+        return p;
     }
 
     public List<Producto> listarProductos(){
@@ -116,7 +118,7 @@ public class Controladora {
         }
     }
 
-    public int cantProductosCarrito(CarroCompra carrito){
+    public static int cantProductosCarrito(CarroCompra carrito){
         int n = 0;
 
         for (ProductoCarrito p : carrito.getListaProductos()){
@@ -152,6 +154,34 @@ public class Controladora {
         listaVentas.add(venta);
 
         contadorVentas += 1;
+    }
+
+    public Map<String, Object> construirModeloBase(Context ctx){
+        Map<String, Object> modelo = new HashMap<>();
+
+        Usuario user = ctx.sessionAttribute("usuario");
+
+        boolean deshabilitado = true;
+
+        if(user != null){
+            if (user.getUsuario().equals("admin") && user.getPassword().equals("admin")){
+                deshabilitado = false;
+            }
+        }
+
+        CarroCompra carrito = ctx.sessionAttribute("carrito");
+
+        int cantProductos = 0;
+
+        if (carrito != null){
+            cantProductos = cantProductosCarrito(carrito);
+        }
+
+        modelo.put("usuario",user);
+        modelo.put("cantCarrito",cantProductos);
+        modelo.put("deshabilitado",deshabilitado);
+
+        return modelo;
     }
 
     public List<VentaProductos> listarVentas() {return listaVentas;}

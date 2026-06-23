@@ -2,6 +2,7 @@ package edu.pucmm.eict.P3;
 
 import edu.pucmm.eict.P3.Controladora.CrudControladorProducto;
 import edu.pucmm.eict.P3.Controladora.ProductoControlador;
+import edu.pucmm.eict.P3.Controladora.VentaControladora;
 import edu.pucmm.eict.P3.Entidades.CarroCompra;
 import edu.pucmm.eict.P3.Entidades.Producto;
 import edu.pucmm.eict.P3.Entidades.Usuario;
@@ -59,7 +60,7 @@ public class Main {
                     get("/carrito",CrudControladorProducto::cargarCarrito);
                     get("/limpiar-carrito",CrudControladorProducto::LimpiarCarrito);
                     post("/eliminar-producto-carrito/{id}",CrudControladorProducto::EliminarProductoCarrito);
-                    post("/procesar-compra", CrudControladorProducto::ProcesarCompra);
+                    post("/procesar-compra", VentaControladora::ProcesarCompra);
                 });
             });
 
@@ -71,7 +72,7 @@ public class Main {
                     post("/crear",ProductoControlador::procesarCrear);
                     get("/modificar/{id}",ProductoControlador::Modificar);
                     post("modificar/{id}", ProductoControlador::ProcesarModificar);
-                    post("/eliminar/{id}",ProductoControlador::ProcesarEliminar);
+                    post("/eliminar/{id}",ProductoControlador ::ProcesarEliminar);
                     get("/ventas",CrudControladorProducto::ventas);
                 });
             });

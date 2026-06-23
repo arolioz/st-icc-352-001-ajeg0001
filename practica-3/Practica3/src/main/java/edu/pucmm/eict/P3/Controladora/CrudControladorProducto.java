@@ -15,7 +15,7 @@ public class CrudControladorProducto {
     public static void listar(@NotNull Context ctx) {
         List<Producto> lista = controladora.listarProductos();
 
-        Map<String, Object> modelo = construirModeloBase(ctx);
+        Map<String, Object> modelo = controladora.construirModeloBase(ctx);
 
 
         modelo.put("lista", lista);
@@ -43,7 +43,7 @@ public class CrudControladorProducto {
     }
 
     public static void crear(@NotNull Context ctx) {
-        Map<String, Object> modelo = construirModeloBase(ctx);
+        Map<String, Object> modelo = controladora.construirModeloBase(ctx);
         modelo.put("titulo","Crear productos");
 
         ctx.render("/templates/Crear/productos.html",modelo);
@@ -53,7 +53,7 @@ public class CrudControladorProducto {
         List<Producto> lista = controladora.listarProductos();
 
 
-        Map<String, Object> modelo = construirModeloBase(ctx);
+        Map<String, Object> modelo = controladora.construirModeloBase(ctx);
         modelo.put("lista", lista);
 
         ctx.render("/templates/crud/CrudProductos.html",modelo);
@@ -88,7 +88,7 @@ public class CrudControladorProducto {
         CarroCompra carrito = ctx.sessionAttribute("carrito");
 
 
-        Map<String, Object> modelo = construirModeloBase(ctx);
+        Map<String, Object> modelo = controladora.construirModeloBase(ctx);
 
 
         assert carrito != null;
@@ -129,52 +129,10 @@ public class CrudControladorProducto {
         ctx.redirect("/crud-producto/carrito");
     }
 
-    public static Map<String, Object> construirModeloBase(Context ctx){
-        Map<String, Object> modelo = new HashMap<>();
 
-        Usuario user = ctx.sessionAttribute("usuario");
-
-        boolean deshabilitado = true;
-
-        if(user != null){
-            if (user.getUsuario().equals("admin") && user.getPassword().equals("admin")){
-                deshabilitado = false;
-            }
-        }
-
-        CarroCompra carrito = ctx.sessionAttribute("carrito");
-
-        int cantProductos = 0;
-
-        if (carrito != null){
-            cantProductos = controladora.cantProductosCarrito(carrito);
-        }
-
-        modelo.put("usuario",user);
-        modelo.put("cantCarrito",cantProductos);
-        modelo.put("deshabilitado",deshabilitado);
-
-        return modelo;
-    }
-
-    public static void ProcesarCompra(@NotNull Context ctx) {
-        String nombre = ctx.formParam("nombreCliente");
-
-        CarroCompra carrito = ctx.sessionAttribute("carrito");
-
-        if (nombre != null){
-            assert carrito != null;
-            controladora.procesarCompra(carrito,nombre);
-
-            ctx.redirect("/crud-producto/limpiar-carrito");
-        }
-        else{
-            ctx.redirect("/crud-producto/carrito");
-        }
-    }
 
     public static void ventas(@NotNull Context ctx) {
-        Map<String, Object> modelo = construirModeloBase(ctx);
+        Map<String, Object> modelo = controladora.construirModeloBase(ctx);
 
         List<VentaProductos> ventas = controladora.listarVentas();
 
