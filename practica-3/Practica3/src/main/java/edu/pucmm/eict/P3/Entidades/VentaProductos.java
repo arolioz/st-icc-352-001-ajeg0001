@@ -62,4 +62,9 @@ public class VentaProductos {
         
         return n;
     }
+
+    public void addProducto(ProductoVista pv) {
+        listaProductos.add(pv);
+        pv.setVenta(this);
+    }
 }

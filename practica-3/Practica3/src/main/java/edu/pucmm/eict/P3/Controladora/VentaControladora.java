@@ -20,14 +20,13 @@ public class VentaControladora {
 
         CarroCompra carrito = ctx.sessionAttribute("carrito");
 
-        assert carrito != null;
-        List<ProductoVista> listaProductos = construirListaCompra(carrito);
-
         VentaProductos venta = new VentaProductos();
+
+        assert carrito != null;
 
         if (nombre != null){
             venta.setNombreCliente(nombre);
-            venta.setListaProductos(listaProductos);
+            construirListaCompra(venta,carrito);
             ventaServices.crear(venta);
 
             ctx.redirect("/crud-producto/limpiar-carrito");
@@ -37,17 +36,22 @@ public class VentaControladora {
         }
     }
 
-    public static List<ProductoVista> construirListaCompra(CarroCompra carrito) {
-        List<ProductoVista> lista = new ArrayList<>();
+    private static void construirListaCompra(VentaProductos venta,CarroCompra carrito) {
+
 
         for (ProductoCarrito p : carrito.getListaProductos()){
             Producto producto = productoServices.find(p.getIdProducto());
 
             if (producto != null){
-                lista.add(new ProductoVista(p.getIdProducto(),p.getCantidad(),producto.getNombre(),producto.getPrecio()));
+                ProductoVista tmp = new ProductoVista();
+                tmp.setIdProducto(p.getIdProducto());
+                tmp.setCantidad(p.getCantidad());
+                tmp.setNombre(producto.getNombre());
+                tmp.setPrecio(producto.getPrecio());
+                tmp.setVenta(venta);
+
+                venta.addProducto(tmp);
             }
         }
-
-        return lista;
     }
 }
