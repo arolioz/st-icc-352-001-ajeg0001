@@ -82,44 +82,7 @@ public class CrudControladorProducto {
         ctx.redirect("/");
     }
 
-    public static void Modificar(@NotNull Context ctx) {
-        int id = Integer.parseInt(ctx.pathParam("id"));
 
-        Producto p = controladora.buscarProductoPorId(id);
-
-        Map<String, Object> modelo = construirModeloBase(ctx);
-
-        modelo.put("titulo","Modificar productos");
-
-        if (p != null){
-            modelo.put("producto",p);
-            ctx.render("/templates/Crear/productos.html",modelo);
-        }
-        else{
-            ctx.redirect("/administracion");
-        }
-
-    }
-
-    public static void ProcesarModificar(@NotNull Context ctx) {
-        int id = Integer.parseInt(ctx.pathParam("id"));
-        String nombre = ctx.formParam("nombre");
-        int precio = Integer.parseInt(Objects.requireNonNull(ctx.formParam("precio")));
-
-
-        controladora.modificarProducto(id,nombre, new BigDecimal(precio));
-
-        ctx.redirect("/administracion");
-    }
-
-    public static void ProcesarEliminar(@NotNull Context ctx){
-        int id = Integer.parseInt(ctx.pathParam("id"));
-
-        controladora.eliminarProducto(id);
-
-        ctx.redirect("/administracion");
-
-    }
 
     public static void cargarCarrito(@NotNull Context ctx) {
         CarroCompra carrito = ctx.sessionAttribute("carrito");

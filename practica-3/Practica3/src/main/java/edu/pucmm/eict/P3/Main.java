@@ -28,7 +28,7 @@ public class Main {
         BootStrapServices.getInstancia().startDb();
 
 
-        EntityManager em = Persistence.createEntityManagerFactory("MiUnidadPersistencia").createEntityManager();
+
 
         var app = Javalin.create(config -> {
 
@@ -66,12 +66,12 @@ public class Main {
             config.routes.apiBuilder(() ->{
                 path("/administracion/", () -> {
                     get(ctx -> ctx.redirect("/administracion/administrar"));
-                    get("/administrar",CrudControladorProducto::administrar);
+                    get("/administrar",ProductoControlador::administrar);
                     get("/crear", ProductoControlador::crear);
                     post("/crear",ProductoControlador::procesarCrear);
-                    get("/modificar/{id}",CrudControladorProducto::Modificar);
-                    post("modificar/{id}", CrudControladorProducto::ProcesarModificar);
-                    post("/eliminar/{id}",CrudControladorProducto::ProcesarEliminar);
+                    get("/modificar/{id}",ProductoControlador::Modificar);
+                    post("modificar/{id}", ProductoControlador::ProcesarModificar);
+                    post("/eliminar/{id}",ProductoControlador::ProcesarEliminar);
                     get("/ventas",CrudControladorProducto::ventas);
                 });
             });

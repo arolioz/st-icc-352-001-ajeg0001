@@ -83,4 +83,63 @@ public class ProductoControlador {
 
         ctx.render("/templates/Crear/productos.html",modelo);
     }
+
+
+    public static void administrar(@NotNull Context ctx) {
+        List<Producto> lista = productoServices.findAll();;
+
+
+        Map<String, Object> modelo = construirModeloBase(ctx);
+        modelo.put("lista", lista);
+
+        ctx.render("/templates/crud/CrudProductos.html",modelo);
+    }
+
+    public static void Modificar(@NotNull Context ctx) {
+        int id = Integer.parseInt(ctx.pathParam("id"));
+
+        Producto p = productoServices.find(id);
+
+        Map<String, Object> modelo = construirModeloBase(ctx);
+
+        modelo.put("titulo","Modificar productos");
+
+        if (p != null){
+            modelo.put("producto",p);
+            ctx.render("/templates/Crear/productos.html",modelo);
+        }
+        else{
+            ctx.redirect("/administracion");
+        }
+
+    }
+
+    public static void ProcesarModificar(@NotNull Context ctx) {
+        int id = Integer.parseInt(ctx.pathParam("id"));
+        String nombre = ctx.formParam("nombre");
+        BigDecimal precio = BigDecimal.valueOf(Double.parseDouble(Objects.requireNonNull(ctx.formParam("precio"))));
+
+        Producto p = productoServices.find(id);
+
+        p.setNombre(nombre);
+        p.setPrecio(precio);
+
+        productoServices.editar(p);
+
+        ctx.redirect("/administracion");
+    }
+
+    public static void ProcesarEliminar(@NotNull Context ctx){
+        int id = Integer.parseInt(ctx.pathParam("id"));
+
+        Producto p = productoServices.find(id);
+
+
+        if (p != null){
+            productoServices.eliminar(id);
+        }
+
+        ctx.redirect("/administracion");
+
+    }
 }
