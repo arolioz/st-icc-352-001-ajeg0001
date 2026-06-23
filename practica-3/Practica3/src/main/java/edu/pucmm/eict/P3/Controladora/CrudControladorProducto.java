@@ -129,18 +129,4 @@ public class CrudControladorProducto {
         ctx.redirect("/crud-producto/carrito");
     }
 
-
-
-    public static void ventas(@NotNull Context ctx) {
-        Map<String, Object> modelo = controladora.construirModeloBase(ctx);
-
-        List<VentaProductos> ventas = controladora.listarVentas();
-
-        modelo.put("listaVentas",ventas);
-
-        ctx.render("/templates/crud/ventas.html",modelo);
-
-
-
-    }
 }

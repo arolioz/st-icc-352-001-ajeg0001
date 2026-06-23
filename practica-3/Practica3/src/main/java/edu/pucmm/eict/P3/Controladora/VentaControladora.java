@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class VentaControladora {
     private final static VentaServices ventaServices = VentaServices.getInstancia();
@@ -53,5 +54,16 @@ public class VentaControladora {
                 venta.addProducto(tmp);
             }
         }
+    }
+
+    public static void ventas(@NotNull Context ctx) {
+        Map<String, Object> modelo = controladora.construirModeloBase(ctx);
+
+        List<VentaProductos> ventas = ventaServices.findAll();
+
+        modelo.put("listaVentas",ventas);
+
+        ctx.render("/templates/crud/ventas.html",modelo);
+
     }
 }

@@ -15,7 +15,7 @@ public class VentaProductos {
     private long id;
     private Date fechaCompra;
     private String nombreCliente;
-    @OneToMany(mappedBy = "venta",cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "venta",cascade = CascadeType.ALL)
     private List<ProductoVista> listaProductos;
 
     public VentaProductos() {

@@ -73,7 +73,7 @@ public class Main {
                     get("/modificar/{id}",ProductoControlador::Modificar);
                     post("modificar/{id}", ProductoControlador::ProcesarModificar);
                     post("/eliminar/{id}",ProductoControlador ::ProcesarEliminar);
-                    get("/ventas",CrudControladorProducto::ventas);
+                    get("/ventas",VentaControladora::ventas);
                 });
             });
 
