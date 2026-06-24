@@ -17,23 +17,7 @@ public class CrudControladorProducto {
 
 
 
-    public static void procesarLogin(@NotNull Context ctx) {
-        String usuario = ctx.formParam("usuario");
-        String password = ctx.formParam("password");
 
-        Usuario user = controladora.ValidarUsuario(usuario,password);
-
-        if (user != null){
-            ctx.sessionAttribute("usuario", user);
-            ctx.redirect("/");
-        }
-        else {
-            ctx.redirect("/login.html");
-        }
-
-
-
-    }
 
     public static void cerrarSesion(@NotNull Context ctx) {
         ctx.sessionAttribute("usuario", null);

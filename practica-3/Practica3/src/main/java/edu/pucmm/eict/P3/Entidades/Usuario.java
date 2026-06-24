@@ -2,8 +2,16 @@ package edu.pucmm.eict.P3.Entidades;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
 
 @Entity
+@NamedQueries({
+        @NamedQuery(
+                name = "Usuario.findByUsuario",
+                query = "SELECT u FROM Usuario u WHERE u.usuario = :usuario AND u.password = :password"
+        )
+})
 public class Usuario {
 
 

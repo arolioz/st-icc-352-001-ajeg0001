@@ -1,4 +1,34 @@
 package edu.pucmm.eict.P3.Controladora;
 
+import edu.pucmm.eict.P3.Entidades.Usuario;
+import edu.pucmm.eict.P3.Servicios.UsuarioServices;
+import io.javalin.http.Context;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
+
 public class UsuarioControlador {
+
+    private final static UsuarioServices usuarioService = UsuarioServices.getInstancia();
+
+    public static void procesarLogin(@NotNull Context ctx) {
+        String usuario = ctx.formParam("usuario");
+        String password = ctx.formParam("password");
+
+        List<Usuario> user = ValidarUsuario(usuario,password);
+
+        if (user != null && !user.isEmpty()){
+            ctx.sessionAttribute("usuario", user.getFirst());
+            ctx.redirect("/");
+        }
+        else {
+            ctx.redirect("/login.html");
+        }
+    }
+
+    private static List<Usuario> ValidarUsuario(String usuario, String password){
+        List<Usuario> u = usuarioService.findUsuarioPorUsuario(usuario, password);
+
+        return  u;
+    }
 }

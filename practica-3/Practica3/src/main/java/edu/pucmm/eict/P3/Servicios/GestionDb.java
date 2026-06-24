@@ -66,7 +66,7 @@ public class GestionDb<T> {
      * @param entidad
      */
     public T crear(T entidad) throws IllegalArgumentException, EntityExistsException, PersistenceException{
-        EntityManager em = getEntityManager();
+            EntityManager em = getEntityManager();
 
         try {
 
