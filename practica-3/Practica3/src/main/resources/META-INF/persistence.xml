@@ -6,6 +6,7 @@
         <class>edu.pucmm.eict.P3.Entidades.VentaProductos</class>
         <class>edu.pucmm.eict.P3.Entidades.ProductoVista</class>
         <class>edu.pucmm.eict.P3.Entidades.Usuario</class>
+        <class>edu.pucmm.eict.P3.Entidades.Foto</class>
         <properties>
             <!--<property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:test" />-->
             <property name="jakarta.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/carrito" />

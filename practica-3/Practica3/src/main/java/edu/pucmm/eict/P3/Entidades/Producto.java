@@ -1,11 +1,10 @@
 package edu.pucmm.eict.P3.Entidades;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -16,15 +15,18 @@ public class Producto {
     private int idProducto;
     private String nombre;
     private BigDecimal precio;
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "Producto",cascade = CascadeType.ALL)
+    private List<Foto> fotosProducto;
 
     public Producto() {
-
+        this.fotosProducto = new ArrayList<>();
     }
 
     public Producto(int idProducto, String nombre, BigDecimal precio) {
         this.idProducto = idProducto;
         this.nombre = nombre;
         this.precio = precio;
+        this.fotosProducto = new ArrayList<>();
     }
 
     public int getIdProducto() {return idProducto;}

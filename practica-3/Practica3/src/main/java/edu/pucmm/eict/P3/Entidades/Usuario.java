@@ -2,22 +2,23 @@ package edu.pucmm.eict.P3.Entidades;
 
 import jakarta.persistence.*;
 
-@Entity
-@NamedQueries({
-        @NamedQuery(
-                name = "Usuario.findByUsuario",
-                query = "SELECT u FROM Usuario u WHERE u.usuario = :usuario AND u.password = :password"
-        )
-})
-public class Usuario {
+import java.util.List;
 
-
+    @Entity
+    @NamedQueries({
+            @NamedQuery(
+                    name = "Usuario.findByUsuario",
+                    query = "SELECT u FROM Usuario u WHERE u.usuario = :usuario AND u.password = :password"
+            )
+    })
+    public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String usuario;
     private String nombre;
     private String password;
+
 
     public Usuario(String usuario, String nombre, String password){
         this.usuario = usuario;

@@ -12,6 +12,8 @@ public class Foto implements Serializable {
     private String mimeType;
     @Lob
     private String fotoBase64;
+    @ManyToOne
+    private Producto producto;
 
     public Foto() {
     }
