@@ -127,5 +127,26 @@ public class Controladora {
         return modelo;
     }
 
+    public void initData(){
+
+        if (UsuarioServices.getInstancia().findAll().isEmpty()){
+            Usuario admin = new Usuario("admin","admin","admin");
+            Usuario test = new Usuario("test","test","test");
+
+
+            UsuarioServices.getInstancia().crear(admin);
+            UsuarioServices.getInstancia().crear(test);
+        }
+
+        if (ProductoServices.getInstancia().findAll().isEmpty()){
+            Producto p = new Producto();
+            p.setPrecio(new BigDecimal(10));
+            p.setNombre("Harina");
+
+            ProductoServices.getInstancia().crear(p);
+        }
+
+    }
+
     public List<VentaProductos> listarVentas() {return listaVentas;}
 }

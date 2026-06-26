@@ -20,15 +20,16 @@ public class UsuarioServices extends GestionDb<Usuario>{
         return instancia;
     }
 
-    public List<Usuario> findUsuarioPorUsuario(String usuario, String password) {
+    public Usuario findUsuarioPorUsuario(String usuario, String password) {
         EntityManager em = getEntityManager();
 
-        Query query = em.createNamedQuery("Usuario.findByUsuario");
-        query.setParameter("usuario", "%"+usuario+"%");
-        query.setParameter("password", "%"+password+"%");
-
-        List<Usuario> u = query.getResultList();
-
-        return u;
+        try {
+            return em.createNamedQuery("Usuario.findByUsuario", Usuario.class)
+                    .setParameter("usuario", usuario)
+                    .setParameter("password", password)
+                    .getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

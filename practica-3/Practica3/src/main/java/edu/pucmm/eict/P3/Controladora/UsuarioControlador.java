@@ -15,10 +15,10 @@ public class UsuarioControlador {
         String usuario = ctx.formParam("usuario");
         String password = ctx.formParam("password");
 
-        List<Usuario> user = ValidarUsuario(usuario,password);
+        Usuario user = ValidarUsuario(usuario,password);
 
-        if (user != null && !user.isEmpty()){
-            ctx.sessionAttribute("usuario", user.getFirst());
+        if (user != null){
+            ctx.sessionAttribute("usuario", user);
             ctx.redirect("/");
         }
         else {
@@ -26,9 +26,14 @@ public class UsuarioControlador {
         }
     }
 
-    private static List<Usuario> ValidarUsuario(String usuario, String password){
-        List<Usuario> u = usuarioService.findUsuarioPorUsuario(usuario, password);
+    private static Usuario ValidarUsuario(String usuario, String password){
+        Usuario u = usuarioService.findUsuarioPorUsuario(usuario, password);
 
         return  u;
+    }
+
+    public static void cerrarSesion(@NotNull Context ctx) {
+        ctx.sessionAttribute("usuario", null);
+        ctx.redirect("/");
     }
 }

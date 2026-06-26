@@ -1,13 +1,11 @@
 package edu.pucmm.eict.P3;
 
-import edu.pucmm.eict.P3.Controladora.CarritoControlador;
-import edu.pucmm.eict.P3.Controladora.CrudControladorProducto;
-import edu.pucmm.eict.P3.Controladora.ProductoControlador;
-import edu.pucmm.eict.P3.Controladora.VentaControladora;
+import edu.pucmm.eict.P3.Controladora.*;
 import edu.pucmm.eict.P3.Entidades.CarroCompra;
 import edu.pucmm.eict.P3.Entidades.Producto;
 import edu.pucmm.eict.P3.Entidades.Usuario;
 import edu.pucmm.eict.P3.Servicios.BootStrapServices;
+import edu.pucmm.eict.P3.Servicios.Controladora;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
 import jakarta.persistence.EntityManager;
@@ -29,7 +27,7 @@ public class Main {
 
         BootStrapServices.getInstancia().startDb();
 
-
+        Controladora.getInstance().initData();
 
 
         var app = Javalin.create(config -> {
@@ -82,8 +80,8 @@ public class Main {
             config.routes.apiBuilder(() ->{
                 path("/", () -> {
                     get(ctx -> ctx.redirect("/crud-producto/listar"));
-                    post("/procesar-login", CrudControladorProducto::procesarLogin);
-                    get("/cerrar-sesion", CrudControladorProducto::cerrarSesion);
+                    post("/procesar-login", UsuarioControlador::procesarLogin);
+                    get("/cerrar-sesion", UsuarioControlador::cerrarSesion);
                 });
             });
 
