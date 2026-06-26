@@ -3,6 +3,7 @@ package edu.pucmm.eict.P3.Controladora;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import edu.pucmm.eict.P3.Entidades.Usuario;
+import edu.pucmm.eict.P3.Servicios.Encriptador;
 import edu.pucmm.eict.P3.Servicios.UsuarioServices;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
@@ -42,7 +43,9 @@ public class UsuarioControlador {
 
                 String jsonUser = gson.toJson(datosUsuario);
 
-                String encodedUser = URLEncoder.encode(jsonUser, StandardCharsets.UTF_8);
+                String encryptedUsuario = Encriptador.encrypt(jsonUser);
+
+                String encodedUser = URLEncoder.encode(encryptedUsuario, StandardCharsets.UTF_8);
 
 
 
@@ -79,7 +82,9 @@ public class UsuarioControlador {
 
 
             if (usuarioCookie != null){
-                String json = URLDecoder.decode(usuarioCookie, StandardCharsets.UTF_8);;
+                String encryptedUsuario = URLDecoder.decode(usuarioCookie, StandardCharsets.UTF_8);
+
+                String json = Encriptador.decrypt(encryptedUsuario);
 
                 Type type = new TypeToken<Map<String, Object>>() {}.getType();
 
