@@ -43,6 +43,8 @@ public class Main {
                 if (ctx.sessionAttribute("carrito") == null){
                     ctx.sessionAttribute("carrito",new CarroCompra());
                 }
+
+                UsuarioControlador.recordarUsuario(ctx);
             });
 
             config.routes.get("/login", ctx -> {
