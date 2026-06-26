@@ -14,6 +14,15 @@ public class UsuarioControlador {
     public static void procesarLogin(@NotNull Context ctx) {
         String usuario = ctx.formParam("usuario");
         String password = ctx.formParam("password");
+        String rememberUser = ctx.formParam("rememberUser");
+
+        if (rememberUser != null){
+            IO.println("TRUEEEE");
+        }
+        else{
+            IO.println("False");
+        }
+
 
         Usuario user = ValidarUsuario(usuario,password);
 
