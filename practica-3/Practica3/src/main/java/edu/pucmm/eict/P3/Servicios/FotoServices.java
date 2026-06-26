@@ -1,6 +1,6 @@
 package edu.pucmm.eict.P3.Servicios;
 
-import edu.pucmm.eict.ormjpa.entidades.Foto;
+import edu.pucmm.eict.P3.Entidades.Foto;
 
 /**
  *
