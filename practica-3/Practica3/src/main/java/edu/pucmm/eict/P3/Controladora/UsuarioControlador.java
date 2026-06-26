@@ -93,8 +93,6 @@ public class UsuarioControlador {
                 String usuario = (String) datos.get("usuario");
                 int id = ((Double) datos.get("id")).intValue();
 
-                IO.println(usuario);
-
                 Usuario validatedUser = usuarioService.find(id);
 
                 if (validatedUser != null){
