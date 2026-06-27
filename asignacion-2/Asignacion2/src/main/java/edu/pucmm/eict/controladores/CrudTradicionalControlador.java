@@ -85,10 +85,10 @@ public class CrudTradicionalControlador  {
         EstServices.actualizarEstudiante(tmp); //puedo validar, existe un error enviar a otro vista.
         ctx.redirect("/crud-simple/");
     }
-//
-//    public static void eliminarEstudiante(@NotNull Context ctx) throws Exception {
-//        fakeServices.eliminandoEstudiante(ctx.pathParamAsClass("matricula", Integer.class).required().get());
-//        ctx.redirect("/crud-simple/");
-//    }
+
+    public static void eliminarEstudiante(@NotNull Context ctx) throws Exception {
+        EstServices.eliminandoEstudiante(ctx.pathParamAsClass("matricula", Integer.class).required().get());
+        ctx.redirect("/crud-simple/");
+    }
 
 }

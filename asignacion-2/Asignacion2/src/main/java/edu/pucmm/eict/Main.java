@@ -55,7 +55,7 @@ public class Main {
                     get("/visualizar/{matricula}", CrudTradicionalControlador::visualizarEstudiante);
                     get("/editar/{matricula}", CrudTradicionalControlador::editarEstudianteForm);
                     post("/editar", CrudTradicionalControlador::procesarEditarEstudiante);
-//                    get("/eliminar/{matricula}", CrudTradicionalControlador::eliminarEstudiante);
+                    get("/eliminar/{matricula}", CrudTradicionalControlador::eliminarEstudiante);
                 });
             });
 

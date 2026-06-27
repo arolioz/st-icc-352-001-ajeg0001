@@ -177,7 +177,7 @@ public class EstudianteServices {
         return ok;
     }
 
-    public boolean borrarEstudiante(int matricula){
+    public boolean eliminandoEstudiante(int matricula){
         boolean ok =false;
 
         Connection con = null;
