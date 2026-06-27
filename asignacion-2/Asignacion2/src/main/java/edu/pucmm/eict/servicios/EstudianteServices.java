@@ -151,15 +151,15 @@ public class EstudianteServices {
         Connection con = null;
         try {
 
-            String query = "update estudiante set nombre=?, apellido=?, carrera=?, telefono=? where matricula = ?";
+            String query = "update estudiante set nombre=?, carrera=? where matricula = ?";
             con = DataBaseServices.getInstancia().getConexion();
             //
             PreparedStatement prepareStatement = con.prepareStatement(query);
             //Antes de ejecutar seteo los parametros.
             prepareStatement.setString(1, est.getNombre());
-            prepareStatement.setString(3, est.getCarrera());
+            prepareStatement.setString(2, est.getCarrera());
             //Indica el where...
-            prepareStatement.setInt(5, est.getMatricula());
+            prepareStatement.setInt(3, est.getMatricula());
             //
             int fila = prepareStatement.executeUpdate();
             ok = fila > 0 ;

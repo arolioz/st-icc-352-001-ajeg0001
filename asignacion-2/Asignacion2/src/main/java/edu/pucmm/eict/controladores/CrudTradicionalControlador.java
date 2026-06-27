@@ -61,30 +61,30 @@ public class CrudTradicionalControlador  {
         //enviando al sistema de ,plantilla.
         ctx.render("/templates/crud-tradicional/crearEditarVisualizar.html", modelo);
     }
-//
-//    public static void editarEstudianteForm(@NotNull Context ctx) throws Exception {
-//        Estudiante estudiante = fakeServices.getEstudiantePorMatricula(ctx.pathParamAsClass("matricula", Integer.class).required().get());
-//        //
-//        Map<String, Object> modelo = new HashMap<>();
-//        modelo.put("titulo", "Formulario Editar Estudiante "+estudiante.getMatricula());
-//        modelo.put("estudiante", estudiante);
-//        modelo.put("accion", "/crud-simple/editar");
-//
-//        //enviando al sistema de ,plantilla.
-//        ctx.render("/templates/crud-tradicional/crearEditarVisualizar.html", modelo);
-//    }
-//
-//    public static void procesarEditarEstudiante(@NotNull Context ctx) throws Exception {
-//        //obteniendo la información enviada.
-//        int matricula = ctx.formParamAsClass("matricula", Integer.class).required().get();
-//        String nombre = ctx.formParam("nombre");
-//        String carrera = ctx.formParam("carrera");
-//        //
-//        Estudiante tmp = new Estudiante(matricula, nombre, carrera);
-//        //realizar algún tipo de validación...
-//        fakeServices.actualizarEstudiante(tmp); //puedo validar, existe un error enviar a otro vista.
-//        ctx.redirect("/crud-simple/");
-//    }
+
+    public static void editarEstudianteForm(@NotNull Context ctx) throws Exception {
+        Estudiante estudiante = EstServices.getEstudiantePorMatricula(ctx.pathParamAsClass("matricula", Integer.class).required().get());
+        //
+        Map<String, Object> modelo = new HashMap<>();
+        modelo.put("titulo", "Formulario Editar Estudiante "+estudiante.getMatricula());
+        modelo.put("estudiante", estudiante);
+        modelo.put("accion", "/crud-simple/editar");
+
+        //enviando al sistema de ,plantilla.
+        ctx.render("/templates/crud-tradicional/crearEditarVisualizar.html", modelo);
+    }
+
+    public static void procesarEditarEstudiante(@NotNull Context ctx) throws Exception {
+        //obteniendo la información enviada.
+        int matricula = ctx.formParamAsClass("matricula", Integer.class).required().get();
+        String nombre = ctx.formParam("nombre");
+        String carrera = ctx.formParam("carrera");
+        //
+        Estudiante tmp = new Estudiante(matricula, nombre, carrera);
+        //realizar algún tipo de validación...
+        EstServices.actualizarEstudiante(tmp); //puedo validar, existe un error enviar a otro vista.
+        ctx.redirect("/crud-simple/");
+    }
 //
 //    public static void eliminarEstudiante(@NotNull Context ctx) throws Exception {
 //        fakeServices.eliminandoEstudiante(ctx.pathParamAsClass("matricula", Integer.class).required().get());
