@@ -76,7 +76,7 @@ public class EstudianteServices {
      * @param matricula
      * @return
      */
-    public Estudiante getEstudiante(int matricula) {
+    public Estudiante getEstudiantePorMatricula(int matricula) {
         Estudiante est = null;
         Connection con = null;
         try {
@@ -120,14 +120,14 @@ public class EstudianteServices {
         Connection con = null;
         try {
 
-            String query = "insert into estudiante(matricula, nombre, apellido, telefono, carrera) values(?,?,?,?,?)";
+            String query = "insert into estudiante(matricula, nombre, carrera) values(?,?,?)";
             con = DataBaseServices.getInstancia().getConexion();
             //
             PreparedStatement prepareStatement = con.prepareStatement(query);
             //Antes de ejecutar seteo los parametros.
             prepareStatement.setInt(1, est.getMatricula());
             prepareStatement.setString(2, est.getNombre());
-            prepareStatement.setString(5, est.getCarrera());
+            prepareStatement.setString(3, est.getCarrera());
             //
             int fila = prepareStatement.executeUpdate();
             ok = fila > 0 ;

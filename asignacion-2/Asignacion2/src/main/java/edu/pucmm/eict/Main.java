@@ -51,8 +51,8 @@ public class Main {
                     get(ctx -> ctx.redirect("/crud-simple/listar"));
                     get("/listar", CrudTradicionalControlador::listar);
                     get("/crear", CrudTradicionalControlador::crearEstudianteForm);
-//                    post("/crear", CrudTradicionalControlador::procesarCreacionEstudiante);
-//                    get("/visualizar/{matricula}", CrudTradicionalControlador::visualizarEstudiante);
+                    post("/crear", CrudTradicionalControlador::procesarCreacionEstudiante);
+                    get("/visualizar/{matricula}", CrudTradicionalControlador::visualizarEstudiante);
 //                    get("/editar/{matricula}", CrudTradicionalControlador::editarEstudianteForm);
 //                    post("/editar", CrudTradicionalControlador::procesarEditarEstudiante);
 //                    get("/eliminar/{matricula}", CrudTradicionalControlador::eliminarEstudiante);
