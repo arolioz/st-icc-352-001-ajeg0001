@@ -3,12 +3,14 @@ package edu.pucmm.eict.servicios;
 
 
 import edu.pucmm.eict.encapsulaciones.Estudiante;
+import org.h2.util.MemoryEstimator;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.EmptyStackException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,11 +21,24 @@ import java.util.logging.Logger;
  */
 public class EstudianteServices {
 
+    private static EstudianteServices instancia;
+
+    private EstudianteServices(){
+
+    }
+
+    public static EstudianteServices getInstancia(){
+        if(instancia==null){
+            instancia = new EstudianteServices();
+        }
+        return instancia;
+    }
+
     /**
      * Listado de los estudiantes.
      * @return
      */
-    public List<Estudiante> listaEstudiantes() {
+    public static List<Estudiante> listaEstudiantes() {
         List<Estudiante> lista = new ArrayList<>();
         Connection con = null; //objeto conexion.
         try {
