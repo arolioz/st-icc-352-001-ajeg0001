@@ -49,18 +49,7 @@ public class ProductoControlador {
     }
 
     public static void listar(@NotNull Context ctx){
-        Map<String, Object> modelo = construirModeloBase(ctx);
-
-
-        List<Producto> lista = productoServices.getProductosPaginacion(1);
-
-        if (lista !=  null){
-            modelo.put("lista",lista);
-            ctx.render("/templates/crud/ListaProductos.html", modelo);
-        }
-        else{
-            ctx.result("Error a la hora de listar");
-        }
+        ctx.redirect("/crud-producto/listar/1");
     }
 
     public static void listarConPaginacion(@NotNull Context ctx){
@@ -69,13 +58,23 @@ public class ProductoControlador {
 
         List<Producto> lista = productoServices.getProductosPaginacion(pagina);
 
+        int paginaAnterior = (pagina > 1) ? pagina - 1 : 1;
+        int paginaSiguiente = pagina + 1;
+        long totalProductos = ProductoServices.getInstancia().contarProductos();
+        int ultimaPagina = (int) Math.ceil((double) totalProductos / 10);
+        if (ultimaPagina == 0) ultimaPagina = 1;
 
 
 
-        if (lista.isEmpty()){
-            ctx.redirect("/crud-producto/listar");
-        }
 
+        modelo.put("pagina",pagina);
+        modelo.put("paginaAnterior",paginaAnterior);
+        modelo.put("paginaSiguiente",paginaSiguiente);
+        modelo.put("ultimaPagina",ultimaPagina);
+        IO.println(pagina + "," + ultimaPagina);
+
+
+        IO.println(modelo);
         if (lista !=  null){
             modelo.put("lista",lista);
             ctx.render("/templates/crud/ListaProductos.html", modelo);

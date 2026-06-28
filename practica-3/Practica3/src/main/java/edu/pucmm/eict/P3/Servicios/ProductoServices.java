@@ -46,5 +46,18 @@ public class ProductoServices extends GestionDb<Producto>{
         }
     }
 
+    public long contarProductos() {
+        EntityManager em = getEntityManager();
+
+        try {
+            return em.createQuery(
+                    "SELECT COUNT(p) FROM Producto p",
+                    Long.class
+            ).getSingleResult();
+
+        } finally {
+            em.close();
+        }
+    }
 
 }

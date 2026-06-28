@@ -80,6 +80,15 @@
             </tr>
             </tbody>
         </table>
+        <div class="container text-center mt-4">
+            <a class="btn btn-dark" th:href="@{/crud-producto/listar/1}" th:if="${pagina > 0}">&lt;&lt;</a>
+
+            <a class="btn btn-dark" th:href="@{'/crud-producto/listar/' + ${paginaAnterior}}" th:if="${pagina > 1}">&lt;</a>
+
+            <a class="btn btn-dark" th:href="@{'/crud-producto/listar/' + ${paginaSiguiente}}" th:if="${pagina < ultimaPagina}">&gt;</a>
+
+            <a class="btn btn-dark" th:href="@{'/crud-producto/listar/' + ${ultimaPagina}}" th:if="${pagina < ultimaPagina}">&gt;&gt;</a>
+        </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>
