@@ -18,6 +18,8 @@ public class Producto {
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "producto",cascade = CascadeType.ALL)
     private List<Foto> fotosProducto;
     private String descripcion;
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "producto",cascade = CascadeType.ALL)
+    private List<Comentario> comentarios;
 
     public Producto() {
         this.fotosProducto = new ArrayList<>();
@@ -54,5 +56,13 @@ public class Producto {
         this.fotosProducto = fotos;
     }
 
+    public List<Comentario> getComentarios() {return comentarios;}
+
+    public void setComentarios(List<Comentario> c) {this.comentarios = c;}
+
     public List<Foto> getFotosProducto() {return fotosProducto;}
+
+    public void addComentario(Comentario comentario){
+        comentarios.add(comentario);
+    }
 }
