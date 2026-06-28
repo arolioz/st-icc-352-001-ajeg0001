@@ -17,12 +17,13 @@ public class Producto {
     private BigDecimal precio;
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "producto",cascade = CascadeType.ALL)
     private List<Foto> fotosProducto;
+    private String descripcion;
 
     public Producto() {
         this.fotosProducto = new ArrayList<>();
     }
 
-    public Producto(int idProducto, String nombre, BigDecimal precio) {
+    public Producto(int idProducto, String nombre, BigDecimal precio, String descripcion) {
         this.idProducto = idProducto;
         this.nombre = nombre;
         this.precio = precio;
@@ -43,5 +44,13 @@ public class Producto {
 
     public void addFoto(Foto foto){
         fotosProducto.add(foto);
+    }
+
+    public String getDescripcion() {return descripcion;}
+
+    public void setDescripcion(String d) {this.descripcion = d;}
+
+    public void setFotosProducto(List<Foto> fotos){
+        this.fotosProducto = fotos;
     }
 }

@@ -23,7 +23,7 @@ public class Controladora {
 
     private Controladora(){
         listaUsuarios.add(new Usuario("admin","admin","admin"));
-        listaProductos.add(new Producto(0,"Huevo",new BigDecimal(100)));
+        listaProductos.add(new Producto(0,"Huevo",new BigDecimal(100),"Test"));
     }
 
     public static Controladora getInstance(){

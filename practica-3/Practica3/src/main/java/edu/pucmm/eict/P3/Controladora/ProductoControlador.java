@@ -67,11 +67,13 @@ public class ProductoControlador {
     public static void procesarCrear(@NotNull Context ctx) throws Exception {
         String nombre = ctx.formParam("nombre");
         int precio = Integer.parseInt(Objects.requireNonNull(ctx.formParam("precio")));
+        String descripcion = ctx.formParam("descripcion");
 
         Producto producto = new Producto();
 
         producto.setNombre(nombre);
         producto.setPrecio(new BigDecimal(precio));
+        producto.setDescripcion(descripcion);
 
         productoServices.crear(producto);
         FotoControlador.procesarFotos(ctx,producto.getIdProducto());
@@ -120,11 +122,13 @@ public class ProductoControlador {
         int id = Integer.parseInt(ctx.pathParam("id"));
         String nombre = ctx.formParam("nombre");
         BigDecimal precio = BigDecimal.valueOf(Double.parseDouble(Objects.requireNonNull(ctx.formParam("precio"))));
+        String descripcion = ctx.formParam("descripcion");
 
         Producto p = productoServices.find(id);
 
         p.setNombre(nombre);
         p.setPrecio(precio);
+        p.setDescripcion(descripcion);
 
         productoServices.editar(p);
 

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vizualizar producto</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+
+
+
+<div class="container">
+    <nav class="navbar navbar-expand-lg bg-dark border-bottom border-body" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a class="btn btn-outline-light" href="/">
+                <i class="bi bi-shop"></i>
+                Comprar
+            </a>
+
+            <div class="navbar-nav ms-auto gap-5">
+                <a class="nav-link" th:classappend="${deshabilitado} ? ' disabled pe-none' : ''" href="/administracion/ventas">Ventas</a>
+                <a class="nav-link" th:classappend="${deshabilitado} ? ' disabled pe-none' : ''" href="/administracion/">Administrar productos</a>
+                <a class="nav-link" href="/crud-producto/carrito"><i class="bi bi-cart3"></i><span th:text="'(' + ${cantCarrito} + ')'"></span></a>
+                <li class="nav-item dropdown" th:if="${usuario != null}">
+
+                    <a class="nav-link dropdown-toggle"
+                       data-bs-toggle="dropdown"
+                       href="#">
+                        <i class="bi bi-person-fill"></i>
+                        <span th:text="${usuario != null ? usuario.usuario : 'Iniciar sesión'}">
+                                Iniciar sesión
+                            </span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/login">Cambiar Usuario</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="/cerrar-sesion">Cerrar sesion</a></li>
+                    </ul>
+                </li>
+                <a class="nav-link" th:unless="${usuario != null}" href="/login">
+                    <i class="bi bi-person-fill"></i>
+                    Iniciar sesión
+                </a>
+            </div>
+
+        </div>
+    </nav>
+
+    <div class="px-4 py-5 my-5 text-center">
+        <h1 class="bold">Listado de ventas realizadas</h1>
+    </div>
+
+    <div class="container" th:each="venta : ${listaVentas}">
+        <div class="px-4 text-left">
+            <h3 class="bold" th:text="${venta.nombreCliente} + ' - ' + ${#dates.format(venta.fechaCompra, 'dd/MM/yyyy')}">Aaron - 30/08/2005</h3>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-striped table-bordered text-center">
+                    <thead>
+                    <th scope="col">Producto</th>
+                    <th scope="col">Precio(RD$)</th>
+                    <th scope="col">Cantidad</th>
+                    <th scope="col">Total(RD$)</th>
+                    </thead>
+                    <tbody class="table-group-divider">
+                    <tr th:each="producto : ${venta.listaProductos}">
+                        <td th:text="${producto.nombre}"></td>
+
+                        <td th:text="${producto.precio}"></td>
+
+                        <td th:text="${producto.cantidad}"></td>
+
+                        <td th:text="${producto.cantidad * producto.precio}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div class="container d-flex justify-content-end gap-5">
+                    <h3 th:text="'Total: '+ ${venta.getTotal()}">Total: 100</h3>
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+
+</div>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
+</html>
