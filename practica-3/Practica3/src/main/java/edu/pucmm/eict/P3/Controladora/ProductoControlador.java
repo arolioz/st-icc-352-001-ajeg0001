@@ -6,6 +6,7 @@ import edu.pucmm.eict.P3.Entidades.Usuario;
 import edu.pucmm.eict.P3.Servicios.Controladora;
 import edu.pucmm.eict.P3.Servicios.ProductoServices;
 import io.javalin.http.Context;
+import io.javalin.http.UploadedFile;
 import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
@@ -63,7 +64,7 @@ public class ProductoControlador {
 
     }
 
-    public static void procesarCrear(@NotNull Context ctx) {
+    public static void procesarCrear(@NotNull Context ctx) throws Exception {
         String nombre = ctx.formParam("nombre");
         int precio = Integer.parseInt(Objects.requireNonNull(ctx.formParam("precio")));
 
@@ -73,6 +74,7 @@ public class ProductoControlador {
         producto.setPrecio(new BigDecimal(precio));
 
         productoServices.crear(producto);
+        FotoControlador.procesarFotos(ctx,producto.getIdProducto());
 
         ctx.redirect("/administracion/");
     }

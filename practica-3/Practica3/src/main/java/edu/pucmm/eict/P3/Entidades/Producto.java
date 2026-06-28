@@ -15,7 +15,7 @@ public class Producto {
     private int idProducto;
     private String nombre;
     private BigDecimal precio;
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "Producto",cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "producto",cascade = CascadeType.ALL)
     private List<Foto> fotosProducto;
 
     public Producto() {
@@ -40,4 +40,8 @@ public class Producto {
     public void setNombre(String nombre) {this.nombre = nombre;}
 
     public void setPrecio(BigDecimal precio) {this.precio = precio;}
+
+    public void addFoto(Foto foto){
+        fotosProducto.add(foto);
+    }
 }

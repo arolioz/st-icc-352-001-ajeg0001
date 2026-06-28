@@ -2,8 +2,11 @@ package edu.pucmm.eict.P3.Controladora;
 
 
 import edu.pucmm.eict.P3.Entidades.Foto;
+import edu.pucmm.eict.P3.Entidades.Producto;
 import edu.pucmm.eict.P3.Servicios.FotoServices;
+import edu.pucmm.eict.P3.Servicios.ProductoServices;
 import io.javalin.http.Context;
+import io.javalin.http.UploadedFile;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -26,13 +29,25 @@ public class FotoControlador {
         ctx.render("/templates/listar.html", modelo);
     }
 
-    public static void procesarFotos(@NotNull Context ctx) throws Exception {
+    public static void procesarFotos(@NotNull Context ctx, int idProducto) throws Exception {
+        Producto p = ProductoServices.getInstancia().find(idProducto);
+        IO.println(p.getIdProducto());
+        System.out.println("Entró a procesarFotos");
+
+
+
         ctx.uploadedFiles("foto").forEach(uploadedFile -> {
+            IO.println("Foto");
             try {
-                byte[] bytes = uploadedFile.content().readAllBytes();
-                String encodedString = Base64.getEncoder().encodeToString(bytes);
-                Foto foto = new Foto(uploadedFile.filename(), uploadedFile.contentType(), encodedString);
-                FotoServices.getInstancia().crear(foto);
+
+                if (p != null){
+                    byte[] bytes = uploadedFile.content().readAllBytes();
+                    String encodedString = Base64.getEncoder().encodeToString(bytes);
+                    Foto foto = new Foto(uploadedFile.filename(), uploadedFile.contentType(), encodedString);
+                    foto.setProducto(p);
+                    p.addFoto(foto);
+                    FotoServices.getInstancia().crear(foto);
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -55,7 +55,7 @@
                 </div>
 
 
-                <form method="post" th:action="${producto != null ? '/administracion/modificar/' + producto.idProducto : '/administracion/crear'}">
+                <form method="post" enctype="multipart/form-data" th:action="${producto != null ? '/administracion/modificar/' + producto.idProducto : '/administracion/crear'}">
                     <div class="mb-3">
                         <label for="userInput" class="form-label">Nombre</label>
                         <input type="text" class="form-control" id="userInput" name="nombre" required th:value="${producto != null ? producto.nombre : ''}">
@@ -65,6 +65,12 @@
                         <label for="InputPrecio" class="form-label">Precio</label>
                         <input type="number" class="form-control" id="InputPrecio" name="precio" min="1" required th:value="${producto != null ? producto.precio : ''}">
                     </div>
+                    <div class="mb-3">
+                        <label for="foto">Foto</label>
+                        <input class="form-control" id="foto" type="file" name="foto" multiple required>
+                    </div>
+                    <br>
+
                     <div class="d-flex justify-content-center gap-2">
                         <button type="submit" class="btn btn-primary">
                             Aceptar

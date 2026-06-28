@@ -16,6 +16,7 @@ public class Foto implements Serializable {
     private Producto producto;
 
     public Foto() {
+
     }
 
     public Foto(String nombre, String mimeType, String fotoBase64){
@@ -54,5 +55,13 @@ public class Foto implements Serializable {
 
     public void setFotoBase64(String fotoBase64) {
         this.fotoBase64 = fotoBase64;
+    }
+
+    public void setProducto(Producto p) {
+        this.producto = p;
+    }
+
+    public Producto getProducto(){
+        return producto;
     }
 }
