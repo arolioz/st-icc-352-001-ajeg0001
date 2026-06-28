@@ -51,7 +51,8 @@ public class ProductoControlador {
     public static void listar(@NotNull Context ctx){
         Map<String, Object> modelo = construirModeloBase(ctx);
 
-        List<Producto> lista = productoServices.findAll();
+
+        List<Producto> lista = productoServices.getProductosPaginacion(1);
 
         if (lista !=  null){
             modelo.put("lista",lista);
@@ -60,8 +61,31 @@ public class ProductoControlador {
         else{
             ctx.result("Error a la hora de listar");
         }
-
     }
+
+    public static void listarConPaginacion(@NotNull Context ctx){
+        Map<String, Object> modelo = construirModeloBase(ctx);
+        int pagina = Integer.parseInt(ctx.pathParam("pagina"));
+
+        List<Producto> lista = productoServices.getProductosPaginacion(pagina);
+
+
+
+
+        if (lista.isEmpty()){
+            ctx.redirect("/crud-producto/listar");
+        }
+
+        if (lista !=  null){
+            modelo.put("lista",lista);
+            ctx.render("/templates/crud/ListaProductos.html", modelo);
+        }
+        else{
+            ctx.result("Error a la hora de listar");
+        }
+    }
+
+
 
     public static void procesarCrear(@NotNull Context ctx) throws Exception {
         String nombre = ctx.formParam("nombre");

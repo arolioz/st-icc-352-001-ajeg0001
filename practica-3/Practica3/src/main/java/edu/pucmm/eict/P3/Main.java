@@ -23,8 +23,6 @@ import static io.javalin.apibuilder.ApiBuilder.post;
 public class Main {
     void main()  {
 
-
-
         BootStrapServices.getInstancia().startDb();
 
         Controladora.getInstance().initData();
@@ -57,6 +55,7 @@ public class Main {
                 path("/crud-producto/", () -> {
                     get(ctx -> ctx.redirect("/crud-producto/listar"));
                     get("/listar", ProductoControlador::listar);
+                    get("/listar/{pagina}", ProductoControlador::listarConPaginacion);
                     post("/agregar/{id}", CarritoControlador::agregar);
                     get("/carrito",CarritoControlador::cargarCarrito);
                     get("/limpiar-carrito",CarritoControlador::LimpiarCarrito);
