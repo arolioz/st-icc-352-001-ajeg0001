@@ -53,4 +53,6 @@ public class Producto {
     public void setFotosProducto(List<Foto> fotos){
         this.fotosProducto = fotos;
     }
+
+    public List<Foto> getListaFotos() {return fotosProducto;}
 }

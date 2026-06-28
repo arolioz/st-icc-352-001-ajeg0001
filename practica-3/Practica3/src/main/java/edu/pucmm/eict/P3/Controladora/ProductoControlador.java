@@ -1,19 +1,18 @@
 package edu.pucmm.eict.P3.Controladora;
 
 import edu.pucmm.eict.P3.Entidades.CarroCompra;
+import edu.pucmm.eict.P3.Entidades.Foto;
 import edu.pucmm.eict.P3.Entidades.Producto;
 import edu.pucmm.eict.P3.Entidades.Usuario;
 import edu.pucmm.eict.P3.Servicios.Controladora;
+import edu.pucmm.eict.P3.Servicios.FotoServices;
 import edu.pucmm.eict.P3.Servicios.ProductoServices;
 import io.javalin.http.Context;
 import io.javalin.http.UploadedFile;
 import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class ProductoControlador {
 
@@ -109,6 +108,7 @@ public class ProductoControlador {
         modelo.put("titulo","Modificar productos");
 
         if (p != null){
+
             modelo.put("producto",p);
             ctx.render("/templates/Crear/productos.html",modelo);
         }
@@ -118,13 +118,17 @@ public class ProductoControlador {
 
     }
 
-    public static void ProcesarModificar(@NotNull Context ctx) {
+
+    public static void ProcesarModificar(@NotNull Context ctx) throws Exception {
         int id = Integer.parseInt(ctx.pathParam("id"));
         String nombre = ctx.formParam("nombre");
         BigDecimal precio = BigDecimal.valueOf(Double.parseDouble(Objects.requireNonNull(ctx.formParam("precio"))));
         String descripcion = ctx.formParam("descripcion");
 
         Producto p = productoServices.find(id);
+
+        FotoControlador.procesarFotos(ctx,p.getIdProducto());
+
 
         p.setNombre(nombre);
         p.setPrecio(precio);
