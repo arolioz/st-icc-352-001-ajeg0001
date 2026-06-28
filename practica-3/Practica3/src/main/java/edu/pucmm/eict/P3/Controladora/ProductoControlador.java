@@ -152,4 +152,21 @@ public class ProductoControlador {
         ctx.redirect("/administracion");
 
     }
+
+    public static void vizualizar(@NotNull Context ctx){
+        Map<String, Object> modelo = construirModeloBase(ctx);
+
+        int id = Integer.parseInt(ctx.pathParam("id"));
+
+        Producto p = productoServices.find(id);
+
+        if (p !=  null){
+            modelo.put("producto",p);
+            ctx.render("/templates/Vizualizar/producto.html", modelo);
+        }
+        else{
+            ctx.result("Error a la hora de enviar el producto");
+        }
+
+    }
 }

@@ -62,6 +62,7 @@ public class Main {
                     get("/limpiar-carrito",CarritoControlador::LimpiarCarrito);
                     post("/eliminar-producto-carrito/{id}",CarritoControlador::EliminarProductoCarrito);
                     post("/procesar-compra", VentaControladora::ProcesarCompra);
+                    get("vizualizar/{id}", ProductoControlador::vizualizar);
                 });
             });
 

@@ -54,5 +54,5 @@ public class Producto {
         this.fotosProducto = fotos;
     }
 
-    public List<Foto> getListaFotos() {return fotosProducto;}
+    public List<Foto> getFotosProducto() {return fotosProducto;}
 }
