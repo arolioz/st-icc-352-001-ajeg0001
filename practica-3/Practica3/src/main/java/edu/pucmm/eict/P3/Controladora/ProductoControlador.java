@@ -127,6 +127,9 @@ public class ProductoControlador {
 
         Producto p = productoServices.find(id);
 
+        List<UploadedFile> files = ctx.uploadedFiles("foto");
+        IO.println(files.size());
+
         FotoControlador.procesarFotos(ctx,p.getIdProducto());
 
 

@@ -42,11 +42,13 @@ public class FotoControlador {
 
                 if (p != null){
                     byte[] bytes = uploadedFile.content().readAllBytes();
-                    String encodedString = Base64.getEncoder().encodeToString(bytes);
-                    Foto foto = new Foto(uploadedFile.filename(), uploadedFile.contentType(), encodedString);
-                    foto.setProducto(p);
-                    p.addFoto(foto);
-                    FotoServices.getInstancia().crear(foto);
+                    if (bytes.length > 0) {
+                        String encodedString = Base64.getEncoder().encodeToString(bytes);
+                        Foto foto = new Foto(uploadedFile.filename(), uploadedFile.contentType(), encodedString);
+                        foto.setProducto(p);
+                        p.addFoto(foto);
+                        FotoServices.getInstancia().crear(foto);
+                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
