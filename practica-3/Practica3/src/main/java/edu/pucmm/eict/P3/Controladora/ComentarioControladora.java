@@ -3,6 +3,7 @@ package edu.pucmm.eict.P3.Controladora;
 import edu.pucmm.eict.P3.Entidades.Comentario;
 import edu.pucmm.eict.P3.Entidades.Producto;
 import edu.pucmm.eict.P3.Entidades.Usuario;
+import edu.pucmm.eict.P3.Servicios.ComentarioServices;
 import edu.pucmm.eict.P3.Servicios.ProductoServices;
 import io.javalin.http.Context;
 import org.jetbrains.annotations.NotNull;
@@ -27,10 +28,13 @@ public class ComentarioControladora {
                 comentario.setProducto(p);
                 comentario.setUsuario(usuario);
                 p.addComentario(comentario);
+
+                ComentarioServices.getInstancia().crear(comentario);
                 ctx.redirect("/crud-producto/vizualizar/"+id);
             }
 
         }
     }
+
 
 }
