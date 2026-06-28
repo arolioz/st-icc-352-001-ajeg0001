@@ -34,7 +34,7 @@ public class UsuarioControlador {
             ctx.sessionAttribute("usuario", user);
 
             if (rememberUser != null){
-
+                IO.println("remember");
                 Gson gson = new Gson();
 
                 Map<String, Object> datosUsuario = new HashMap<>();
@@ -52,7 +52,8 @@ public class UsuarioControlador {
                 ctx.cookie("usuario",encodedUser,60 * 60 * 24 * 7);
             }
             else{
-                IO.println("False");
+                IO.println("noremember");
+                ctx.removeCookie("usuario");
             }
 
             ctx.redirect("/");
