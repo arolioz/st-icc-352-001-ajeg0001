@@ -61,7 +61,7 @@
             <tr th:each="producto : ${lista}">
                 <form th:action="'/crud-producto/agregar/'+${producto.idProducto}" method="post">
 
-                    <td th:text="${producto.nombre}">Nombre</td>
+                    <td><a th:text="${producto.nombre}" th:href="'/crud-producto/vizualizar/'+${producto.idProducto}" class="btn" style="color: steelblue">Producto</a></td>
 
                     <td th:text="${producto.precio}">0</td>
 
