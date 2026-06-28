@@ -35,6 +35,19 @@ public class ComentarioControladora {
 
         }
     }
+    public static void procesarEliminar(@NotNull Context ctx){
+        int id = Integer.parseInt(ctx.pathParam("id"));
+        IO.println("ID recibido: " + id);
+
+        Comentario c = ComentarioServices.getInstancia().find(id);
+
+        if (c != null){
+            c.setHabilitado(false);
+            ComentarioServices.getInstancia().editar(c);
+
+            ctx.redirect("/crud-producto/vizualizar/"+c.getProducto().getIdProducto());
+        }
+    }
 
 
 }

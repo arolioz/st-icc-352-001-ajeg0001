@@ -77,6 +77,7 @@ public class Main {
                     post("modificar/{id}", ProductoControlador::ProcesarModificar);
                     post("/eliminar/{id}",ProductoControlador ::ProcesarEliminar);
                     get("/ventas",VentaControladora::ventas);
+                    get("/eliminar-comentario/{id}",ComentarioControladora::procesarEliminar);
                 });
             });
 

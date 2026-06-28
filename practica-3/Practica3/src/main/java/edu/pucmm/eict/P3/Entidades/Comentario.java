@@ -11,8 +11,10 @@ public class Comentario {
     private String usuario;
     @ManyToOne
     private Producto producto;
+    private boolean habilitado;
 
     public Comentario() {
+        this.habilitado = true;
     }
 
     public Comentario(String contenido, String usuario, Producto producto) {
@@ -51,5 +53,13 @@ public class Comentario {
 
     public void setProducto(Producto producto) {
         this.producto = producto;
+    }
+
+    public void setHabilitado(boolean b) {
+        this.habilitado = b;
+    }
+
+    public boolean getHabilitado(){
+        return habilitado;
     }
 }

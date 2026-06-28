@@ -18,11 +18,12 @@ public class Producto {
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "producto",cascade = CascadeType.ALL)
     private List<Foto> fotosProducto;
     private String descripcion;
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "producto",cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "producto",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comentario> comentarios;
 
     public Producto() {
         this.fotosProducto = new ArrayList<>();
+        this.comentarios = new ArrayList<>();
     }
 
     public Producto(int idProducto, String nombre, BigDecimal precio, String descripcion) {
@@ -65,4 +66,6 @@ public class Producto {
     public void addComentario(Comentario comentario){
         comentarios.add(comentario);
     }
+
+
 }
