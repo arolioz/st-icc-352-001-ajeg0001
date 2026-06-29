@@ -5,8 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class GestionDBCockroach {
-    private static final String URL =
-            System.getenv("JDBC_DATABASE_URL");
+    private static final String URL = System.getenv("JDBC_DATABASE_URL");
 
 
     public static Connection getConexion() throws SQLException {

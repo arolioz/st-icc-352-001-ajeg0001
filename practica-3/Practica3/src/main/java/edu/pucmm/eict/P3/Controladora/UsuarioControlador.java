@@ -56,6 +56,7 @@ public class UsuarioControlador {
                 ctx.removeCookie("usuario");
             }
 
+            UsuarioServices.getInstancia().guardarHistorialLogin(usuario);
             ctx.redirect("/");
         }
         else {

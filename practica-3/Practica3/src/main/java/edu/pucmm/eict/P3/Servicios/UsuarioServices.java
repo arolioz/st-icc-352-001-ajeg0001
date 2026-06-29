@@ -38,9 +38,9 @@ public class UsuarioServices extends GestionDb<Usuario>{
         }
     }
 
-    public static void guardarHistorialLogin(String usuario){
+    public void guardarHistorialLogin(String usuario){
         String sql = """
-                INSERT INTO login_log(usuario, fecha)
+                INSERT INTO login(usuario, fecha)
                 VALUES (?, ?)
                 """;
 
