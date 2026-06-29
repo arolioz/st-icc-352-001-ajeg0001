@@ -6,6 +6,11 @@ import edu.pucmm.eict.P3.Entidades.VentaProductos;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class UsuarioServices extends GestionDb<Usuario>{
@@ -30,6 +35,28 @@ public class UsuarioServices extends GestionDb<Usuario>{
                     .getSingleResult();
         } catch (Exception e) {
             return null;
+        }
+    }
+
+    public static void guardarHistorialLogin(String usuario){
+        String sql = """
+                INSERT INTO login_log(usuario, fecha)
+                VALUES (?, ?)
+                """;
+
+        try(Connection con = GestionDBCockroach.getConexion();
+            PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, usuario);
+            ps.setTimestamp(
+                    2,
+                    Timestamp.valueOf(LocalDateTime.now())
+            );
+
+            ps.executeUpdate();
+
+        } catch(SQLException e) {
+            e.printStackTrace();
         }
     }
 }

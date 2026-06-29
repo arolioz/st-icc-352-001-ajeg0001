@@ -23,4 +23,23 @@
             <!--<property name="eclipselink.logging.level" value="ALL" />-->
         </properties>
     </persistence-unit>
+
+    <persistence-unit name="cockroachPU">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+        <properties>
+            <property name="jakarta.persistence.jdbc.url"
+                      value="jdbc:postgresql://HOST:26257/db?sslmode=verify-full"/>
+
+            <property name="jakarta.persistence.jdbc.user"
+                      value="usuario"/>
+
+            <property name="jakarta.persistence.jdbc.password"
+                      value="password"/>
+
+            <property name="hibernate.dialect"
+                      value="org.hibernate.dialect.PostgreSQLDialect"/>
+        </properties>
+    </persistence-unit>
 </persistence>
+
