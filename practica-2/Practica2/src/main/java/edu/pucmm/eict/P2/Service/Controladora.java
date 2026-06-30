@@ -139,9 +139,10 @@ public class Controladora {
             }
         }
 
-        crearVenta(lista,nombreCliente);
+        if (!lista.isEmpty()){
+            crearVenta(lista,nombreCliente);
+        }
     }
-
     public void crearVenta(List<ProductoVista> lista, String nombreCliente){
         VentaProductos venta = new VentaProductos();
         venta.setListaProductos(lista);
