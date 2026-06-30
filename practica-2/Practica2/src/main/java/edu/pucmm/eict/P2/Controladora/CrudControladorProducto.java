@@ -19,7 +19,7 @@ public class CrudControladorProducto {
 
 
         modelo.put("lista", lista);
-        ctx.render("/templates/crud/ListaProductos.html", modelo);
+        ctx.render("/Templates/Crud/ListaProductos.html", modelo);
     }
 
 
@@ -46,7 +46,7 @@ public class CrudControladorProducto {
         Map<String, Object> modelo = construirModeloBase(ctx);
         modelo.put("titulo","Crear productos");
 
-        ctx.render("/templates/Crear/productos.html",modelo);
+        ctx.render("/Templates/Crear/productos.html",modelo);
     }
 
     public static void administrar(@NotNull Context ctx) {
@@ -56,7 +56,7 @@ public class CrudControladorProducto {
         Map<String, Object> modelo = construirModeloBase(ctx);
         modelo.put("lista", lista);
 
-        ctx.render("/templates/crud/CrudProductos.html",modelo);
+        ctx.render("/Templates/Crud/CrudProductos.html",modelo);
     }
 
     public static void procesarCrear(@NotNull Context ctx) {
@@ -107,7 +107,7 @@ public class CrudControladorProducto {
 
         if (p != null){
             modelo.put("producto",p);
-            ctx.render("/templates/Crear/productos.html",modelo);
+            ctx.render("/Templates/Crear/productos.html",modelo);
         }
         else{
             ctx.redirect("/administracion");
@@ -159,7 +159,7 @@ public class CrudControladorProducto {
         modelo.put("lista", lista);
         modelo.put("total", total);
         //enviando al sistema de plantilla.
-        ctx.render("/templates/crud/carritoCompra.html", modelo);
+        ctx.render("/Templates/Crud/carritoCompra.html", modelo);
     }
 
     public static void LimpiarCarrito(@NotNull Context ctx) {
@@ -231,7 +231,7 @@ public class CrudControladorProducto {
 
         modelo.put("listaVentas",ventas);
 
-        ctx.render("/templates/crud/ventas.html",modelo);
+        ctx.render("/Templates/Crud/ventas.html",modelo);
 
 
 
