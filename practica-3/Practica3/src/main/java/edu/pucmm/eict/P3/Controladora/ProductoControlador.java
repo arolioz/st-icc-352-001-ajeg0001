@@ -77,7 +77,7 @@ public class ProductoControlador {
         IO.println(modelo);
         if (lista !=  null){
             modelo.put("lista",lista);
-            ctx.render("/templates/crud/ListaProductos.html", modelo);
+            ctx.render("/Templates/Crud/ListaProductos.html", modelo);
         }
         else{
             ctx.result("Error a la hora de listar");
@@ -107,7 +107,7 @@ public class ProductoControlador {
         Map<String, Object> modelo = construirModeloBase(ctx);
         modelo.put("titulo","Crear productos");
 
-        ctx.render("/templates/Crear/productos.html",modelo);
+        ctx.render("/Templates/Crear/productos.html",modelo);
     }
 
 
@@ -118,7 +118,7 @@ public class ProductoControlador {
         Map<String, Object> modelo = construirModeloBase(ctx);
         modelo.put("lista", lista);
 
-        ctx.render("/templates/crud/CrudProductos.html",modelo);
+        ctx.render("/Templates/Crud/CrudProductos.html",modelo);
     }
 
     public static void Modificar(@NotNull Context ctx) {
@@ -133,7 +133,7 @@ public class ProductoControlador {
         if (p != null){
 
             modelo.put("producto",p);
-            ctx.render("/templates/Crear/productos.html",modelo);
+            ctx.render("/Templates/Crear/productos.html",modelo);
         }
         else{
             ctx.redirect("/administracion");
@@ -188,7 +188,7 @@ public class ProductoControlador {
 
         if (p !=  null){
             modelo.put("producto",p);
-            ctx.render("/templates/Vizualizar/producto.html", modelo);
+            ctx.render("/Templates/Vizualizar/producto.html", modelo);
         }
         else{
             ctx.result("Error a la hora de enviar el producto");

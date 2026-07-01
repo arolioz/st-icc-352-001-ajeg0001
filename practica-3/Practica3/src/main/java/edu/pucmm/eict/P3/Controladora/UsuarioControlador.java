@@ -49,7 +49,7 @@ public class UsuarioControlador {
 
 
 
-                ctx.cookie("usuario",encodedUser,60 * 60 * 24 * 7);
+                ctx.cookie("usuario",encodedUser, 60 * 60 * 24 * 7);
             }
             else{
                 IO.println("noremember");

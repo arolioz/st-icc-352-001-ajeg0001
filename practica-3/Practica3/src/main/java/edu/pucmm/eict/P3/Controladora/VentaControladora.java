@@ -63,7 +63,7 @@ public class VentaControladora {
 
         modelo.put("listaVentas",ventas);
 
-        ctx.render("/templates/crud/ventas.html",modelo);
+        ctx.render("/Templates/Crud/ventas.html",modelo);
 
     }
 }

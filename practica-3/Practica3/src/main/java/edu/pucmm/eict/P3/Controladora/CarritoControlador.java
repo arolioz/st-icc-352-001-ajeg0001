@@ -69,7 +69,7 @@ public class CarritoControlador {
         modelo.put("lista", lista);
         modelo.put("total", total);
         //enviando al sistema de plantilla.
-        ctx.render("/templates/crud/carritoCompra.html", modelo);
+        ctx.render("/Templates/Crud/carritoCompra.html", modelo);
     }
 
     public static void LimpiarCarrito(@NotNull Context ctx) {
