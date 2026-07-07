@@ -1,6 +1,6 @@
 package edu.pucmm.eict.App1;
 
-import io.javalin.Javalin;
+import io.javalin.Javalin5
 
 public class Main {
     void main(){
@@ -9,7 +9,6 @@ public class Main {
                 ctx.result("Hola desde la aplicacion 1!");
             });
         });
-
         app.start(7000);
     }
 }
