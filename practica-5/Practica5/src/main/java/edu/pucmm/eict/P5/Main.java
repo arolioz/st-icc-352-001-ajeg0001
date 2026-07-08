@@ -26,13 +26,9 @@ public class Main {
 
     void main()  {
 
-
-
         BootStrapServices.getInstancia().startDb();
 
         Controladora.getInstance().initData();
-
-
 
         var app = Javalin.create(config -> {
 
