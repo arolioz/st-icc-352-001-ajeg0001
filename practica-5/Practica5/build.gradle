@@ -38,6 +38,8 @@ dependencies {
     implementation 'org.jasypt:jasypt:1.9.3'
 
     implementation("org.postgresql:postgresql:42.7.3")
+
+    implementation 'org.slf4j:slf4j-simple:2.0.16'
 }
 
 test {

@@ -7,24 +7,55 @@ import edu.pucmm.eict.P5.Servicios.BootStrapServices;
 import edu.pucmm.eict.P5.Servicios.Controladora;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
+import io.javalin.websocket.WsContext;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import org.h2.tools.Server;
+
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import static io.javalin.apibuilder.ApiBuilder.*;
 import static io.javalin.apibuilder.ApiBuilder.get;
 import static io.javalin.apibuilder.ApiBuilder.post;
 
 public class Main {
+
+    public static final Queue<WsContext> usuariosConectados = new ConcurrentLinkedQueue<>();
+
     void main()  {
+
+
 
         BootStrapServices.getInstancia().startDb();
 
         Controladora.getInstance().initData();
 
 
+
         var app = Javalin.create(config -> {
+
+            config.bundledPlugins.enableRouteOverview("/rutas");
+
+            config.routes.ws("/conectarUsuario", ws -> {
+
+
+                        ws.onConnect(ctx -> {
+                            ctx.enableAutomaticPings();   // ping/pong de control para mantener viva la conexión
+                            IO.println("Se conecto un usuario!");
+
+                            usuariosConectados.add(ctx);
+                            actualizarCantUsuariosConectados();
+                        });
+
+                        ws.onClose(ctx -> {
+                            IO.println("Se desconecto un usuario!");
+
+                            usuariosConectados.remove(ctx);
+                            actualizarCantUsuariosConectados();
+                        });
+            });
 
             config.fileRenderer(new JavalinThymeleaf());
 
@@ -101,5 +132,20 @@ public class Main {
         });
 
         app.start(7000);
+    }
+
+    public static void actualizarCantUsuariosConectados() {
+        String cantidad = String.valueOf(contarUsuariosLogeados());
+        usuariosConectados.forEach(ctx -> ctx.send(cantidad));
+    }
+
+    public static int contarUsuariosLogeados(){
+        int n = 0;
+        for (WsContext ctx : usuariosConectados){
+            if (ctx.sessionAttribute("usuario") != null){
+                n += 1;
+            }
+        }
+        return  n;
     }
 }
