@@ -13,7 +13,7 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import org.h2.tools.Server;
 
-import java.util.Queue;
+import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import static io.javalin.apibuilder.ApiBuilder.*;
@@ -136,12 +136,14 @@ public class Main {
     }
 
     public static int contarUsuariosLogeados(){
-        int n = 0;
+        Set<String> usuarios = new HashSet<>();
+
         for (WsContext ctx : usuariosConectados){
-            if (ctx.sessionAttribute("usuario") != null){
-                n += 1;
+            Usuario user = ctx.sessionAttribute("usuario");
+            if (user != null){
+                usuarios.add(user.getUsuario());
             }
         }
-        return  n;
+        return  usuarios.size();
     }
 }
