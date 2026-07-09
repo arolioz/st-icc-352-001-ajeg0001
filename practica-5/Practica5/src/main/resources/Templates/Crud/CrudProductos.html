@@ -18,8 +18,24 @@
                 </a>
 
                 <div class="navbar-nav ms-auto gap-5">
-                    <a class="nav-link" th:classappend="${deshabilitado} ? ' disabled pe-none' : ''" href="/administracion/ventas">Ventas</a>
-                    <a class="nav-link" th:classappend="${deshabilitado} ? ' disabled pe-none' : ''" href="/administracion/">Administrar productos</a>
+                    <li class="nav-item dropdown" th:classappend="${deshabilitado} ? ' disabled pe-none' : ''">
+
+                        <a class="nav-link dropdown-toggle"
+                           data-bs-toggle="dropdown"
+                           href="#">
+                            <i class="bi bi-person-badge"></i>
+                            <span>
+                                Administracion
+                            </span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" th:classappend="${deshabilitado} ? ' disabled pe-none' : ''" href="/administracion/ventas">Ventas</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" th:classappend="${deshabilitado} ? ' disabled pe-none' : ''" href="/administracion/">Administrar productos</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" th:classappend="${deshabilitado} ? ' disabled pe-none' : ''" href="/administracion/dashboard">Dashboard</a></li>
+                        </ul>
+                    </li>
                     <a class="nav-link" href="/crud-producto/carrito"><i class="bi bi-cart3"></i><span th:text="'(' + ${cantCarrito} + ')'"></span></a>
                     <li class="nav-item dropdown" th:if="${usuario != null}">
 
