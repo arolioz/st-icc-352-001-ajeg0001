@@ -1,8 +1,5 @@
-    // ---------------------------------------------------------------------
-    // Cliente WebSocket moderno: addEventListener, esquema ws/wss dinámico,
-    // reconexión con backoff exponencial y heartbeat. (Sin jQuery.)
-    // ---------------------------------------------------------------------
-    let socket;
+(() => {
+let socket;
     let heartbeat;
     let retardoReconexion = 1000;        // 1 s inicial
     const retardoMaximo = 30000;         // tope de 30 s
@@ -51,3 +48,5 @@
 
 
     conectar();
+})();
+

@@ -1,12 +1,14 @@
 package edu.pucmm.eict.P5.Controladora;
 
 import edu.pucmm.eict.P5.Entidades.*;
+import edu.pucmm.eict.P5.Main;
 import edu.pucmm.eict.P5.Servicios.Controladora;
 import edu.pucmm.eict.P5.Servicios.ProductoServices;
 import edu.pucmm.eict.P5.Servicios.VentaServices;
 import io.javalin.http.Context;
 import org.jetbrains.annotations.NotNull;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +32,7 @@ public class VentaControladora {
             ventaServices.crear(venta);
 
             ctx.redirect("/crud-producto/limpiar-carrito");
+            Main.actualizarVentas();
         }
         else{
             ctx.redirect("/crud-producto/carrito");
@@ -64,5 +67,17 @@ public class VentaControladora {
 
         ctx.render("/Templates/Crud/ventas.html",modelo);
 
+    }
+
+    public static void totalVentas(@NotNull Context ctx) {
+        List<VentaProductos> ventas = ventaServices.findAll();
+
+        BigDecimal total = new BigDecimal(0);
+
+        for (VentaProductos venta : ventas){
+            total = total.add(venta.getTotal());
+        }
+
+        ctx.json(total);
     }
 }
