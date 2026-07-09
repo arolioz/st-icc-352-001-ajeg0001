@@ -69,16 +69,44 @@
     </div>
 
     <div class="px-4 py-5 my-5 text-center">
-        <h1 class="bold">Admin Dashboard</h1>
+        <h1 class="bold">Listado de ventas realizadas</h1>
     </div>
 
     <div class="container">
+
+    </div>
+    <div class="container" th:each="venta : ${listaVentas}">
+        <div class="px-4 text-left">
+            <h3 class="bold" th:text="${venta.nombreCliente} + ' - ' + ${#dates.format(venta.fechaCompra, 'dd/MM/yyyy')}">Aaron - 30/08/2005</h3>
+        </div>
         <div class="card">
-            <div class="card-header text-center"><h3>Total ventas realizadas</h3></div>
             <div class="card-body">
-                <h2><span id="totalVentas">1000</span>$</h2>
+                <table class="table table-striped table-bordered text-center">
+                    <thead>
+                    <th scope="col">Producto</th>
+                    <th scope="col">Precio(RD$)</th>
+                    <th scope="col">Cantidad</th>
+                    <th scope="col">Total(RD$)</th>
+                    </thead>
+                    <tbody class="table-group-divider">
+                    <tr th:each="producto : ${venta.listaProductos}">
+                        <td th:text="${producto.nombre}"></td>
+
+                        <td th:text="${producto.precio}"></td>
+
+                        <td th:text="${producto.cantidad}"></td>
+
+                        <td th:text="${producto.cantidad * producto.precio}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div class="container d-flex justify-content-end gap-5">
+                    <h3 th:text="'Total: '+ ${venta.getTotal()}">Total: 100</h3>
+                </div>
             </div>
         </div>
+        <br>
     </div>
 
 </div>
