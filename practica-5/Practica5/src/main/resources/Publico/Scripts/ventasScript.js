@@ -1,5 +1,6 @@
 
 (() => {
+    let productosChart = null;
     let ventasSocket;
     let heartbeat;
     let retardoReconexion = 1000;        // 1 s inicial
@@ -18,6 +19,52 @@
 
             const data = await respuesta.json();
             $totalVentas.textContent = data;
+          } catch (error) {
+            console.error('Fetch error:', error);
+          }
+    }
+    window.addEventListener('resize', () => {
+        if (productosChart) {
+            productosChart.resize();
+        }
+    });
+    async function actualizarGrafica(){
+          const ctx = document.getElementById('productosChart');
+
+          try {
+            const respuesta = await fetch('/administracion/cantidad-productosVendidos');
+
+
+            if (!respuesta.ok) {
+              throw new Error(`HTTP error! Status: ${respuesta.status}`);
+            }
+            const data = await respuesta.json();
+            console.log(data);
+            const nombres = Object.keys(data);
+            const cantidad = Object.values(data);
+
+            if (productosChart == null){
+                productosChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                    labels: nombres,
+                    datasets: [{
+                        label: 'Cantidad de ventas',
+                        data: cantidad,
+                        borderWidth: 1
+                    }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                });
+                }
+                else{
+                    productosChart.data.labels = nombres;
+                    productosChart.data.datasets[0].data = cantidad;
+                    productosChart.update();
+                }
           } catch (error) {
             console.error('Fetch error:', error);
           }
@@ -41,6 +88,7 @@
             console.log("Recibido del servidor:", evento.data);
             if (evento.data == "Actualizar"){
                 actualizarTotalVentas();
+                actualizarGrafica();
             }
         });
 
@@ -67,6 +115,7 @@
 
 
     actualizarTotalVentas();
+    actualizarGrafica();
     conectar();
 })();
 

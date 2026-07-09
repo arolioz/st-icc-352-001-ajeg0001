@@ -119,7 +119,8 @@ public class Main {
                     get("/ventas",VentaControladora::ventas);
                     get("/eliminar-comentario/{id}",ComentarioControladora::procesarEliminar);
                     get("/dashboard", ProductoControlador::dashboard);
-                    get("totalVentas",VentaControladora::totalVentas);
+                    get("/totalVentas",VentaControladora::totalVentas);
+                    get("/cantidad-productosVendidos", VentaControladora::productosVendidos);
                 });
             });
 

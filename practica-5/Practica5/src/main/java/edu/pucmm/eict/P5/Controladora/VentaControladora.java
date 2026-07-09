@@ -9,6 +9,7 @@ import io.javalin.http.Context;
 import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -79,5 +80,21 @@ public class VentaControladora {
         }
 
         ctx.json(total);
+    }
+
+    public static void productosVendidos(@NotNull Context ctx) {
+        List<VentaProductos> ventas = ventaServices.findAll();
+        Map<String, Integer> productosVendidos = new HashMap<>();
+
+        for (VentaProductos venta : ventas) {
+            for (ProductoVista p : venta.getListaProductos()) {
+                productosVendidos.merge(
+                        p.getNombre(),
+                        p.getCantidad(),
+                        Integer::sum
+                );
+            }
+        }
+        ctx.json(productosVendidos);
     }
 }
