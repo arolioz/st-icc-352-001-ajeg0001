@@ -193,4 +193,10 @@ public class ProductoControlador {
         }
 
     }
+
+    public static void dashboard(@NotNull Context ctx) {
+        Map<String, Object> modelo = construirModeloBase(ctx);
+
+        ctx.render("/Templates/Crud/EstadisticasVenta.html",modelo);
+    }
 }

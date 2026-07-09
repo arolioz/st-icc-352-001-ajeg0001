@@ -100,6 +100,7 @@ public class Main {
                     post("/eliminar/{id}",ProductoControlador ::ProcesarEliminar);
                     get("/ventas",VentaControladora::ventas);
                     get("/eliminar-comentario/{id}",ComentarioControladora::procesarEliminar);
+                    get("/dashboard", ProductoControlador::dashboard);
                 });
             });
 
