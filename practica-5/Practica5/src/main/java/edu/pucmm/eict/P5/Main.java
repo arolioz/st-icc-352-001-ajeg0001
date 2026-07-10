@@ -24,6 +24,7 @@ public class Main {
 
     public static final Queue<WsContext> usuariosConectados = new ConcurrentLinkedQueue<>();
     public static final Queue<WsContext> comentariosUsuarios = new ConcurrentLinkedQueue<>();
+    public static final Queue<WsContext> administradoresConectados = new ConcurrentLinkedQueue<>();
 
     void main()  {
 
@@ -70,6 +71,20 @@ public class Main {
 
                     IO.println("Usuario desconectado del webSocket de comentarios");
 
+            config.routes.ws("/estVentas", ws -> {
+
+
+                ws.onConnect(ctx -> {
+                    ctx.enableAutomaticPings();   // ping/pong de control para mantener viva la conexión
+                    IO.println("Se conecto un administrador!");
+
+                    administradoresConectados.add(ctx);
+                });
+
+                ws.onClose(ctx -> {
+                    IO.println("Se desconecto un administrador!");
+
+                    administradoresConectados.remove(ctx);
                 });
             });
 
@@ -125,6 +140,8 @@ public class Main {
                     get("/dashboard", ProductoControlador::dashboard);
 
                     get("/esAdmin", UsuarioControlador::esAdministrador);
+                    get("/totalVentas",VentaControladora::totalVentas);
+                    get("/cantidad-productosVendidos", VentaControladora::productosVendidos);
                 });
             });
 
@@ -158,6 +175,10 @@ public class Main {
     public static void actualizarCantUsuariosConectados() {
         String cantidad = String.valueOf(contarUsuariosLogeados());
         usuariosConectados.forEach(ctx -> ctx.send(cantidad));
+    }
+
+    public static void actualizarVentas(){
+        administradoresConectados.forEach(ctx -> ctx.send("Actualizar"));
     }
 
     public static int contarUsuariosLogeados(){
