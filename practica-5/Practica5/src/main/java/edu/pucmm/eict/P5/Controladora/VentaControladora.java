@@ -86,6 +86,16 @@ public class VentaControladora {
         List<VentaProductos> ventas = ventaServices.findAll();
         Map<String, Integer> productosVendidos = new HashMap<>();
 
+        List<Producto> listaProductos = productoServices.findAll();
+
+        for (Producto p : listaProductos){
+            productosVendidos.merge(
+                    p.getNombre(),
+                    0,
+                    Integer::sum
+            );
+        }
+
         for (VentaProductos venta : ventas) {
             for (ProductoVista p : venta.getListaProductos()) {
                 productosVendidos.merge(
