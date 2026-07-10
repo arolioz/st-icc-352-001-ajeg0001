@@ -1,7 +1,7 @@
 (() => {
 
     const idProducto = location.pathname.split('/').pop();
-
+    let esAdmin = false;
     console.log(idProducto);
 
 
@@ -19,6 +19,22 @@
             mostrarComentarios(data);
         } catch (error) {
             console.error('Fetch error:', error);
+        }
+    }
+
+    async function usuarioEsAdmin() {
+        try {
+            const respuesta = await fetch(`/administracion/esAdmin`);
+
+            if (!respuesta.ok) {
+                throw new Error(`HTTP error! Status: ${respuesta.status}`);
+            }
+
+            esAdmin = await respuesta.json();
+            console.log(esAdmin);
+
+        } catch (error){
+            console.error('Fetch error: ', error);
         }
     }
 
