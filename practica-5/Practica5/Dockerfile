@@ -27,7 +27,7 @@ FROM eclipse-temurin:25-jre
 WORKDIR /app
 
 # Ejecutamos como usuario no-root por seguridad.
-RUN useradd --system --uid 1001 javalin
+RUN useradd -m --system --uid 1001 javalin
 USER javalin
 
 # Solo necesitamos el JAR autocontenido generado en la etapa anterior.
