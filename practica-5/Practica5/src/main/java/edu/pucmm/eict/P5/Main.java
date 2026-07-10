@@ -61,12 +61,15 @@ public class Main {
                     IO.println("Usuario conectado al webSocket de comentarios");
 
                     comentariosUsuarios.add(ctx);
+
+
                 });
 
                 ws.onClose(ctx -> {
                     comentariosUsuarios.remove(ctx);
 
                     IO.println("Usuario desconectado del webSocket de comentarios");
+
                 });
             });
 
@@ -167,5 +170,11 @@ public class Main {
             }
         }
         return  usuarios.size();
+    }
+
+    public static void actualizarComentarios() {
+
+        comentariosUsuarios.forEach(ctx ->
+                ctx.send("ActualizarComentarios"));
     }
 }
