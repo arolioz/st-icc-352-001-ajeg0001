@@ -69,6 +69,16 @@
 
                 cardBody.appendChild(contenido);
 
+                if (esAdmin) {
+                    const botonEliminar = document.createElement("a");
+                    botonEliminar.className ="btn btn-danger";
+                    botonEliminar.textContent = "Eliminar";
+
+                    botonEliminar.setAttribute("href", `/administracion/eliminar-comentario/${c.id}`);
+
+                    cardBody.appendChild(botonEliminar);
+                }
+
                 card.appendChild(cardBody);
                 container2.appendChild(tituloDiv);
                 container2.appendChild(card);
@@ -83,7 +93,7 @@
 
 
     async function iniciar() {
-
+        await usuarioEsAdmin();
         await actualizarComentarios();
     }
 
