@@ -23,6 +23,7 @@ import static io.javalin.apibuilder.ApiBuilder.post;
 public class Main {
 
     public static final Queue<WsContext> usuariosConectados = new ConcurrentLinkedQueue<>();
+    public static final Queue<WsContext> comentariosUsuarios = new ConcurrentLinkedQueue<>();
 
     void main()  {
 
@@ -51,6 +52,22 @@ public class Main {
                             usuariosConectados.remove(ctx);
                             actualizarCantUsuariosConectados();
                         });
+            });
+
+            config.routes.ws("/comentarios", ws -> {
+
+                ws.onConnect(ctx -> {
+                    ctx.enableAutomaticPings();
+                    IO.println("Usuario conectado al webSocket de comentarios");
+
+                    comentariosUsuarios.add(ctx);
+                });
+
+                ws.onClose(ctx -> {
+                    comentariosUsuarios.remove(ctx);
+
+                    IO.println("Usuario desconectado del webSocket de comentarios");
+                });
             });
 
             config.fileRenderer(new JavalinThymeleaf());
