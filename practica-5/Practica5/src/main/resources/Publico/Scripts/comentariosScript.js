@@ -2,6 +2,11 @@
 
     const idProducto = location.pathname.split('/').pop();
     let esAdmin = false;
+    let comentariosSocket;
+    let heartbeat;
+    let retardoReconexion = 1000;
+    const retardoMaximo = 30000;
+
     console.log(idProducto);
 
 
@@ -90,11 +95,51 @@
 
     }
 
+    function conectarComentarios() {
+        const esquema = location.protocol === "https:" ? "wss" : "ws";
+        const url = `${esquema}://${location.host}/comentarios`;
+        comentariosSocket = new WebSocket(url);
+
+        // open: handshake completado (HTTP 101 Switching Protocols).
+        comentariosSocket.addEventListener("open", () => {
+
+            retardoReconexion = 1000;    // reiniciamos el backoff al conectar
+            iniciarHeartbeat();
+        });
+
+        comentariosSocket.addEventListener("message", (evento) => {
+            console.log("RECIBIDO DEL SERVIDOR:", evento.data);
+            if (evento.data == "ActualizarComentarios"){
+                actualizarComentarios();
+            }
+        });
+
+        // close: la conexión se cerró; programamos reintento con backoff.
+        comentariosSocket.addEventListener("close", () => {
+            clearInterval(heartbeat);
+            setTimeout(conectarComentarios, retardoReconexion);
+            retardoReconexion = Math.min(retardoReconexion * 1.5, retardoMaximo);
+        });
+
+        // error: por seguridad el navegador no da detalles; cerramos para reconectar.
+        comentariosSocket.addEventListener("error", () => comentariosSocket.close());
+    }
+    // Heartbeat: enviamos un "latido" cada 30 s para que proxies/balanceadores
+    // no cierren la conexión por inactividad.
+    function iniciarHeartbeat() {
+        heartbeat = setInterval(() => {
+            if (comentariosSocket.readyState === WebSocket.OPEN) {
+                comentariosSocket.send(JSON.stringify({ type: "ping" }));
+            }
+        }, 30000);
+    }
+
 
 
     async function iniciar() {
         await usuarioEsAdmin();
         await actualizarComentarios();
+        conectarComentarios();
     }
 
     iniciar();
