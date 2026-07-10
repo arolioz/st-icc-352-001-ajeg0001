@@ -57,20 +57,17 @@ public class Main {
 
             config.routes.ws("/comentarios", ws -> {
 
-                ws.onConnect(ctx -> {
-                    ctx.enableAutomaticPings();
-                    IO.println("Usuario conectado al webSocket de comentarios");
+                        ws.onConnect(ctx -> {
+                            ctx.enableAutomaticPings();
+                            IO.println("Usuario conectado al webSocket de comentarios");
+                            comentariosUsuarios.add(ctx);
+                        });
 
-                    comentariosUsuarios.add(ctx);
-
-
-                });
-
-                ws.onClose(ctx -> {
-                    comentariosUsuarios.remove(ctx);
-
-                    IO.println("Usuario desconectado del webSocket de comentarios");
-
+                        ws.onClose(ctx -> {
+                            comentariosUsuarios.remove(ctx);
+                            IO.println("Usuario desconectado del webSocket de comentarios");
+                        });
+            });
             config.routes.ws("/estVentas", ws -> {
 
 
@@ -198,4 +195,6 @@ public class Main {
         comentariosUsuarios.forEach(ctx ->
                 ctx.send("ActualizarComentarios"));
     }
+
+
 }
