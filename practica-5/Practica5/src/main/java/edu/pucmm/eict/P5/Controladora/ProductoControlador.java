@@ -1,6 +1,7 @@
 package edu.pucmm.eict.P5.Controladora;
 
 import edu.pucmm.eict.P5.Entidades.CarroCompra;
+import edu.pucmm.eict.P5.Entidades.Comentario;
 import edu.pucmm.eict.P5.Entidades.Producto;
 import edu.pucmm.eict.P5.Entidades.Usuario;
 import edu.pucmm.eict.P5.Servicios.Controladora;
@@ -16,7 +17,13 @@ public class ProductoControlador {
 
     private final static ProductoServices productoServices = ProductoServices.getInstancia();
     private final static Controladora controladora = Controladora.getInstance();
-    
+
+    public record ComentarioDTO(
+            int id,
+            String usuario,
+            String comentario,
+            Boolean habilitado
+    ){}
 
     public static Map<String, Object> construirModeloBase(Context ctx){
         Map<String, Object> modelo = new HashMap<>();
@@ -198,5 +205,29 @@ public class ProductoControlador {
         Map<String, Object> modelo = construirModeloBase(ctx);
 
         ctx.render("/Templates/Crud/EstadisticasVenta.html",modelo);
+    }
+
+    public static void comentariosProducto(@NotNull Context ctx) {
+
+        int id = Integer.parseInt(ctx.pathParam("id"));
+        Producto producto = ProductoServices.getInstancia().find(id);
+        List<Comentario> comentarios = producto.getComentarios();
+
+        if (producto != null) {
+            List<ComentarioDTO> respuesta = producto.getComentarios().stream()
+                    .map( c -> new ComentarioDTO(
+                                            c.getId(),
+                                            c.getUsuario(),
+                                            c.getContenido(),
+                                            c.getHabilitado()
+
+                    )).toList();
+
+            ctx.json(respuesta);
+        }
+        else {
+            ctx.result("Producto no encontrado");
+        }
+
     }
 }

@@ -86,6 +86,8 @@ public class Main {
                     post("/procesar-compra", VentaControladora::ProcesarCompra);
                     get("/vizualizar/{id}", ProductoControlador::vizualizar);
                     post("/procesar-comentario/{id}",ComentarioControladora::procesarComentario);
+
+                    get("/{id}/comentarios", ProductoControlador::comentariosProducto);
                 });
             });
 
