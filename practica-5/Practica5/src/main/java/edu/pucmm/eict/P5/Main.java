@@ -103,6 +103,8 @@ public class Main {
                     get("/ventas",VentaControladora::ventas);
                     get("/eliminar-comentario/{id}",ComentarioControladora::procesarEliminar);
                     get("/dashboard", ProductoControlador::dashboard);
+
+                    get("/esAdmin", UsuarioControlador::esAdministrador);
                 });
             });
 
