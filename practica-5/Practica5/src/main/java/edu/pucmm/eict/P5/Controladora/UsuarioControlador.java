@@ -103,4 +103,27 @@ public class UsuarioControlador {
         }
     }
 
+    public static boolean verificarUsuario(Context ctx) {
+        Usuario usuario = ctx.sessionAttribute("usuario");
+
+        if (usuario != null && usuario.getUsuario().equals("admin") && usuario.getPassword().equals("admin")) {
+            return true;
+        }
+        return false;
+    }
+
+    public static void esAdministrador(Context ctx) {
+
+        try {
+            boolean esAdmin = verificarUsuario(ctx);
+
+            ctx.json(esAdmin);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+
 }
