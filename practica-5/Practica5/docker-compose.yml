@@ -1,0 +1,11 @@
+# Atajo para construir y levantar la demo con un solo comando:
+#   docker compose up --build
+# Luego abre http://localhost:7000
+services:
+  app:
+    build: .
+    ports:
+      - "7000:7000"
+    environment:
+      - PORT=7000
+    restart: unless-stopped
