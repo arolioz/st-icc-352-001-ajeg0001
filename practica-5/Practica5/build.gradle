@@ -48,7 +48,10 @@ test {
     useJUnitPlatform()
 }
 
+// El JAR resultante se llamará simplemente "app.jar" (sin versión ni clasificador)
+// para que sea fácil de copiar dentro de la imagen de Docker.
 shadowJar {
-    archiveVersion.set("")
-    archiveClassifier.set("")
+    archiveBaseName = 'app'
+    archiveClassifier = ''
+    archiveVersion = ''
 }

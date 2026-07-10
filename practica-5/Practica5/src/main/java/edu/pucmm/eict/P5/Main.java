@@ -23,6 +23,7 @@ import static io.javalin.apibuilder.ApiBuilder.post;
 public class Main {
 
     public static final Queue<WsContext> usuariosConectados = new ConcurrentLinkedQueue<>();
+    public static final Queue<WsContext> comentariosUsuarios = new ConcurrentLinkedQueue<>();
     public static final Queue<WsContext> administradoresConectados = new ConcurrentLinkedQueue<>();
 
     void main()  {
@@ -53,6 +54,22 @@ public class Main {
                             actualizarCantUsuariosConectados();
                         });
             });
+
+            config.routes.ws("/comentarios", ws -> {
+
+                ws.onConnect(ctx -> {
+                    ctx.enableAutomaticPings();
+                    IO.println("Usuario conectado al webSocket de comentarios");
+
+                    comentariosUsuarios.add(ctx);
+
+
+                });
+
+                ws.onClose(ctx -> {
+                    comentariosUsuarios.remove(ctx);
+
+                    IO.println("Usuario desconectado del webSocket de comentarios");
 
             config.routes.ws("/estVentas", ws -> {
 
@@ -104,6 +121,8 @@ public class Main {
                     post("/procesar-compra", VentaControladora::ProcesarCompra);
                     get("/vizualizar/{id}", ProductoControlador::vizualizar);
                     post("/procesar-comentario/{id}",ComentarioControladora::procesarComentario);
+
+                    get("/{id}/comentarios", ProductoControlador::comentariosProducto);
                 });
             });
 
@@ -119,6 +138,8 @@ public class Main {
                     get("/ventas",VentaControladora::ventas);
                     get("/eliminar-comentario/{id}",ComentarioControladora::procesarEliminar);
                     get("/dashboard", ProductoControlador::dashboard);
+
+                    get("/esAdmin", UsuarioControlador::esAdministrador);
                     get("/totalVentas",VentaControladora::totalVentas);
                     get("/cantidad-productosVendidos", VentaControladora::productosVendidos);
                 });
@@ -170,5 +191,11 @@ public class Main {
             }
         }
         return  usuarios.size();
+    }
+
+    public static void actualizarComentarios() {
+
+        comentariosUsuarios.forEach(ctx ->
+                ctx.send("ActualizarComentarios"));
     }
 }

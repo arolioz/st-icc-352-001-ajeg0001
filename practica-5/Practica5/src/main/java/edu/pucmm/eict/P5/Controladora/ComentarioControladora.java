@@ -3,6 +3,7 @@ package edu.pucmm.eict.P5.Controladora;
 import edu.pucmm.eict.P5.Entidades.Comentario;
 import edu.pucmm.eict.P5.Entidades.Producto;
 import edu.pucmm.eict.P5.Entidades.Usuario;
+import edu.pucmm.eict.P5.Main;
 import edu.pucmm.eict.P5.Servicios.ComentarioServices;
 import edu.pucmm.eict.P5.Servicios.ProductoServices;
 import io.javalin.http.Context;
@@ -44,6 +45,8 @@ public class ComentarioControladora {
         if (c != null){
             c.setHabilitado(false);
             ComentarioServices.getInstancia().editar(c);
+
+            Main.actualizarComentarios();
 
             ctx.redirect("/crud-producto/vizualizar/"+c.getProducto().getIdProducto());
         }
