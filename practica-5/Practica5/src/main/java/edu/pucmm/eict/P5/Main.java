@@ -54,7 +54,6 @@ public class Main {
                             actualizarCantUsuariosConectados();
                         });
             });
-
             config.routes.ws("/comentarios", ws -> {
 
                         ws.onConnect(ctx -> {
