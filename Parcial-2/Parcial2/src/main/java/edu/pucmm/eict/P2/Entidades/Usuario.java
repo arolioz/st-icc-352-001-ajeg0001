@@ -1,8 +1,10 @@
 package edu.pucmm.eict.P2.Entidades;
 
+import Util.RolesApp;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @NamedQueries({
@@ -21,6 +23,7 @@ public class Usuario {
     private String email;
     private Date fechaNacimiento;
     private String institucion;
+    Set<RolesApp> listaRoles;
 
     public Usuario(String usuario, String nombre, String password){
         this.usuario = usuario;
@@ -51,4 +54,20 @@ public class Usuario {
     public void setNombre(String nombre) {this.nombre = nombre;}
 
     public void setPassword(String password) {this.password = password;}
+
+    public String getEmail() {return email;}
+
+    public void setEmail(String email) {this.email = email;}
+
+    public Date getFechaNacimiento() {return fechaNacimiento;}
+
+    public void setFechaNacimiento(Date fechaNacimiento) {this.fechaNacimiento = fechaNacimiento;}
+
+    public String getInstitucion() {return institucion;}
+
+    public void setInstitucion(String institucion) {this.institucion = institucion;}
+
+    public Set<RolesApp> getListaRoles() {return listaRoles;}
+
+    public void setListaRoles(Set<RolesApp> listaRoles) {this.listaRoles = listaRoles;}
 }
