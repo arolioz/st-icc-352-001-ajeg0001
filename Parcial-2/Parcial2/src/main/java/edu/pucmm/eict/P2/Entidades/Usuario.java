@@ -1,13 +1,16 @@
 package edu.pucmm.eict.P2.Entidades;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.util.Date;
 
 @Entity
+@NamedQueries({
+        @NamedQuery(
+                name = "Usuario.findByUsuario",
+                query = "SELECT u FROM Usuario u WHERE u.usuario = :usuario AND u.password = :password"
+        )
+})
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
