@@ -13,6 +13,7 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class UsuarioControlador {
@@ -95,6 +96,13 @@ public class UsuarioControlador {
         ctx.removeCookie("usuario");
 
         ctx.redirect("/");
+    }
+
+
+    public static void listarUsuarios(@NotNull Context ctx) {
+        List<Usuario> usuarios = UsuarioServices.getInstancia().findAll();
+
+        ctx.json(usuarios);
     }
 
 }

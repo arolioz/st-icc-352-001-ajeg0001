@@ -68,6 +68,13 @@ public class Main {
                 });
             });
 
+            config.routes.apiBuilder(() -> {
+               path("/Usuarios", () -> {
+                   get(UsuarioControlador::listarUsuarios);
+                   get("/Listar",UsuarioControlador::listarUsuarios);
+               });
+            });
+
 
             config.routes.get("/", ctx ->{
                 ctx.result("Hola mundo!");
