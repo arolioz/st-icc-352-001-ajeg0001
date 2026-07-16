@@ -49,6 +49,11 @@ public class Main {
                 }
             });
 
+            config.staticFiles.add(staticFileConfig -> {
+                staticFileConfig.directory = "/Publico";
+                staticFileConfig.hostedPath = "/";
+            });
+
             config.routes.before("/**", ctx->{
                 Usuario usuario = new Usuario();
 
@@ -62,12 +67,18 @@ public class Main {
 
             });
 
-            config.routes.get("/admin", ctx->{
-               ctx.result("ZONA ADMIN!");
-            }, RolesApp.ROLE_ADMIN);
+            config.routes.get("/login", ctx -> {
+               ctx.redirect("login.html");
+            });
 
             config.routes.get("/", ctx ->{
                 ctx.result("Hola mundo!");
+                Usuario u = ctx.sessionAttribute("usuario");
+
+                if (u != null){
+                    IO.println(u.getUsuario());
+                }
+
             });
         });
 
