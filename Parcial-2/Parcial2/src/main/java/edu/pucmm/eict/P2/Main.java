@@ -59,18 +59,7 @@ public class Main {
                 staticFileConfig.hostedPath = "/";
             });
 
-            config.routes.before("/**", ctx->{
-                Usuario usuario = new Usuario();
-
-                usuario.setNombre("usuario");
-                usuario.setUsuario("usuario");
-                usuario.setPassword("usuario");
-
-                usuario.setListaRoles(Set.of(RolesApp.ROLE_USUARIO,RolesApp.ROLE_ADMIN));
-
-                ctx.sessionAttribute("usuario",usuario);
-
-            });
+            config.routes.before("/**", UsuarioControlador::recordarUsuario);
 
             config.routes.apiBuilder(() ->{
                 path("/login", () -> {
@@ -79,9 +68,6 @@ public class Main {
                 });
             });
 
-            config.routes.get("/login", ctx -> {
-               ctx.redirect("login.html");
-            });
 
             config.routes.get("/", ctx ->{
                 ctx.result("Hola mundo!");

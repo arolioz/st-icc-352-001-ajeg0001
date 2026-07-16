@@ -25,7 +25,6 @@ public class Usuario {
     private String nombre;
     private String password;
     private String email;
-    private Date fechaNacimiento;
     private String institucion;
     Set<RolesApp> listaRoles;
 
@@ -62,10 +61,6 @@ public class Usuario {
     public String getEmail() {return email;}
 
     public void setEmail(String email) {this.email = email;}
-
-    public Date getFechaNacimiento() {return fechaNacimiento;}
-
-    public void setFechaNacimiento(Date fechaNacimiento) {this.fechaNacimiento = fechaNacimiento;}
 
     public String getInstitucion() {return institucion;}
 
