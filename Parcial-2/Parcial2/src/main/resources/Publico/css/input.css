@@ -1,1 +1,30 @@
 @import "tailwindcss";
+
+
+@theme {
+    /* This automatically registers the drop-shadow-blue-950 utility */
+    --drop-shadow-blue-950: 0 4px 6px rgba(30, 58, 138, 0.5);
+    --drop-shadow-amber-950: 0 4px 6px rgba(202, 138, 4, 0.5);
+}
+
+.color1 {background: #3b1d19;}
+.color2 {background: #613730;}
+.color3 {background: #905f4d;}
+.color4 {background: #c6956e;}
+.color5 {background: #f4d295;}
+
+.boton1{
+    @apply  w-full rounded-md py-2 font-semibold text-white transition
+}
+
+.card{
+    @apply  container mx-auto min-h-screen flex flex-col items-center justify-center px-6
+}
+
+.card-header{
+    @apply container w-full max-w-md bg-amber-950 rounded-t-xl py-2 shadow-lg
+}
+
+.card-body{
+    @apply container max-w-md rounded-b-xl bg-white p-8 drop-shadow-amber-950
+}
