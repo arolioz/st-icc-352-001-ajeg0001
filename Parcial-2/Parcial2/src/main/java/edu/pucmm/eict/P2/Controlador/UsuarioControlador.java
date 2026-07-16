@@ -1,6 +1,7 @@
 package edu.pucmm.eict.P2.Controlador;
 
 import Util.Encriptador;
+import Util.RolesApp;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import edu.pucmm.eict.P2.Entidades.Usuario;
@@ -16,6 +17,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class UsuarioControlador {
 
@@ -130,6 +132,7 @@ public class UsuarioControlador {
             u.setPassword(password);
             u.setInstitucion(institucion);
             u.setEmail(email);
+            u.setListaRoles(Set.of(RolesApp.ROLE_USUARIO));
 
             UsuarioServices.getInstancia().crear(u);
             ctx.status(200);
