@@ -1,5 +1,8 @@
 package edu.pucmm.eict.P2.Controlador;
 
+import Util.Encriptador;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import edu.pucmm.eict.P2.Entidades.Usuario;
 import edu.pucmm.eict.P2.Services.UsuarioServices;
 import io.javalin.http.Context;
@@ -14,7 +17,78 @@ import java.util.Map;
 
 public class UsuarioControlador {
 
+    public static void procesarLogin(@NotNull Context ctx) {
+        String usuario = ctx.formParam("usuario");
+        String password = ctx.formParam("password");
+        String rememberUser = ctx.formParam("rememberUser");
 
+        Usuario user = ValidarUsuario(usuario,password);
+
+        if (user != null){
+            ctx.sessionAttribute("usuario", user);
+
+            if (rememberUser != null){
+                IO.println("remember");
+                Gson gson = new Gson();
+
+                Map<String, Object> datosUsuario = new HashMap<>();
+                datosUsuario.put("id", user.getId());
+                datosUsuario.put("usuario", user.getUsuario());
+
+                String jsonUser = gson.toJson(datosUsuario);
+
+                String encryptedUsuario = Encriptador.encrypt(jsonUser);
+
+                String encodedUser = URLEncoder.encode(encryptedUsuario, StandardCharsets.UTF_8);
+
+
+
+                ctx.cookie("usuario",encodedUser, 60 * 60 * 24 * 7);
+            }
+            else{
+                IO.println("noremember");
+                ctx.removeCookie("usuario");
+            }
+
+            ctx.redirect("/");
+        }
+        else {
+            ctx.redirect("/login.html");
+        }
+    }
+
+    private static Usuario ValidarUsuario(String usuario, String password){
+        Usuario u = UsuarioServices.getInstancia().findUsuarioPorUsuarioYPassword(usuario, password);
+
+        return  u;
+    }
+
+    public static void recordarUsuario(@NotNull Context ctx){
+        if (ctx.sessionAttribute("usuario") == null){
+            String usuarioCookie = ctx.cookie("usuario");
+
+
+
+            if (usuarioCookie != null){
+                String encryptedUsuario = URLDecoder.decode(usuarioCookie, StandardCharsets.UTF_8);
+
+                String json = Encriptador.decrypt(encryptedUsuario);
+
+                Type type = new TypeToken<Map<String, Object>>() {}.getType();
+
+                Map<String, Object> datos = new Gson().fromJson(json, type);
+
+                String usuario = (String) datos.get("usuario");
+                int id = ((Double) datos.get("id")).intValue();
+
+                Usuario validatedUser = UsuarioServices.getInstancia().find(id);
+
+                if (validatedUser != null){
+                    ctx.sessionAttribute("usuario", validatedUser);
+                }
+            }
+        }
+    }
 
     public static void cerrarSesion(@NotNull Context ctx) {
         ctx.sessionAttribute("usuario", null);

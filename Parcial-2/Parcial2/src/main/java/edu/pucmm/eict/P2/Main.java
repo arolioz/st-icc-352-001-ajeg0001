@@ -1,6 +1,7 @@
 package edu.pucmm.eict.P2;
 
 import Util.RolesApp;
+import edu.pucmm.eict.P2.Controlador.UsuarioControlador;
 import edu.pucmm.eict.P2.Entidades.Usuario;
 import edu.pucmm.eict.P2.Services.BootStrapServices;
 import edu.pucmm.eict.P2.Services.UsuarioServices;
@@ -11,6 +12,10 @@ import jakarta.persistence.Persistence;
 
 import java.util.List;
 import java.util.Set;
+
+import static io.javalin.apibuilder.ApiBuilder.*;
+import static io.javalin.apibuilder.ApiBuilder.get;
+import static io.javalin.apibuilder.ApiBuilder.post;
 
 public class Main {
     void main() {
@@ -65,6 +70,13 @@ public class Main {
 
                 ctx.sessionAttribute("usuario",usuario);
 
+            });
+
+            config.routes.apiBuilder(() ->{
+                path("/login", () -> {
+                    get(ctx -> ctx.redirect("/login.html"));
+                    post("/procesarLogin",UsuarioControlador::procesarLogin);
+                });
             });
 
             config.routes.get("/login", ctx -> {
