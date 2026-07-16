@@ -14,7 +14,7 @@
 .color5 {background: #f4d295;}
 
 .boton1{
-    @apply  w-full rounded-md py-2 font-semibold text-white transition
+    @apply  w-full rounded-md py-2 font-semibold text-white transition cursor-pointer hover:bg-[#905f4d]
 }
 
 .card{
@@ -28,3 +28,4 @@
 .card-body{
     @apply container max-w-md rounded-b-xl bg-white p-8 drop-shadow-amber-950
 }
+
