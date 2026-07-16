@@ -15,13 +15,25 @@ public class UsuarioServices extends GestionDb<Usuario>{
         return instancia;
     }
 
-    public Usuario findUsuarioPorUsuario(String usuario, String password) {
+    public Usuario findUsuarioPorUsuarioYPassword(String usuario, String password) {
         EntityManager em = getEntityManager();
 
         try {
-            return em.createNamedQuery("Usuario.findByUsuario", Usuario.class)
+            return em.createNamedQuery("Usuario.findByUsuarioAndPassword", Usuario.class)
                     .setParameter("usuario", usuario)
                     .setParameter("password", password)
+                    .getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public Usuario findUsuarioPorUsuario(String usuario) {
+        EntityManager em = getEntityManager();
+
+        try {
+            return em.createNamedQuery("Usuario.findByUsuarioAndPassword", Usuario.class)
+                    .setParameter("usuario", usuario)
                     .getSingleResult();
         } catch (Exception e) {
             return null;

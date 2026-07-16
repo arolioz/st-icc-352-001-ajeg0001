@@ -9,8 +9,12 @@ import java.util.Set;
 @Entity
 @NamedQueries({
         @NamedQuery(
+                name = "Usuario.findByUsuarioAndPassword",
+                query = "SELECT u FROM Usuario u WHERE LOWER(u.usuario) = LOWER(:usuario) AND u.password = :password"
+        ),
+        @NamedQuery(
                 name = "Usuario.findByUsuario",
-                query = "SELECT u FROM Usuario u WHERE u.usuario = :usuario AND u.password = :password"
+                query = "SELECT u FROM Usuario u WHERE LOWER(u.usuario) = LOWER(:usuario)"
         )
 })
 public class Usuario {
