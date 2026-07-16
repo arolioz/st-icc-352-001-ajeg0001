@@ -65,6 +65,7 @@ public class Main {
                 path("/login", () -> {
                     get(ctx -> ctx.redirect("/login.html"));
                     post("/procesarLogin",UsuarioControlador::procesarLogin);
+                    post("/procesarRegistrar", UsuarioControlador::procesarRegistrar);
                 });
             });
 

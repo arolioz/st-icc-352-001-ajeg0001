@@ -6,6 +6,7 @@ import com.google.gson.reflect.TypeToken;
 import edu.pucmm.eict.P2.Entidades.Usuario;
 import edu.pucmm.eict.P2.Services.UsuarioServices;
 import io.javalin.http.Context;
+import io.javalin.http.HttpStatus;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Type;
@@ -104,5 +105,46 @@ public class UsuarioControlador {
 
         ctx.json(usuarios);
     }
+
+    public static void procesarRegistrar(@NotNull Context ctx){
+        String usuario = ctx.formParam("usuario");
+        String nombre  = ctx.formParam("nombre");
+        String password = ctx.formParam("password");
+        String institucion = ctx.formParam("institucion");
+        String email = ctx.formParam("email");
+
+        if (usuario == null || usuario.isBlank() ||
+                password == null || password.isBlank() ||
+                email == null || email.isBlank()) {
+
+            ctx.status(400).result("Datos inválidos");
+            return;
+        }
+
+        if (!existeUsuario(usuario)){
+            Usuario u = new Usuario();
+            u.setUsuario(usuario);
+            u.setNombre(nombre);
+            u.setPassword(password);
+            u.setInstitucion(institucion);
+            u.setEmail(email);
+
+            UsuarioServices.getInstancia().crear(u);
+            ctx.status(200);
+            ctx.redirect("/login");
+        }
+    }
+
+    public static Boolean existeUsuario(String usuario) {
+        Usuario tmpU = UsuarioServices.getInstancia().findUsuarioPorUsuario(usuario);
+
+        if (tmpU != null){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
 
 }
