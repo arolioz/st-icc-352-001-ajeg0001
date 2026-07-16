@@ -5,6 +5,7 @@ import edu.pucmm.eict.P2.Entidades.Usuario;
 import edu.pucmm.eict.P2.Services.BootStrapServices;
 import edu.pucmm.eict.P2.Services.UsuarioServices;
 import io.javalin.Javalin;
+import io.javalin.http.UnauthorizedResponse;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Persistence;
 
@@ -21,6 +22,50 @@ public class Main {
                 .createEntityManager();
 
         var app = Javalin.create(config ->{
+
+            config.routes.beforeMatched(ctx -> {
+
+                // Si la ruta no tiene roles, permitir acceso
+                if (ctx.routeRoles().isEmpty()) {
+                    return;
+                }
+
+                Usuario usuario = ctx.sessionAttribute("usuario");
+
+                if (usuario == null) {
+                    ctx.status(401);
+                    ctx.skipRemainingHandlers();
+                    return;
+                }
+
+                boolean autorizado = usuario.getListaRoles()
+                        .stream()
+                        .anyMatch(ctx.routeRoles()::contains);
+
+                if (!autorizado) {
+                    ctx.status(403);
+                    ctx.result("NO ESTA AUTORIZADO PARA ENTRAR A ESTA PAGINA");
+                    ctx.skipRemainingHandlers();
+                }
+            });
+
+            config.routes.before("/**", ctx->{
+                Usuario usuario = new Usuario();
+
+                usuario.setNombre("usuario");
+                usuario.setUsuario("usuario");
+                usuario.setPassword("usuario");
+
+                usuario.setListaRoles(Set.of(RolesApp.ROLE_USUARIO,RolesApp.ROLE_ADMIN));
+
+                ctx.sessionAttribute("usuario",usuario);
+
+            });
+
+            config.routes.get("/admin", ctx->{
+               ctx.result("ZONA ADMIN!");
+            }, RolesApp.ROLE_ADMIN);
+
             config.routes.get("/", ctx ->{
                 ctx.result("Hola mundo!");
             });
@@ -34,16 +79,18 @@ public class Main {
         List<Usuario> usuarios = UsuarioServices.getInstancia().findAll();
 
         if (usuarios.isEmpty()){
-            Usuario u = new Usuario();
+            Usuario admin = new Usuario();
 
-            u.setNombre("admin");
-            u.setUsuario("admin");
-            u.setPassword("admin");
+            admin.setNombre("admin");
+            admin.setUsuario("admin");
+            admin.setPassword("admin");
 
-            u.setListaRoles(Set.of(RolesApp.ROLE_ADMIN,RolesApp.ROLE_ORGANIZADOR,RolesApp.ROLE_USUARIO));
+            admin.setListaRoles(Set.of(RolesApp.ROLE_ADMIN,RolesApp.ROLE_ORGANIZADOR,RolesApp.ROLE_USUARIO));
 
-            UsuarioServices.getInstancia().crear(u);
+            UsuarioServices.getInstancia().crear(admin);
         }
+
+
 
     }
 }
