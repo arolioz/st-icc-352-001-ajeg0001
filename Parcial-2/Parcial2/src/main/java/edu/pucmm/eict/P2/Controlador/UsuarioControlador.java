@@ -16,4 +16,11 @@ public class UsuarioControlador {
 
 
 
+    public static void cerrarSesion(@NotNull Context ctx) {
+        ctx.sessionAttribute("usuario", null);
+        ctx.removeCookie("usuario");
+
+        ctx.redirect("/");
+    }
+
 }
