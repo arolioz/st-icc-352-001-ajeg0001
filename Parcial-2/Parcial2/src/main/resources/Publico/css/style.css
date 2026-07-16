@@ -213,6 +213,9 @@
   .mt-2 {
     margin-top: calc(var(--spacing) * 2);
   }
+  .ml-2 {
+    margin-left: calc(var(--spacing) * 2);
+  }
   .block {
     display: block;
   }
@@ -244,8 +247,14 @@
   .cursor-pointer {
     cursor: pointer;
   }
+  .items-center {
+    align-items: center;
+  }
   .justify-between {
     justify-content: space-between;
+  }
+  .justify-end {
+    justify-content: flex-end;
   }
   .space-y-5 {
     :where(& > :not(:last-child)) {
