@@ -117,9 +117,11 @@ public class UsuarioControlador {
                 password == null || password.isBlank() ||
                 email == null || email.isBlank()) {
 
-            ctx.status(400).result("Datos inválidos");
+            ctx.status(400).result("No se pudo procesar el registro").redirect("/registrar");
             return;
         }
+
+        IO.println(existeUsuario(usuario));
 
         if (!existeUsuario(usuario)){
             Usuario u = new Usuario();
@@ -133,10 +135,16 @@ public class UsuarioControlador {
             ctx.status(200);
             ctx.redirect("/login");
         }
+        else{
+            ctx.status(400).result("El usuario ya existe").redirect("/registrar");
+        }
     }
 
     public static Boolean existeUsuario(String usuario) {
         Usuario tmpU = UsuarioServices.getInstancia().findUsuarioPorUsuario(usuario);
+
+        IO.println(usuario);
+        IO.println(tmpU);
 
         if (tmpU != null){
             return true;

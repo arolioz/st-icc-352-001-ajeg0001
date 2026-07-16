@@ -24,6 +24,7 @@ public class UsuarioServices extends GestionDb<Usuario>{
                     .setParameter("password", password)
                     .getSingleResult();
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }
@@ -32,10 +33,11 @@ public class UsuarioServices extends GestionDb<Usuario>{
         EntityManager em = getEntityManager();
 
         try {
-            return em.createNamedQuery("Usuario.findByUsuarioAndPassword", Usuario.class)
+            return em.createNamedQuery("Usuario.findByUsuario", Usuario.class)
                     .setParameter("usuario", usuario)
                     .getSingleResult();
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }

@@ -68,6 +68,11 @@ public class Main {
                     post("/procesarRegistrar", UsuarioControlador::procesarRegistrar);
                 });
             });
+            config.routes.apiBuilder(() ->{
+                path("/registrar", () -> {
+                    get(ctx -> ctx.redirect("/registrar.html"));
+                });
+            });
 
             config.routes.apiBuilder(() -> {
                path("/Usuarios", () -> {
