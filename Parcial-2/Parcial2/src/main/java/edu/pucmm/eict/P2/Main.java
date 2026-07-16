@@ -76,7 +76,7 @@ public class Main {
 
             config.routes.apiBuilder(() -> {
                path("/Usuarios", () -> {
-                   get(UsuarioControlador::listarUsuarios);
+                   get(UsuarioControlador::listarUsuarios,RolesApp.ROLE_ADMIN);
                    get("/Listar",UsuarioControlador::listarUsuarios,RolesApp.ROLE_ADMIN);
                });
             });
