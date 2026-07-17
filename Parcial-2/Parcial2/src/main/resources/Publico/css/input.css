@@ -48,3 +48,14 @@
 .input-style {
     @apply mt-2 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-amber-700 focus:outline-none focus:ring-2 focus:ring-amber-700
 }
+.event-card{
+    @apply w-full rounded-xl bg-white shadow-lg overflow-hidden drop-shadow-amber-950;
+}
+
+.event-header{
+    @apply bg-amber-950 py-3 ;
+}
+
+.event-body{
+    @apply p-5 space-y-3 ;
+}
