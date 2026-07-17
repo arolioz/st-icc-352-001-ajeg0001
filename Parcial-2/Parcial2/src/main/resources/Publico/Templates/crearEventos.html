@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear evento</title>
+    <link href="../css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+
+<body class="min-h-screen bg-amber-50">
+
+     <nav class="bg-amber-950 py-8 relative">
+        <div class="container mx-auto flex ">
+            <div class="flex grow">
+                <a href="#" class="text-amber-50 text-2xl font-bold">LOGO</a>
+            </div>
+
+            <img src="iconos/menu.svg" alt="Menu" class="lg:hidden cursor-pointer" id="menu-icon">
+            <div class="lg:flex hidden grow justify-between">
+                <div>
+                <a href="../inicio.html" class="nav-link">Inicio</a>
+                <a href="listaEventos.html" class="nav-link">Eventos</a>
+                <a href="../inicio.html" class="nav-link">Sobre nosotros</a>
+                </div>
+
+                <div>
+                    <a href="../login.html" class="text-amber-50 border border-amber-50 py-2 px-5 rounded-lg hover:bg-amber-50 hover:text-amber-950 transition duration-300 ease-in-out lg:mr-3">Iniciar sesión</a>
+                    <a href="../registrar.html" class="text-amber-950 bg-amber-50 border border-amber-50 py-2 px-5 rounded-lg hover:bg-amber-600 transition duration-300 ease-in-out">Registrarse</a>
+                </div>
+
+
+            </div>
+            
+
+        </div>
+
+    </nav>
+
+<div class="card">
+
+    <div class="card-header card-large relative">
+
+        <h2 class="text-center text-3xl font-bold text-amber-50">
+            Crear evento
+        </h2>
+
+        <a href="../inicio.html" class="icon-x">
+            <i class="bi bi-x-lg"></i>
+        </a>
+
+    </div>
+
+    <div class="card-body card-large">
+        <form class="space-y-5">
+
+            <div>
+                <label for="titulo" class="text-label">
+                    Título
+                </label>
+
+                <input id="titulo" name="titulo" type="text" required class="input-style">
+            </div>
+
+            <div>
+                <label for="descripcion" class="text-label">
+                    Descripción
+                </label>
+
+                <input id="descripcion" name="descripcion" type="text" required class="input-style">
+            </div>
+
+
+            <div class="flex flex-col md:flex-row gap-5 ">
+                <div class="flex-1">
+                    <label for="fecha" class="text-label">
+                        Fecha
+                    </label>
+
+                    <input id="fecha" name="fecha" type="date" required class="input-style">
+
+                </div>
+
+                <div class="flex-1">
+
+                    <label for="hora" class="text-label">
+                        Hora
+                    </label>
+
+                    <input id="hora" name="hora" type="time" required class="input-style">
+
+
+                </div>
+            </div>
+
+
+
+            <div>
+                <label for="lugar" class="text-label">
+                    Lugar
+                </label>
+
+                <input id="lugar" name="lugar" type="text" class="input-style">
+            </div>
+
+            <div>
+                <label for="cupo" class="text-label">
+                    Cupo máximo
+                </label>
+
+                <input id="cupo" name="cupo" type="number" min="1" required class="input-style">
+            </div>
+
+            <button
+                    type="submit"
+                    class="boton1 color4 ">
+                Crear evento
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+</body>
+</html>

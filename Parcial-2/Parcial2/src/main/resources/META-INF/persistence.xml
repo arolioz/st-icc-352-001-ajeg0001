@@ -3,6 +3,7 @@
     <persistence-unit name="MiUnidadPersistencia" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>edu.pucmm.eict.P2.Entidades.Usuario</class>
+        <class>edu.pucmm.eict.P2.Entidades.Evento</class>
         <properties>
             <!--<property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:test" />-->
             <property name="jakarta.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/AeternumEvents" />
