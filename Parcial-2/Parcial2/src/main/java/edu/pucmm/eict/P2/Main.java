@@ -1,6 +1,7 @@
 package edu.pucmm.eict.P2;
 
 import Util.RolesApp;
+import edu.pucmm.eict.P2.Controlador.EventoControlador;
 import edu.pucmm.eict.P2.Controlador.UsuarioControlador;
 import edu.pucmm.eict.P2.Entidades.Usuario;
 import edu.pucmm.eict.P2.Services.BootStrapServices;
@@ -38,7 +39,7 @@ public class Main {
                 Usuario usuario = ctx.sessionAttribute("usuario");
 
                 if (usuario == null) {
-                    ctx.status(401);
+                    ctx.status(401).result("Debe iniciar session para entrar aqui");
                     ctx.skipRemainingHandlers();
                     return;
                 }
@@ -80,6 +81,15 @@ public class Main {
                    get("/Listar",UsuarioControlador::listarUsuarios,RolesApp.ROLE_ADMIN);
                });
             });
+
+            config.routes.apiBuilder(() -> {
+                path("/Eventos", () -> {
+                    get(ctx -> ctx.redirect("/Templates/listaEventos.html"));
+                    get("/Crear", ctx -> ctx.redirect("/Templates/crearEventos.html"));
+                    post("/procesar-crear", EventoControlador::procesarCrear);
+                });
+            });
+
 
 
             config.routes.get("/", ctx ->{

@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+import java.sql.Time;
 import java.util.Date;
 
 @Entity
@@ -15,22 +16,27 @@ public class Evento {
     private Long id;
     private String titulo;
     private String descripcion;
-    private Date fechaHora;
+    private Date fecha;
+    private Time hora;
     private String lugar;
     private int cupoMaximo;
+    private Boolean activo;
+    private Long idOrganizador;
 
 
     public Evento() {
     }
 
 
-    public Evento(Long id, String titulo, String descripcion, Date fechaHora, String lugar, int cupoMaximo) {
+    public Evento(Long id, String titulo, String descripcion, Date fecha,Time hora ,String lugar, int cupoMaximo) {
         this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
-        this.fechaHora = fechaHora;
+        this.fecha = fecha;
+        this.hora = hora;
         this.lugar = lugar;
         this.cupoMaximo = cupoMaximo;
+        this.activo = true;
     }
 
     public Long getId() {
@@ -57,12 +63,12 @@ public class Evento {
         this.descripcion = descripcion;
     }
 
-    public Date getFechaHora() {
-        return fechaHora;
+    public Date getFecha() {
+        return fecha;
     }
 
-    public void setFechaHora(Date fechaHora) {
-        this.fechaHora = fechaHora;
+    public void setFecha(Date fechaHora) {
+        this.fecha = fechaHora;
     }
 
     public String getLugar() {
@@ -80,5 +86,21 @@ public class Evento {
     public void setCupoMaximo(int cupoMaximo) {
         this.cupoMaximo = cupoMaximo;
     }
+
+    public void setActivo(String lugar) {
+        this.activo = activo;
+    }
+
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    public void setHora(Time hora) {this.hora = hora;}
+
+    public Time getHora(){return hora;}
+
+    public void setIdOirganizador(Long idOrganizador) {this.idOrganizador = idOrganizador;}
+
+    public Long getIdOrganizador(){return idOrganizador;}
 
 }
