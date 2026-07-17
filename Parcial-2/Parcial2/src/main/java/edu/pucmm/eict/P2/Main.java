@@ -1,6 +1,7 @@
 package edu.pucmm.eict.P2;
 
 import Util.RolesApp;
+import edu.pucmm.eict.P2.Api.EventoApi;
 import edu.pucmm.eict.P2.Controlador.EventoControlador;
 import edu.pucmm.eict.P2.Controlador.UsuarioControlador;
 import edu.pucmm.eict.P2.Entidades.Usuario;
@@ -87,6 +88,12 @@ public class Main {
                     get(ctx -> ctx.redirect("/Templates/listaEventos.html"));
                     get("/Crear", ctx -> ctx.redirect("/Templates/crearEventos.html"));
                     post("/procesar-crear", EventoControlador::procesarCrear);
+                });
+            });
+
+            config.routes.apiBuilder(() -> {
+                path("/Api", () -> {
+                    get("/listaEventos", EventoApi::listaEventos);
                 });
             });
 

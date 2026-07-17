@@ -11,6 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
@@ -22,7 +23,7 @@ public class EventoControlador {
         String descripcion  = ctx.formParam("descripcion");
         String fechaStr =  ctx.formParam("fecha");
         Date fecha = format.parse(fechaStr);
-        Time hora = Time.valueOf(Objects.requireNonNull(ctx.formParam("hora")));
+        LocalTime hora = LocalTime.parse(Objects.requireNonNull(ctx.formParam("hora")));
         int cupoMaximo = Integer.parseInt(Objects.requireNonNull(ctx.formParam("cupo")));
         String lugar = ctx.formParam("lugar");
 
@@ -52,6 +53,7 @@ public class EventoControlador {
         e.setDescripcion(descripcion);
         e.setCupoMaximo(cupoMaximo);
         e.setLugar(lugar);
+        e.setActivo(true);
         EventoServices.getInstancia().crear(e);
         ctx.status(200);
         ctx.redirect("/Eventos");

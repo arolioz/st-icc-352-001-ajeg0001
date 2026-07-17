@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 import java.sql.Time;
+import java.time.LocalTime;
 import java.util.Date;
 
 @Entity
@@ -17,7 +18,7 @@ public class Evento {
     private String titulo;
     private String descripcion;
     private Date fecha;
-    private Time hora;
+    private LocalTime hora;
     private String lugar;
     private int cupoMaximo;
     private Boolean activo;
@@ -28,7 +29,7 @@ public class Evento {
     }
 
 
-    public Evento(Long id, String titulo, String descripcion, Date fecha,Time hora ,String lugar, int cupoMaximo) {
+    public Evento(Long id, String titulo, String descripcion, Date fecha,LocalTime hora ,String lugar, int cupoMaximo) {
         this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
@@ -87,17 +88,16 @@ public class Evento {
         this.cupoMaximo = cupoMaximo;
     }
 
-    public void setActivo(String lugar) {
+    public void setActivo(Boolean lugar) {
         this.activo = activo;
     }
 
-    public Boolean getActivo() {
-        return activo;
+    public Boolean getActivo() {return activo;
     }
 
-    public void setHora(Time hora) {this.hora = hora;}
+    public void setHora(LocalTime hora) {this.hora = hora;}
 
-    public Time getHora(){return hora;}
+    public LocalTime getHora(){return hora;}
 
     public void setIdOirganizador(Long idOrganizador) {this.idOrganizador = idOrganizador;}
 

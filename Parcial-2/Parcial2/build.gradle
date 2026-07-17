@@ -37,6 +37,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.14.0'
 
     implementation 'org.jasypt:jasypt:1.9.3'
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.20.0")
 }
 
 test {
