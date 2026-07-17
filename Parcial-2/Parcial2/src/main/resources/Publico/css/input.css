@@ -22,7 +22,7 @@
 }
 
 .card-header{
-    @apply container w-full bg-amber-950 rounded-t-xl py-2 shadow-lg
+    @apply container max-w-md  w-full bg-amber-950 rounded-t-xl py-2 shadow-lg
 }
 
 .card-body{

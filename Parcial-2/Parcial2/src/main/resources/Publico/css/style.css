@@ -564,6 +564,7 @@
     max-width: 96rem;
   }
   width: 100%;
+  max-width: var(--container-md);
   border-top-left-radius: var(--radius-xl);
   border-top-right-radius: var(--radius-xl);
   background-color: var(--color-amber-950);
