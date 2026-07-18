@@ -28,8 +28,28 @@
 
     }
 
+    async function obtenerOrganizadorEvento(idOrganizador) {
+
+        try {
+            const respuesta = await fetch(`/Api/obtenerOrganizador/${idOrganizador}`);
+            
+            if (!respuesta.ok) {
+                throw new Error(`HTTP error! Status: ${respuesta.status}`);
+            }
+
+            const organizador = await respuesta.text();
+            console.log(organizador);
+            console.log(idOrganizador);
+            return organizador;
+
+        } catch (error) {
+            console.error('Fetch error:', error);
+        }
+    }
+
     async function mostrarDetallesEventos(evento) {
 
+        const organizadorEvento = await obtenerOrganizadorEvento(evento.idOrganizador);
         const detalleEvento = document.getElementById('detalleEvento');
 
         detalleEvento.innerHTML = '';
@@ -38,13 +58,13 @@
             card.className = "card";
 
             const cardHeader = document.createElement("div");
-            cardHeader.className = "card-header";
+            cardHeader.className = "card-header relative";
 
             const titulo = document.createElement("h2");
             titulo.className = "text-xl font-bold text-amber-50 text-center";
             titulo.textContent = evento.titulo;
 
-            cardHeader.innerHTML = `<a href="../inicio.html" class="icon-x">
+            cardHeader.innerHTML = `<a href="listaEventos.html" class="icon-x">
                                     <i class="bi bi-x-lg"></i>
                                     </a> `;
 
@@ -52,6 +72,25 @@
 
             const eventBody = document.createElement("div");
             eventBody.className = " w-full max-w-md min-h-[450px] rounded-b-xl bg-white p-8 drop-shadow-amber-950 flex flex-col justify-between";
+
+            //ORGANIZADOR
+            const organizador = document.createElement("p");
+            organizador.className = "text-label";
+            const iconOrganizador = document.createElement("i");
+            iconOrganizador.className = "bi bi-person-fill";
+            organizador.appendChild(iconOrganizador);
+            organizador.append("Organizador: " + organizadorEvento);
+
+
+            // FECHA
+            const fecha = document.createElement("p");
+            fecha.className = "text-label";
+
+            const iconoCalendario = document.createElement("i");
+            iconoCalendario.className = "bi bi-calendar-event";
+
+            fecha.appendChild(iconoCalendario);
+            fecha.append(" Fecha: " + new Date(evento.fecha).toLocaleDateString());
 
             //HORA
             const hora = document.createElement("p");
@@ -64,22 +103,12 @@
             hora.append(" Hora: " + evento.hora);
             console.log(evento.hora);
 
-            // FECHA
-            const fecha = document.createElement("p");
-            fecha.className = "text-label";
-
-            const iconoCalendario = document.createElement("i");
-            iconoCalendario.className = "bi bi-calendar-event";
-
-            fecha.appendChild(iconoCalendario);
-            fecha.append(" Fecha: " + new Date(evento.fecha).toLocaleDateString());
-
             // CUPO MAXIMO
             const totalInscritos = document.createElement("p");
             totalInscritos.className = "text-label";
 
             const iconoPersona = document.createElement("i");
-            iconoPersona.className = "bi bi-person-check";
+            iconoPersona.className = "bi bi-person-badge";
 
             totalInscritos.appendChild(iconoPersona);
             totalInscritos.append(" Cupo: " + evento.cupoMaximo);
@@ -93,7 +122,7 @@
             labelDescripcion.textContent = "Descripción";
 
             const descripcion = document.createElement("div");
-            descripcion.className = "w-full rounded-md border border-gray-300 px-3 py-2 bg-gray-100";
+            descripcion.className = "w-full rounded-md border border-gray-300 px-3 py-2 bg-gray-100 break-words";
             descripcion.textContent = evento.descripcion;
 
             // BOTON
@@ -103,8 +132,9 @@
             //btnInscribir.setAttribute("href", "detalleEvento.html?id=" + evento.id);
 
 
-            eventBody.appendChild(hora);
+            eventBody.appendChild(organizador);
             eventBody.appendChild(fecha);
+            eventBody.appendChild(hora);
             eventBody.appendChild(totalInscritos);
             eventBody.appendChild(containerDescripcion);
             containerDescripcion.appendChild(labelDescripcion);
