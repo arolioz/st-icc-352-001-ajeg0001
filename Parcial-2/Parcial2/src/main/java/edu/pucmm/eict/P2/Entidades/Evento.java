@@ -23,9 +23,11 @@ public class Evento {
     private int cupoMaximo;
     private Boolean activo;
     private Long idOrganizador;
+    private int cupo;
 
 
     public Evento() {
+        this.cupo = 0;
     }
 
 
@@ -38,6 +40,7 @@ public class Evento {
         this.lugar = lugar;
         this.cupoMaximo = cupoMaximo;
         this.activo = true;
+        this.cupo = 0;
     }
 
     public Long getId() {
@@ -103,4 +106,9 @@ public class Evento {
 
     public Long getIdOrganizador(){return idOrganizador;}
 
+    public int getCupo() {
+        return cupo;
+    }
+
+     public void setCupo(int n) {this.cupo = n;}
 }

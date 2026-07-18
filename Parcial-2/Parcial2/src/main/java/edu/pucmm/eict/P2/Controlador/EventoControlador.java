@@ -2,8 +2,10 @@ package edu.pucmm.eict.P2.Controlador;
 
 import Util.RolesApp;
 import edu.pucmm.eict.P2.Entidades.Evento;
+import edu.pucmm.eict.P2.Entidades.EventoUsuario;
 import edu.pucmm.eict.P2.Entidades.Usuario;
 import edu.pucmm.eict.P2.Services.EventoServices;
+import edu.pucmm.eict.P2.Services.EventoUsuarioServices;
 import edu.pucmm.eict.P2.Services.UsuarioServices;
 import io.javalin.http.Context;
 import org.jetbrains.annotations.NotNull;
@@ -57,6 +59,33 @@ public class EventoControlador {
         EventoServices.getInstancia().crear(e);
         ctx.status(200);
         ctx.redirect("/Eventos");
+
+    }
+
+    public static void inscribirUsuario (@NotNull Context ctx){
+
+        Long eventId = (long) Integer.parseInt(ctx.pathParam("eventId"));
+
+
+        Usuario tmp = ctx.sessionAttribute("usuario");
+        Usuario usuario = UsuarioServices.getInstancia().find(tmp.getId());
+
+        Evento evento = EventoServices.getInstancia().find(eventId);
+
+        if ((usuario != null && usuario.getListaRoles().contains(RolesApp.ROLE_USUARIO)) && evento.getCupo() < evento.getCupoMaximo() && evento != null){
+            EventoUsuario tmpEU = EventoUsuarioServices.getInstancia().findUsuarioEnEvento(usuario.getId(),eventId);
+
+            if (tmpEU == null){
+                evento.setCupo(evento.getCupo() + 1);
+                EventoUsuario eu = new EventoUsuario();
+                eu.setUsuario(usuario);
+                eu.setEvento(evento);
+                EventoUsuarioServices.getInstancia().crear(eu);
+                EventoServices.getInstancia().editar(evento);
+            }
+
+        }
+
 
     }
 }

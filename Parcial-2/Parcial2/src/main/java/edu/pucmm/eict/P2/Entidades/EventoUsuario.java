@@ -1,12 +1,25 @@
 package edu.pucmm.eict.P2.Entidades;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 @Entity
+@Table(
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"usuario_id", "evento_id"})
+        }
+)
+@NamedQuery(
+        name = "EventoUsuario.findUsuarioEnEvento",
+        query = """
+            SELECT eu
+            FROM EventoUsuario eu
+            WHERE eu.usuario.id = :idUsuario
+            AND eu.evento.id = :idEvento
+            """
+)
 public class EventoUsuario {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
