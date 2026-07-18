@@ -113,4 +113,52 @@ public class EventoControlador {
             }
         }
     }
+
+    public static void procesarModificar(@NotNull Context ctx) throws ParseException {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String titulo = ctx.formParam("titulo");
+        String descripcion  = ctx.formParam("descripcion");
+        String fechaStr =  ctx.formParam("fecha");
+        Date fecha = format.parse(fechaStr);
+        LocalTime hora = LocalTime.parse(Objects.requireNonNull(ctx.formParam("hora")));
+        int cupoMaximo = Integer.parseInt(Objects.requireNonNull(ctx.formParam("cupo")));
+        String lugar = ctx.formParam("lugar");
+        Long id = Long.valueOf(Objects.requireNonNull(ctx.formParam("id")));
+
+        Evento e = EventoServices.getInstancia().find(id);
+
+        Usuario usuario = ctx.sessionAttribute("usuario");
+
+        if (usuario == null || !usuario.getListaRoles().contains(RolesApp.ROLE_ORGANIZADOR)) {
+            ctx.status(403);
+            return;
+        }
+
+        if (titulo == null || titulo.isBlank() ||
+                fecha == null || descripcion == null || hora == null
+                || cupoMaximo <= 0 || lugar == null || lugar.isBlank()) {
+
+            ctx.status(400).result("No se pudo procesar el registro").redirect("/registrar");
+            return;
+        }
+
+        if (e != null){
+            e.setTitulo(titulo);
+            e.setFecha(fecha);
+            e.setHora(hora);
+            e.setDescripcion(descripcion);
+            e.setLugar(lugar);
+            e.setActivo(true);
+
+            if (e.getCupo() <= cupoMaximo){
+                e.setCupoMaximo(e.getCupo());
+            }
+            else{
+                e.setCupoMaximo(cupoMaximo);
+            }
+
+            EventoServices.getInstancia().editar(e);
+        }
+
+    }
 }

@@ -90,6 +90,7 @@ public class Main {
                     get("/Crear", ctx -> ctx.redirect("/Templates/crearEventos.html"));
                     post("/procesar-crear", EventoControlador::procesarCrear);
                     post("/inscribir/{eventId}",EventoControlador::inscribirUsuario);
+                    post("/procesar-modificar", EventoControlador::procesarModificar);
                     post("/cancelarInscripcion/{eventId}", EventoControlador::cancelarInscripcion);
                 });
             });
