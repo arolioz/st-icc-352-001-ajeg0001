@@ -25,4 +25,27 @@ public class UsuarioApi {
 
 
     }
+
+    public static void esAdmin(@NotNull Context ctx) {
+        Usuario u = ctx.sessionAttribute("usuario");
+
+        if (u != null && u.getListaRoles().contains(RolesApp.ROLE_ADMIN)){
+            ctx.json(true);
+        }
+        else{
+            ctx.json(false);
+        }
+    }
+    public static void esOrganizador(@NotNull Context ctx) {
+        Usuario u = ctx.sessionAttribute("usuario");
+
+        if (u != null && u.getListaRoles().contains(RolesApp.ROLE_ORGANIZADOR)){
+            ctx.json(true);
+        }
+        else{
+            ctx.json(false);
+        }
+    }
+
+
 }

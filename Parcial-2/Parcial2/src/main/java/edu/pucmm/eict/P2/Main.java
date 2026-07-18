@@ -101,13 +101,15 @@ public class Main {
                     get("/listaEventos", EventoApi::listaEventos);
                     get("/obtenerOrganizador/{id}", UsuarioApi::obtenerOrganizador);
                     get("/obtenerCupo-Evento/{id}", EventoApi::cupoEvento);
+                    get("usuarioEsAdmin", UsuarioApi::esAdmin);
+                    get("usuarioEsOrganizador", UsuarioApi::esOrganizador);
                 });
             });
 
 
 
             config.routes.get("/", ctx ->{
-                ctx.result("Hola mundo!");
+                ctx.redirect("/inicio.html");
                 Usuario u = ctx.sessionAttribute("usuario");
 
                 if (u != null){
