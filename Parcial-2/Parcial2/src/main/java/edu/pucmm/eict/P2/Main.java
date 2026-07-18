@@ -92,6 +92,9 @@ public class Main {
                     post("/inscribir/{eventId}",EventoControlador::inscribirUsuario);
                     post("/procesar-modificar", EventoControlador::procesarModificar);
                     post("/cancelarInscripcion/{eventId}", EventoControlador::cancelarInscripcion);
+                    post("cancelar/{id}",EventoControlador::cancelarEvento);
+                    post("cambiarEstado/{id}",EventoControlador::cambiarEstadoEvento);
+
                 });
             });
 

@@ -56,6 +56,7 @@ public class EventoControlador {
         e.setCupoMaximo(cupoMaximo);
         e.setLugar(lugar);
         e.setActivo(true);
+        e.setPublicado(true);
         EventoServices.getInstancia().crear(e);
         ctx.status(200);
         ctx.redirect("/Eventos");
@@ -161,4 +162,31 @@ public class EventoControlador {
         }
 
     }
+
+    public static void cambiarEstadoEvento(@NotNull Context ctx){
+        Long id = Long.valueOf(Objects.requireNonNull(ctx.formParam("id")));
+
+        Evento e = EventoServices.getInstancia().find(id);
+
+        if (e != null){
+            if(e.getPublicado() == null || e.getPublicado() == false){
+                e.setPublicado(true);
+            }
+            else{
+                e.setPublicado(false);
+            }
+        }
+    }
+
+    public  static void cancelarEvento(@NotNull Context ctx){
+        Long id = Long.valueOf(Objects.requireNonNull(ctx.formParam("id")));
+
+        Evento e = EventoServices.getInstancia().find(id);
+
+        if (e != null){
+            e.setActivo(false);
+        }
+    }
+
+
 }
