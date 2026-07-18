@@ -8,5 +8,6 @@ import io.javalin.security.RouteRole;
 public enum RolesApp implements RouteRole {
     ROLE_USUARIO,
     ROLE_ORGANIZADOR,
-    ROLE_ADMIN;
+    ROLE_ADMIN,
+    ROLE_BLOQUEADO;
 }

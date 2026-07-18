@@ -46,6 +46,12 @@ public class Main {
                     return;
                 }
 
+                if (usuario.getListaRoles().contains(RolesApp.ROLE_BLOQUEADO)){
+                    ctx.status(401).result("Usted esta bloqueado, comuniquese con un administrador");
+                    ctx.skipRemainingHandlers();
+                    return;
+                }
+
                 boolean autorizado = usuario.getListaRoles()
                         .stream()
                         .anyMatch(ctx.routeRoles()::contains);
@@ -89,7 +95,7 @@ public class Main {
                     get(ctx -> ctx.redirect("/Templates/listaEventos.html"));
                     get("/Crear", ctx -> ctx.redirect("/Templates/crearEventos.html"));
                     post("/procesar-crear", EventoControlador::procesarCrear);
-                    post("/inscribir/{eventId}",EventoControlador::inscribirUsuario);
+                    post("/inscribir/{eventId}",EventoControlador::inscribirUsuario, RolesApp.ROLE_USUARIO);
                     post("/procesar-modificar", EventoControlador::procesarModificar);
                     post("/cancelarInscripcion/{eventId}", EventoControlador::cancelarInscripcion);
                     post("cancelar/{id}",EventoControlador::cancelarEvento);
