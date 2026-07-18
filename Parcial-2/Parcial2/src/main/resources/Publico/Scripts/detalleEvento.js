@@ -39,8 +39,24 @@
 
             const organizador = await respuesta.text();
             console.log(organizador);
-            console.log(idOrganizador);
             return organizador;
+
+        } catch (error) {
+            console.error('Fetch error:', error);
+        }
+    }
+
+    async function obtenerCantidadInscritos(idEvento) {
+        try {
+            const respuesta = await fetch(`/Api/obtenerCupo-Evento/${idEvento}`);
+
+            if (!respuesta.ok) {
+                throw new Error(`HTTP error! Status: ${respuesta.status}`);
+            }
+
+            const cantidadInscritos = await respuesta.json();
+            console.log(cantidadInscritos);
+            return cantidadInscritos;
 
         } catch (error) {
             console.error('Fetch error:', error);
@@ -50,6 +66,7 @@
     async function mostrarDetallesEventos(evento) {
 
         const organizadorEvento = await obtenerOrganizadorEvento(evento.idOrganizador);
+        const cantidadInscritos = await obtenerCantidadInscritos(evento.id);
         const detalleEvento = document.getElementById('detalleEvento');
 
         detalleEvento.innerHTML = '';
@@ -81,7 +98,6 @@
             organizador.appendChild(iconOrganizador);
             organizador.append("Organizador: " + organizadorEvento);
 
-
             // FECHA
             const fecha = document.createElement("p");
             fecha.className = "text-label";
@@ -111,7 +127,7 @@
             iconoPersona.className = "bi bi-person-badge";
 
             totalInscritos.appendChild(iconoPersona);
-            totalInscritos.append(" Cupo: " + evento.cupoMaximo);
+            totalInscritos.append(" Cupo: " + cantidadInscritos + " / " + evento.cupoMaximo);
 
             // DESCRIPCION
             const containerDescripcion = document.createElement("div");
@@ -130,7 +146,6 @@
             btnInscribir.className = "boton1 color4 text-center block";
             btnInscribir.textContent = "Inscribirse";
             //btnInscribir.setAttribute("href", "detalleEvento.html?id=" + evento.id);
-
 
             eventBody.appendChild(organizador);
             eventBody.appendChild(fecha);
