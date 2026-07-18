@@ -114,6 +114,7 @@ public class Main {
                     get("usuarioEsAdmin", UsuarioApi::esAdmin);
                     get("usuarioEsOrganizador", UsuarioApi::esOrganizador);
                     get("usuarioEstaInscrito/{id}", UsuarioApi::usuarioEventoInscrito);
+                    get("obtenerEvento/{id}", EventoApi::obtenerEvento);
                 });
             });
 

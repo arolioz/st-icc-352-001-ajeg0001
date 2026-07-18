@@ -15,6 +15,14 @@ public class EventoApi {
         ctx.json(eventos);
     }
 
+    public static void obtenerEvento(@NotNull Context ctx){
+        Long id = Long.parseLong(ctx.pathParam("id"));
+
+        Evento evento = EventoServices.getInstancia().find(id);
+
+        ctx.json(evento);
+    }
+
     public static void cupoEvento(@NotNull Context ctx){
         int id = Integer.parseInt(Objects.requireNonNull(ctx.pathParam("id")));
 
