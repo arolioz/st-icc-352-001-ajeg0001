@@ -100,8 +100,10 @@ public class Main {
                     post("/inscribir/{eventId}",EventoControlador::inscribirUsuario, RolesApp.ROLE_USUARIO);
                     post("/procesar-modificar", EventoControlador::procesarModificar);
                     post("/cancelarInscripcion/{eventId}", EventoControlador::cancelarInscripcion);
-                    post("cancelar/{id}",EventoControlador::cancelarEvento);
-                    post("cambiarEstado/{id}",EventoControlador::cambiarEstadoEvento);
+                    post("/cancelar/{id}",EventoControlador::cancelarEvento);
+                    post("/cambiarEstado/{id}",EventoControlador::cambiarEstadoEvento);
+                    //TODO CAMBIAR A METODO POST
+                    get("/marcarAsistencia/{token}",EventoControlador::marcarAsistencia);
 
                 });
             });

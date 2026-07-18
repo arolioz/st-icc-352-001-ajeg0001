@@ -13,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.Objects;
@@ -191,7 +192,7 @@ public class EventoControlador {
         }
     }
 
-    public  static void eliminarEvento(@NotNull Context ctx){
+    public static void eliminarEvento(@NotNull Context ctx){
         Long id = Long.valueOf(Objects.requireNonNull(ctx.formParam("id")));
 
         Evento e = EventoServices.getInstancia().find(id);
@@ -203,5 +204,16 @@ public class EventoControlador {
         }
     }
 
+    public static void marcarAsistencia(@NotNull Context ctx){
+        String token = ctx.pathParam("token");
+
+        EventoUsuario eu = EventoUsuarioServices.getInstancia().findRegistroToken(token);
+
+        if (eu != null && eu.getAsistencia() == false){
+            eu.setAsistencia(true);
+            eu.setFechaAsistencia(LocalDateTime.now());
+            EventoUsuarioServices.getInstancia().editar(eu);
+        }
+    }
 
 }

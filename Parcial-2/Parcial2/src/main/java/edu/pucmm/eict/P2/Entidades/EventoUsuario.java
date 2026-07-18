@@ -1,6 +1,7 @@
 package edu.pucmm.eict.P2.Entidades;
 
 import jakarta.persistence.*;
+import jdk.jfr.Name;
 
 import java.time.LocalDateTime;
 
@@ -10,15 +11,16 @@ import java.time.LocalDateTime;
                 @UniqueConstraint(columnNames = {"usuario_id", "evento_id"})
         }
 )
-@NamedQuery(
-        name = "EventoUsuario.findUsuarioEnEvento",
-        query = """
-            SELECT eu
-            FROM EventoUsuario eu
-            WHERE eu.usuario.id = :idUsuario
-            AND eu.evento.id = :idEvento
-            """
-)
+@NamedQueries({
+        @NamedQuery(
+                name = "EventoUsuario.findUsuarioEnEvento",
+                query = "SELECT eu FROM EventoUsuario eu WHERE eu.usuario.id = :idUsuario AND eu.evento.id = :idEvento"
+        ),
+        @NamedQuery(
+                name = "EventoUsuario.findRegistroToken",
+                query = "SELECT eu FROM EventoUsuario eu WHERE eu.token = :token"
+        )
+})
 public class EventoUsuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,7 +37,7 @@ public class EventoUsuario {
     private LocalDateTime fechaAsistencia;
 
     public EventoUsuario(){
-
+        this.asistencia = false;
     }
 
     public Long getId() {
@@ -75,6 +77,6 @@ public class EventoUsuario {
     }
 
     public void setFechaAsistencia(LocalDateTime fechaAsistencia) {
-
+        this.fechaAsistencia = fechaAsistencia;
     }
 }

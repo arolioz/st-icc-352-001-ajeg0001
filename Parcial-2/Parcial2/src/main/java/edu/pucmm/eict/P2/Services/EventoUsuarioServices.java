@@ -30,4 +30,18 @@ public class EventoUsuarioServices extends  GestionDb<EventoUsuario>{
             return null;
         }
     }
+
+    public EventoUsuario findRegistroToken(String token) {
+        EntityManager em = getEntityManager();
+
+        try {
+            return em.createNamedQuery("EventoUsuario.findRegistroToken", EventoUsuario.class)
+                    .setParameter("token", token)
+                    .getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }
