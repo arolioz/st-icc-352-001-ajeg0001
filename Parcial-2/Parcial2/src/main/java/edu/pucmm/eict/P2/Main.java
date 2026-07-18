@@ -97,7 +97,8 @@ public class Main {
             config.routes.apiBuilder(() -> {
                 path("/Api", () -> {
                     get("/listaEventos", EventoApi::listaEventos);
-                    get("obtenerOrganizador/{id}", UsuarioApi::obtenerOrganizador);
+                    get("/obtenerOrganizador/{id}", UsuarioApi::obtenerOrganizador);
+                    get("/obtenerCupo-Evento/{id}", EventoApi::cupoEvento);
                 });
             });
 

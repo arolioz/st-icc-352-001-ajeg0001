@@ -6,11 +6,23 @@ import io.javalin.http.Context;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Objects;
 
 public class EventoApi {
     public static void listaEventos(@NotNull Context ctx){
         List<Evento> eventos = EventoServices.getInstancia().findAll();
 
         ctx.json(eventos);
+    }
+
+    public static void cupoEvento(@NotNull Context ctx){
+        int id = Integer.parseInt(Objects.requireNonNull(ctx.pathParam("id")));
+
+        Evento e = EventoServices.getInstancia().find(id);
+
+        if (e != null){
+            ctx.json(e.getCupo());
+        }
+
     }
 }
