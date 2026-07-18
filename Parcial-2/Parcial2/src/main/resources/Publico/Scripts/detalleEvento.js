@@ -36,23 +36,34 @@
                 method: "POST"
             });
 
-            const mensaje = await respuesta.text();
-
             if (!respuesta.ok) {
-                throw new Error(mensaje);
+                throw new Error(`HTTP error! Status: ${respuesta.status}`);
             }
-
-            alert(mensaje);
 
             cargarDetalleEvento();
 
         } catch (error) {
-            alert(error.message);
+            console.error('Fetch error:', error);
         }
-
     }
 
-    /*
+    async function editarEvento(idEvento) {
+        try {
+            const respuesta = await fetch(`/Eventos/procesar-modificar/${idEvento}`, {
+                method: "POST"
+            });
+
+            if (!respuesta.ok) {
+                throw new Error(`HTTP error! Status: ${respuesta.status}`);
+            }
+
+            //cargarDetalleEvento();
+
+        } catch (error) {
+            console.error('Fetch error:', error);
+        }
+    }
+
     async function crearBotones(evento) {
 
         const container = document.createElement("div");
@@ -63,10 +74,19 @@
 
         if (esAdmin || esOrganizador) {
 
+            const btnEditar = document.createElement("button");
+            btnEditar.className = "boton1 color3 text-center block flex-1";
+            btnEditar.textContent = "Editar";
+            btnEditar.href = `editarEvento.html?id=${evento.id}`;
+
+            //btnEditar.setAttribute("href", `/Eventos/procesar-modificar/${evento.id}`);
+            //btnEditar.setAttribute("href", `/Eventos/procesar-modificar/${evento.id}`);
+
 
         }
+        container.appendChild(btnEditar);
         
-    }*/
+    }
 
    
 
