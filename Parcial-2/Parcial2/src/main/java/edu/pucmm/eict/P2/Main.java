@@ -2,6 +2,7 @@ package edu.pucmm.eict.P2;
 
 import Util.RolesApp;
 import edu.pucmm.eict.P2.Api.EventoApi;
+import edu.pucmm.eict.P2.Api.UsuarioApi;
 import edu.pucmm.eict.P2.Controlador.EventoControlador;
 import edu.pucmm.eict.P2.Controlador.UsuarioControlador;
 import edu.pucmm.eict.P2.Entidades.Usuario;
@@ -94,6 +95,7 @@ public class Main {
             config.routes.apiBuilder(() -> {
                 path("/Api", () -> {
                     get("/listaEventos", EventoApi::listaEventos);
+                    get("obtenerOrganizador/{id}", UsuarioApi::obtenerOrganizador);
                 });
             });
 
