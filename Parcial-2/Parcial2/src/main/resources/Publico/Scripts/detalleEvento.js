@@ -28,6 +28,47 @@
 
     }
 
+    async function inscribirEvento(idEvento) {
+
+        try {
+
+            const respuesta = await fetch(`/Eventos/inscribir/${idEvento}`, {
+                method: "POST"
+            });
+
+            const mensaje = await respuesta.text();
+
+            if (!respuesta.ok) {
+                throw new Error(mensaje);
+            }
+
+            alert(mensaje);
+
+            cargarDetalleEvento();
+
+        } catch (error) {
+            alert(error.message);
+        }
+
+    }
+
+    /*
+    async function crearBotones(evento) {
+
+        const container = document.createElement("div");
+        container.className = "flex gap-3"
+
+        const esAdmin = await usuarioEsAdmin();
+        const esOrganizador = await usuarioEsOrganizador();
+
+        if (esAdmin || esOrganizador) {
+
+
+        }
+        
+    }*/
+
+   
 
     async function mostrarDetallesEventos(evento) {
 
@@ -108,10 +149,16 @@
             descripcion.textContent = evento.descripcion;
 
             // BOTON
-            const btnInscribir = document.createElement("a");
+            const btnInscribir = document.createElement("button");
             btnInscribir.className = "boton1 color4 text-center block";
             btnInscribir.textContent = "Inscribirse";
-            btnInscribir.setAttribute("href", `/Eventos/inscribir/${evento.id}`);
+            btnInscribir.addEventListener("click", async () => {
+
+            inscribirEvento(evento.id)
+        
+            });
+
+            //btnInscribir.setAttribute("href", `/Eventos/inscribir/${evento.id}`);
 
             eventBody.appendChild(organizador);
             eventBody.appendChild(fecha);
