@@ -111,6 +111,7 @@ public class Main {
                     get("/obtenerCupo-Evento/{id}", EventoApi::cupoEvento);
                     get("usuarioEsAdmin", UsuarioApi::esAdmin);
                     get("usuarioEsOrganizador", UsuarioApi::esOrganizador);
+                    get("usuarioEstaInscrito/{id}", UsuarioApi::usuarioEventoInscrito);
                 });
             });
 
