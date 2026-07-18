@@ -28,40 +28,6 @@
 
     }
 
-    async function obtenerOrganizadorEvento(idOrganizador) {
-
-        try {
-            const respuesta = await fetch(`/Api/obtenerOrganizador/${idOrganizador}`);
-            
-            if (!respuesta.ok) {
-                throw new Error(`HTTP error! Status: ${respuesta.status}`);
-            }
-
-            const organizador = await respuesta.text();
-            console.log(organizador);
-            return organizador;
-
-        } catch (error) {
-            console.error('Fetch error:', error);
-        }
-    }
-
-    async function obtenerCantidadInscritos(idEvento) {
-        try {
-            const respuesta = await fetch(`/Api/obtenerCupo-Evento/${idEvento}`);
-
-            if (!respuesta.ok) {
-                throw new Error(`HTTP error! Status: ${respuesta.status}`);
-            }
-
-            const cantidadInscritos = await respuesta.json();
-            console.log(cantidadInscritos);
-            return cantidadInscritos;
-
-        } catch (error) {
-            console.error('Fetch error:', error);
-        }
-    }
 
     async function mostrarDetallesEventos(evento) {
 
@@ -145,7 +111,7 @@
             const btnInscribir = document.createElement("a");
             btnInscribir.className = "boton1 color4 text-center block";
             btnInscribir.textContent = "Inscribirse";
-            //btnInscribir.setAttribute("href", "detalleEvento.html?id=" + evento.id);
+            btnInscribir.setAttribute("href", `/Eventos/inscribir/${evento.id}`);
 
             eventBody.appendChild(organizador);
             eventBody.appendChild(fecha);

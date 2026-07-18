@@ -28,7 +28,10 @@
 
         listaEventos.innerHTML = '';
 
-        eventos.forEach(evento => {
+        for (const evento of eventos) {
+            const idOrganizador = await obtenerOrganizadorEvento(evento.idOrganizador);
+            const cantidadInscritos = await obtenerCantidadInscritos(evento.id);
+
             const card = document.createElement("div");
             card.className = "event-card";
 
@@ -44,16 +47,13 @@
             const eventBody = document.createElement("div");
             eventBody.className = "event-body";
 
-            //HORA
-            const hora = document.createElement("p");
-            hora.className = "text-label";
-
-            const iconoReloj = document.createElement("i");
-            iconoReloj.className = "bi bi-clock-fill";
-
-            hora.appendChild(iconoReloj);
-            hora.append(" Hora: " + evento.hora);
-            console.log(evento.hora);
+            //ORGANIZADOR
+            const organizador = document.createElement("p");
+            organizador.className = "text-label";
+            const iconOrganizador = document.createElement("i");
+            iconOrganizador.className = "bi bi-person-fill";
+            organizador.appendChild(iconOrganizador);
+            organizador.append("Organizador: " + idOrganizador);
 
             // FECHA
             const fecha = document.createElement("p");
@@ -65,31 +65,43 @@
             fecha.appendChild(iconoCalendario);
             fecha.append(" Fecha: " + new Date(evento.fecha).toLocaleDateString());
 
+            //HORA
+            const hora = document.createElement("p");
+            hora.className = "text-label";
+
+            const iconoReloj = document.createElement("i");
+            iconoReloj.className = "bi bi-clock-fill";
+
+            hora.appendChild(iconoReloj);
+            hora.append(" Hora: " + evento.hora);
+            console.log(evento.hora);
+
             // CUPO MAXIMO
             const totalInscritos = document.createElement("p");
             totalInscritos.className = "text-label";
 
             const iconoPersona = document.createElement("i");
-            iconoPersona.className = "bi bi-person-check";
+            iconoPersona.className = "bi bi-person-badge";
 
             totalInscritos.appendChild(iconoPersona);
-            totalInscritos.append(" Cupo: " + evento.cupoMaximo);
+            totalInscritos.append(" Cupo: " + cantidadInscritos + " / " +evento.cupoMaximo);
 
             // BOTON
             const btnVerDetalles = document.createElement("a");
             btnVerDetalles.className = "boton1 color4 text-center block";
             btnVerDetalles.textContent = "Ver Detalles";
             btnVerDetalles.setAttribute("href", "detalleEvento.html?id=" + evento.id);
-            
-            eventBody.appendChild(hora);
+
+            eventBody.appendChild(organizador);
             eventBody.appendChild(fecha);
+            eventBody.appendChild(hora);
             eventBody.appendChild(totalInscritos);
             eventBody.appendChild(btnVerDetalles);
             card.appendChild(cardHeader);
             card.appendChild(eventBody);
             listaEventos.appendChild(card);
-            
-        });
+
+        }
     }
 
     cargarEventos();
