@@ -76,7 +76,7 @@ public class EventoControlador {
         }
         Evento evento = EventoServices.getInstancia().find(eventId);
 
-        if ((usuario != null && usuario.getListaRoles().contains(RolesApp.ROLE_USUARIO)) && evento.getCupo() < evento.getCupoMaximo() && evento != null){
+        if ((usuario != null && usuario.getListaRoles().contains(RolesApp.ROLE_USUARIO)) && evento.getCupo() < evento.getCupoMaximo() && evento != null && evento.getPublicado() == true){
             EventoUsuario tmpEU = EventoUsuarioServices.getInstancia().findUsuarioEnEvento(usuario.getId(),eventId);
 
             if (tmpEU == null){
@@ -195,6 +195,8 @@ public class EventoControlador {
 
         if (e != null){
             e.setEliminado(true);
+            e.setPublicado(false);
+            e.setActivo(false);
         }
     }
 
