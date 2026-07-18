@@ -25,6 +25,7 @@ public class Evento {
     private Boolean publicado;
     private Long idOrganizador;
     private int cupo;
+    private Boolean eliminado;
 
 
     public Evento() {
@@ -43,6 +44,7 @@ public class Evento {
         this.activo = true;
         this.cupo = 0;
         this.publicado = true;
+        this.eliminado = false;
     }
 
     public Long getId() {
@@ -119,4 +121,10 @@ public class Evento {
     }
 
     public void setPublicado(Boolean n) {this.publicado = n;}
+
+    public Boolean getEliminado() {
+        return eliminado;
+    }
+
+    public void setEliminado(Boolean n) {this.eliminado = n;}
 }

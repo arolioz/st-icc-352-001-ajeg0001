@@ -188,5 +188,15 @@ public class EventoControlador {
         }
     }
 
+    public  static void eliminarEvento(@NotNull Context ctx){
+        Long id = Long.valueOf(Objects.requireNonNull(ctx.formParam("id")));
+
+        Evento e = EventoServices.getInstancia().find(id);
+
+        if (e != null){
+            e.setEliminado(true);
+        }
+    }
+
 
 }
