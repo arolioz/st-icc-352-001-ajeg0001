@@ -13,6 +13,7 @@ import io.javalin.http.UnauthorizedResponse;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Persistence;
 
+import javax.management.relation.Role;
 import java.util.List;
 import java.util.Set;
 
@@ -87,6 +88,7 @@ public class Main {
                path("/Usuarios", () -> {
                    get(UsuarioControlador::listarUsuarios,RolesApp.ROLE_ADMIN);
                    get("/Listar",UsuarioControlador::listarUsuarios,RolesApp.ROLE_ADMIN);
+                   post("bloquear/{id}",UsuarioControlador::cambiarEstadoUsuario, RolesApp.ROLE_ADMIN);
                });
             });
 

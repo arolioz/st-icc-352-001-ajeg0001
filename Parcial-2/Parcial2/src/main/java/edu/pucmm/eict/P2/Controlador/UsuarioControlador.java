@@ -14,10 +14,7 @@ import java.lang.reflect.Type;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class UsuarioControlador {
 
@@ -157,5 +154,22 @@ public class UsuarioControlador {
         }
     }
 
+    public static void cambiarEstadoUsuario(@NotNull Context ctx){
+        Usuario admin = ctx.sessionAttribute("usuario");
 
+        long idUsuario = Long.parseLong(Objects.requireNonNull(ctx.formParam("id")));
+
+        if (admin != null && admin.getListaRoles().contains(RolesApp.ROLE_ADMIN)){
+            Usuario usuario = UsuarioServices.getInstancia().find(idUsuario);
+
+            assert usuario != null;
+            if (usuario.getListaRoles().contains(RolesApp.ROLE_BLOQUEADO)) {
+                usuario.getListaRoles().remove(RolesApp.ROLE_BLOQUEADO);
+            } else {
+                usuario.getListaRoles().add(RolesApp.ROLE_BLOQUEADO);
+            }
+
+            UsuarioServices.getInstancia().editar(usuario);
+        }
+    }
 }
