@@ -17,6 +17,7 @@ import java.time.LocalTime;
 import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
+import java.util.UUID;
 
 public class EventoControlador {
     public static void procesarCrear(@NotNull Context ctx) throws ParseException {
@@ -67,7 +68,6 @@ public class EventoControlador {
 
         Long eventId = (long) Integer.parseInt(ctx.pathParam("eventId"));
 
-
         Usuario tmp = ctx.sessionAttribute("usuario");
 
         Usuario usuario = null;
@@ -80,10 +80,13 @@ public class EventoControlador {
             EventoUsuario tmpEU = EventoUsuarioServices.getInstancia().findUsuarioEnEvento(usuario.getId(),eventId);
 
             if (tmpEU == null){
+                String token = UUID.randomUUID().toString();
+
                 evento.setCupo(evento.getCupo() + 1);
                 EventoUsuario eu = new EventoUsuario();
                 eu.setUsuario(usuario);
                 eu.setEvento(evento);
+                eu.setToken(token);
                 EventoUsuarioServices.getInstancia().crear(eu);
                 EventoServices.getInstancia().editar(evento);
             }
