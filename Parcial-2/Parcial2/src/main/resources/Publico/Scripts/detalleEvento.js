@@ -1,0 +1,121 @@
+(() => {
+
+    console.log("Cargando detalles...");
+    //const idEvento = location.pathname.split("/").pop();
+    const idEvento = new URLSearchParams(window.location.search).get('id');
+
+    async function cargarDetalleEvento() {
+
+        try {
+
+            const respuesta = await fetch('/Api/listaEventos');
+            console.log(respuesta);
+
+            if (!respuesta.ok) {
+                throw new Error(`HTTP error! Status: ${respuesta.status}`);
+            }
+
+            const data = await respuesta.json();
+            const evento = data.find(e => e.id == idEvento);
+
+            console.log(evento);
+
+            mostrarDetallesEventos(evento);
+
+        } catch (error) {
+            console.error('Fetch error:', error);
+        }
+
+    }
+
+    async function mostrarDetallesEventos(evento) {
+
+        const detalleEvento = document.getElementById('detalleEvento');
+
+        detalleEvento.innerHTML = '';
+
+            const card = document.createElement("div");
+            card.className = "card";
+
+            const cardHeader = document.createElement("div");
+            cardHeader.className = "card-header";
+
+            const titulo = document.createElement("h2");
+            titulo.className = "text-xl font-bold text-amber-50 text-center";
+            titulo.textContent = evento.titulo;
+
+            cardHeader.innerHTML = `<a href="../inicio.html" class="icon-x">
+                                    <i class="bi bi-x-lg"></i>
+                                    </a> `;
+
+            cardHeader.appendChild(titulo);
+
+            const eventBody = document.createElement("div");
+            eventBody.className = " w-full max-w-md min-h-[450px] rounded-b-xl bg-white p-8 drop-shadow-amber-950 flex flex-col justify-between";
+
+            //HORA
+            const hora = document.createElement("p");
+            hora.className = "text-label";
+
+            const iconoReloj = document.createElement("i");
+            iconoReloj.className = "bi bi-clock-fill";
+
+            hora.appendChild(iconoReloj);
+            hora.append(" Hora: " + evento.hora);
+            console.log(evento.hora);
+
+            // FECHA
+            const fecha = document.createElement("p");
+            fecha.className = "text-label";
+
+            const iconoCalendario = document.createElement("i");
+            iconoCalendario.className = "bi bi-calendar-event";
+
+            fecha.appendChild(iconoCalendario);
+            fecha.append(" Fecha: " + new Date(evento.fecha).toLocaleDateString());
+
+            // CUPO MAXIMO
+            const totalInscritos = document.createElement("p");
+            totalInscritos.className = "text-label";
+
+            const iconoPersona = document.createElement("i");
+            iconoPersona.className = "bi bi-person-check";
+
+            totalInscritos.appendChild(iconoPersona);
+            totalInscritos.append(" Cupo: " + evento.cupoMaximo);
+
+            // DESCRIPCION
+            const containerDescripcion = document.createElement("div");
+            containerDescripcion.className = "flex flex-col gap-2";
+            
+            const labelDescripcion = document.createElement("label");
+            labelDescripcion.className = "text-label";
+            labelDescripcion.textContent = "Descripción";
+
+            const descripcion = document.createElement("div");
+            descripcion.className = "w-full rounded-md border border-gray-300 px-3 py-2 bg-gray-100";
+            descripcion.textContent = evento.descripcion;
+
+            // BOTON
+            const btnInscribir = document.createElement("a");
+            btnInscribir.className = "boton1 color4 text-center block";
+            btnInscribir.textContent = "Inscribirse";
+            //btnInscribir.setAttribute("href", "detalleEvento.html?id=" + evento.id);
+
+
+            eventBody.appendChild(hora);
+            eventBody.appendChild(fecha);
+            eventBody.appendChild(totalInscritos);
+            eventBody.appendChild(containerDescripcion);
+            containerDescripcion.appendChild(labelDescripcion);
+            containerDescripcion.appendChild(descripcion);
+            eventBody.appendChild(btnInscribir);
+            card.appendChild(cardHeader);
+            card.appendChild(eventBody);
+            detalleEvento.appendChild(card);
+
+        }
+
+    cargarDetalleEvento();
+
+})();
