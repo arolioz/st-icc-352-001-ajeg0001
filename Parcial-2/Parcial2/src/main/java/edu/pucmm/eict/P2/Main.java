@@ -89,10 +89,8 @@ public class Main {
                     get(ctx -> ctx.redirect("/Templates/listaEventos.html"));
                     get("/Crear", ctx -> ctx.redirect("/Templates/crearEventos.html"));
                     post("/procesar-crear", EventoControlador::procesarCrear);
-                    //TODO Cambiar a metodo post cuando este disponible
-                    get("/inscribir/{eventId}",EventoControlador::inscribirUsuario);
-                    //TODO Cambiar a metodo post cuando este disponible
-                    get("/cancelarInscripcion/{eventId}", EventoControlador::cancelarInscripcion);
+                    post("/inscribir/{eventId}",EventoControlador::inscribirUsuario);
+                    post("/cancelarInscripcion/{eventId}", EventoControlador::cancelarInscripcion);
                 });
             });
 
