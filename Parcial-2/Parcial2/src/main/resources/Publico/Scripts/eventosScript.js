@@ -20,7 +20,6 @@
             console.error('Fetch error:', error);
         }
 
-
     }
 
     async function mostrarEventos(eventos) {
@@ -31,10 +30,10 @@
 
         eventos.forEach(evento => {
             const card = document.createElement("div");
-            card.className = "evento-card";
+            card.className = "event-card";
 
             const cardHeader = document.createElement("div");
-            cardHeader.className = "evento-header";
+            cardHeader.className = "event-header";
 
             const titulo = document.createElement("h2");
             titulo.className = "text-xl font-bold text-amber-50 text-center";
@@ -45,52 +44,54 @@
             const eventBody = document.createElement("div");
             eventBody.className = "event-body";
 
-            const totalInscritos = document.createElement("p");
-            const iconoPersona = document.createElement("i");
-            iconoPersona.className = "bi bi-person-check";
-
-            totalInscritos.appendChild(iconoPersona);
-            totalInscritos.textContent = evento.cupoMaximo;
-
+            //HORA
             const hora = document.createElement("p");
+            hora.className = "text-label";
+
             const iconoReloj = document.createElement("i");
             iconoReloj.className = "bi bi-clock-fill";
 
             hora.appendChild(iconoReloj);
-            hora.textContent = evento.hora;
-            //hora.appendChild(evento.hora);
+            hora.append(" Hora: " + evento.hora);
+            console.log(evento.hora);
 
+            // FECHA
             const fecha = document.createElement("p");
+            fecha.className = "text-label";
+
             const iconoCalendario = document.createElement("i");
             iconoCalendario.className = "bi bi-calendar-event";
 
             fecha.appendChild(iconoCalendario);
-            fecha.textContent = evento.fecha;
-            //fecha.appendChild(evento.fecha);
+            fecha.append(" Fecha: " + new Date(evento.fecha).toLocaleDateString());
 
+            // CUPO MAXIMO
+            const totalInscritos = document.createElement("p");
+            totalInscritos.className = "text-label";
+
+            const iconoPersona = document.createElement("i");
+            iconoPersona.className = "bi bi-person-check";
+
+            totalInscritos.appendChild(iconoPersona);
+            totalInscritos.append(" Cupo: " + evento.cupoMaximo);
+
+            // BOTON
             const btnVerDetalles = document.createElement("a");
             btnVerDetalles.className = "boton1 color4 text-center block";
             btnVerDetalles.textContent = "Ver Detalles";
             btnVerDetalles.setAttribute("href", "detalleEvento.html?id=" + evento.id);
             
-            eventBody.appendChild(totalInscritos);
             eventBody.appendChild(hora);
             eventBody.appendChild(fecha);
+            eventBody.appendChild(totalInscritos);
             eventBody.appendChild(btnVerDetalles);
-
             card.appendChild(cardHeader);
             card.appendChild(eventBody);
-
             listaEventos.appendChild(card);
-
             
         });
     }
 
-        
-
-
-    
     cargarEventos();
 
-})
+})();
