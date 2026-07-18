@@ -68,8 +68,11 @@ public class EventoControlador {
 
 
         Usuario tmp = ctx.sessionAttribute("usuario");
-        Usuario usuario = UsuarioServices.getInstancia().find(tmp.getId());
 
+        Usuario usuario = null;
+        if (tmp != null){
+            usuario = UsuarioServices.getInstancia().find(tmp.getId());
+        }
         Evento evento = EventoServices.getInstancia().find(eventId);
 
         if ((usuario != null && usuario.getListaRoles().contains(RolesApp.ROLE_USUARIO)) && evento.getCupo() < evento.getCupoMaximo() && evento != null){
@@ -85,7 +88,29 @@ public class EventoControlador {
             }
 
         }
+    }
+
+    public static void cancelarInscripcion(@NotNull Context ctx){
+        Long eventId = (long) Integer.parseInt(ctx.pathParam("eventId"));
 
 
+        Usuario tmp = ctx.sessionAttribute("usuario");
+
+        Usuario usuario = null;
+        if (tmp != null){
+            usuario = UsuarioServices.getInstancia().find(tmp.getId());
+        }
+
+        Evento evento = EventoServices.getInstancia().find(eventId);
+
+        if ((usuario != null && usuario.getListaRoles().contains(RolesApp.ROLE_USUARIO)) && evento != null){
+            EventoUsuario tmpEU = EventoUsuarioServices.getInstancia().findUsuarioEnEvento(usuario.getId(),eventId);
+
+            if (tmpEU != null){
+                EventoUsuarioServices.getInstancia().eliminar(tmpEU.getId());
+                evento.setCupo(evento.getCupo() - 1);
+                EventoServices.getInstancia().editar(evento);
+            }
+        }
     }
 }

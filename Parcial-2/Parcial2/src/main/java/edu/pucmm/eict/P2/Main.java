@@ -91,6 +91,8 @@ public class Main {
                     post("/procesar-crear", EventoControlador::procesarCrear);
                     //TODO Cambiar a metodo post cuando este disponible
                     get("/inscribir/{eventId}",EventoControlador::inscribirUsuario);
+                    //TODO Cambiar a metodo post cuando este disponible
+                    get("/cancelarInscripcion/{eventId}", EventoControlador::cancelarInscripcion);
                 });
             });
 
