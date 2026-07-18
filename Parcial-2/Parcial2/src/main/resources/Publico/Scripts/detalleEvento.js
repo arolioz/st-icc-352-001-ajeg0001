@@ -47,44 +47,39 @@
         }
     }
 
-    async function editarEvento(idEvento) {
-        try {
-            const respuesta = await fetch(`/Eventos/procesar-modificar/${idEvento}`, {
-                method: "POST"
-            });
-
-            if (!respuesta.ok) {
-                throw new Error(`HTTP error! Status: ${respuesta.status}`);
-            }
-
-            //cargarDetalleEvento();
-
-        } catch (error) {
-            console.error('Fetch error:', error);
-        }
-    }
-
     async function crearBotones(evento) {
 
         const container = document.createElement("div");
-        container.className = "flex gap-3"
+        container.className = "flex gap-3";
+
+        const btnInscribir = document.createElement("button");
+        btnInscribir.className = "boton1 color4 text-center block";
+        btnInscribir.textContent = "Inscribirse";
+        btnInscribir.addEventListener("click", async () => {
+
+            inscribirEvento(evento.id)
+
+        });
+
+        container.appendChild(btnInscribir);
 
         const esAdmin = await usuarioEsAdmin();
         const esOrganizador = await usuarioEsOrganizador();
 
         if (esAdmin || esOrganizador) {
 
-            const btnEditar = document.createElement("button");
+            const btnEditar = document.createElement("a");
             btnEditar.className = "boton1 color3 text-center block flex-1";
             btnEditar.textContent = "Editar";
-            btnEditar.href = `editarEvento.html?id=${evento.id}`;
+            btnEditar.href = `crearEventos.html?id=${evento.id}`;
 
             //btnEditar.setAttribute("href", `/Eventos/procesar-modificar/${evento.id}`);
             //btnEditar.setAttribute("href", `/Eventos/procesar-modificar/${evento.id}`);
-
-
+            container.appendChild(btnEditar);
         }
-        container.appendChild(btnEditar);
+
+        return container;
+
         
     }
 
@@ -169,14 +164,9 @@
             descripcion.textContent = evento.descripcion;
 
             // BOTON
-            const btnInscribir = document.createElement("button");
-            btnInscribir.className = "boton1 color4 text-center block";
-            btnInscribir.textContent = "Inscribirse";
-            btnInscribir.addEventListener("click", async () => {
+            const botones = await crearBotones(evento);
+            eventBody.appendChild(botones);
 
-            inscribirEvento(evento.id)
-        
-            });
 
             //btnInscribir.setAttribute("href", `/Eventos/inscribir/${evento.id}`);
 

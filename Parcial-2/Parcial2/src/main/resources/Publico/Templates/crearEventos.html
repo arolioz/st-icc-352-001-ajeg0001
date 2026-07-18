@@ -41,7 +41,7 @@
 
     <div class="card-header card-large relative">
 
-        <h2 class="text-center text-3xl font-bold text-amber-50">
+        <h2 id="idTituloFormulario" class="text-center text-3xl font-bold text-amber-50">
             Crear evento
         </h2>
 
@@ -52,7 +52,8 @@
     </div>
 
     <div class="card-body card-large">
-        <form action="/Eventos/procesar-crear" method="post" class="space-y-5">
+        <form id="idForm" action="/Eventos/procesar-crear" method="post" class="space-y-5">
+            <input type="hidden" id="idEvento" name="id">
 
             <div>
                 <label for="titulo" class="text-label">
@@ -111,7 +112,7 @@
                 <input id="cupo" name="cupo" type="number" min="1" required class="input-style">
             </div>
 
-            <button
+            <button id="btn"
                     type="submit"
                     class="boton1 color4 ">
                 Crear evento
@@ -122,6 +123,8 @@
     </div>
 
 </div>
+
+<script src="/Scripts/editarCrearEvento.js"></script>
 
 
 </body>
