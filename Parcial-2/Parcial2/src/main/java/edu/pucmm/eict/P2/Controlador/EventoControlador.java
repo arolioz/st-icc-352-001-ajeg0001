@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.*;
 
 public class EventoControlador {
@@ -208,7 +209,25 @@ public class EventoControlador {
 
         EventoUsuario eu = EventoUsuarioServices.getInstancia().findRegistroToken(token);
 
-        if (eu != null && eu.getAsistencia() == false){
+        if (eu == null) {
+            ctx.status(404).result("Token no válido");
+            return;
+        }
+
+        Date fechaEventoDate = eu.getEvento().getFecha();
+
+        LocalDate fechaEvento = fechaEventoDate.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+
+        LocalDate hoy = LocalDate.now();
+
+        if (!fechaEvento.equals(hoy)) {
+            ctx.status(400).result("La asistencia solo puede registrarse el día del evento");
+            return;
+        }
+
+        if (!eu.getAsistencia()) {
             eu.setAsistencia(true);
             eu.setFechaAsistencia(LocalDateTime.now());
             EventoUsuarioServices.getInstancia().editar(eu);
