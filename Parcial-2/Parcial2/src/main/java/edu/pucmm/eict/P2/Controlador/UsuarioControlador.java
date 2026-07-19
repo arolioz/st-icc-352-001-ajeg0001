@@ -4,12 +4,23 @@ import Util.Encriptador;
 import Util.RolesApp;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+import edu.pucmm.eict.P2.Entidades.Evento;
+import edu.pucmm.eict.P2.Entidades.EventoUsuario;
 import edu.pucmm.eict.P2.Entidades.Usuario;
+import edu.pucmm.eict.P2.Services.EventoServices;
+import edu.pucmm.eict.P2.Services.EventoUsuarioServices;
 import edu.pucmm.eict.P2.Services.UsuarioServices;
 import io.javalin.http.Context;
 import io.javalin.http.HttpStatus;
 import org.jetbrains.annotations.NotNull;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.lang.reflect.Type;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -170,6 +181,56 @@ public class UsuarioControlador {
             }
 
             UsuarioServices.getInstancia().editar(usuario);
+        }
+    }
+
+    public static void mostrarQr(@NotNull Context ctx){
+        Long idEvento = Long.valueOf(Objects.requireNonNull(ctx.pathParam("idEvento")));
+
+        Usuario tmp = ctx.sessionAttribute("usuario");
+
+        Usuario usuario = null;
+        if (tmp != null){
+            usuario = UsuarioServices.getInstancia().find(tmp.getId());
+        }
+
+
+
+        if ((usuario != null && usuario.getListaRoles().contains(RolesApp.ROLE_USUARIO))){
+            EventoUsuario tmpEU = EventoUsuarioServices.getInstancia().findUsuarioEnEvento(usuario.getId(),idEvento);
+
+            if (tmpEU != null) {
+                try {
+                    QRCodeWriter writer = new QRCodeWriter();
+
+                    Gson gson = new Gson();
+
+                    Map<String, Object> data = new HashMap<>();
+                    data.put("eventId", tmpEU.getEvento().getId());
+                    data.put("userId", tmpEU.getUsuario().getId());
+                    data.put("token", tmpEU.getToken());
+
+                    String qrContent = gson.toJson(data);
+
+                    BitMatrix matrix = writer.encode(
+                            qrContent,
+                            BarcodeFormat.QR_CODE,
+                            300,
+                            300
+                    );
+                    BufferedImage image = MatrixToImageWriter.toBufferedImage(matrix);
+
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    ImageIO.write(image, "PNG", baos);
+
+                    ctx.contentType("image/png");
+                    ctx.result(baos.toByteArray());
+
+                } catch (Exception e) {
+                    ctx.status(HttpStatus.INTERNAL_SERVER_ERROR);
+                    ctx.result("Error al generar el QR");
+                }
+            }
         }
     }
 }

@@ -89,6 +89,7 @@ public class Main {
                    get(UsuarioControlador::listarUsuarios,RolesApp.ROLE_ADMIN);
                    get("/Listar",UsuarioControlador::listarUsuarios,RolesApp.ROLE_ADMIN);
                    post("bloquear/{id}",UsuarioControlador::cambiarEstadoUsuario, RolesApp.ROLE_ADMIN);
+                   get("mostrarQr/{idEvento}",UsuarioControlador::mostrarQr);
                });
             });
 
@@ -103,7 +104,8 @@ public class Main {
                     post("/cancelar/{id}",EventoControlador::cancelarEvento);
                     post("/cambiarEstado/{id}",EventoControlador::cambiarEstadoEvento);
                     //TODO CAMBIAR A METODO POST
-                    get("/marcarAsistencia/{token}",EventoControlador::marcarAsistencia);
+                    post("/marcarAsistencia/{token}",EventoControlador::marcarAsistencia);
+
 
                 });
             });
