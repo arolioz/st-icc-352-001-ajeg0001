@@ -17,6 +17,11 @@
     @apply  w-full rounded-md py-2 font-semibold text-white transition cursor-pointer hover:bg-[#905f4d]
 }
 
+.btn2 {
+    @apply w-full rounded-md py-2 font-semibold text-white transition cursor-pointer hover:bg-[#c6956e]
+
+}
+
 .card{
     @apply  container mx-auto min-h-screen flex flex-col items-center justify-center px-6
 }

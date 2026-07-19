@@ -78,21 +78,20 @@
 
         try {
 
-        const respuesta = await fetch(`/Usuarios/cambiarRol/${idUsuario}`, {
-            method: "POST"
-        });
+            const respuesta = await fetch(`/Usuarios/cambiarRol/${idUsuario}`, {
+                method: "POST"
+            });
 
 
-        if (!respuesta.ok){
-            throw new Error("Error cambiando rol");
+            if (!respuesta.ok){
+                throw new Error("Error cambiando rol");
+            }
+
+            cargarUsuarios();
+
+        } catch(error){
+            console.error(error);
         }
-
-
-        cargarUsuarios();
-
-    } catch(error){
-        console.error(error);
-    }
         
     }
 
@@ -106,6 +105,7 @@
 
         if (usuarioEsOrganizador(usuario)) {
             botonOrganizador.textContent = "Quitar organizador";
+            botonOrganizador.className = "btn2 color3 text-center block flex-1 !w-auto"
         } else {
             botonOrganizador.textContent = "Hacer organizador";
         }
@@ -115,12 +115,13 @@
         });
 
         const btnBloquear = document.createElement("button");
-        btnBloquear.className = "boton1 color3 text-center block flex-1 !w-auto";
+        btnBloquear.className = "boton1 color4 text-center block flex-1 !w-auto";
 
         if (usuarioEstaBloqueado(usuario)) {
             btnBloquear.textContent = "Desbloquear";
         } else {
             btnBloquear.textContent = "Bloquear";
+            btnBloquear.className = "btn2 color3 text-center block flex-1 !w-auto";
         }
 
         btnBloquear.addEventListener("click", () => {
