@@ -63,3 +63,16 @@
 .btn-cancelar{
     @apply  bg-red-800 hover:bg-red-950 text-center block flex-1  rounded-md py-2 font-semibold text-white transition cursor-pointer 
 }
+
+.card-table {
+    @apply container mx-auto flex flex-col items-center px-6;
+}
+
+.card-table-header {
+    @apply w-full max-w-5xl mx-auto bg-amber-950 rounded-t-xl py-2 shadow-lg;
+}
+
+.card-table-body{
+    @apply w-full max-w-5xl mx-auto bg-white rounded-b-xl p-8 drop-shadow-amber-950;
+}
+
