@@ -89,24 +89,24 @@ public class Main {
                    get(UsuarioControlador::listarUsuarios,RolesApp.ROLE_ADMIN);
                    get("/Listar",UsuarioControlador::listarUsuarios,RolesApp.ROLE_ADMIN);
                    post("bloquear/{id}",UsuarioControlador::cambiarEstadoUsuario, RolesApp.ROLE_ADMIN);
-                   get("mostrarQr/{idEvento}",UsuarioControlador::mostrarQr);
-                   post("cambiarRol/{id}", UsuarioControlador::cambiarRolOrganizador);
+                   get("mostrarQr/{idEvento}",UsuarioControlador::mostrarQr, RolesApp.ROLE_USUARIO);
+                   post("cambiarRol/{id}", UsuarioControlador::cambiarRolOrganizador,RolesApp.ROLE_ADMIN);
                });
             });
 
             config.routes.apiBuilder(() -> {
                 path("/Eventos", () -> {
                     get(ctx -> ctx.redirect("/Templates/listaEventos.html"));
-                    get("/Crear", ctx -> ctx.redirect("/Templates/crearEventos.html"));
-                    post("/procesar-crear", EventoControlador::procesarCrear);
+                    get("/Crear", ctx -> ctx.redirect("/Templates/crearEventos.html"),RolesApp.ROLE_ORGANIZADOR);
+                    post("/procesar-crear", EventoControlador::procesarCrear, RolesApp.ROLE_ORGANIZADOR);
                     post("/inscribir/{eventId}",EventoControlador::inscribirUsuario, RolesApp.ROLE_USUARIO);
-                    post("/procesar-modificar", EventoControlador::procesarModificar);
-                    post("/cancelarInscripcion/{eventId}", EventoControlador::cancelarInscripcion);
-                    post("/cancelar/{id}",EventoControlador::cancelarEvento);
-                    post("/cambiarEstado/{id}",EventoControlador::cambiarEstadoEvento);
+                    post("/procesar-modificar", EventoControlador::procesarModificar,RolesApp.ROLE_ORGANIZADOR);
+                    post("/cancelarInscripcion/{eventId}", EventoControlador::cancelarInscripcion,RolesApp.ROLE_USUARIO);
+                    post("/cancelar/{id}",EventoControlador::cancelarEvento,RolesApp.ROLE_ORGANIZADOR);
+                    post("/cambiarEstado/{id}",EventoControlador::cambiarEstadoEvento, RolesApp.ROLE_ORGANIZADOR);
                     //TODO CAMBIAR A METODO POST
-                    get("/marcarAsistencia/{token}",EventoControlador::marcarAsistencia);
-                    post("eliminar/{id}", EventoControlador::eliminarEvento);
+                    post("/marcarAsistencia/{token}",EventoControlador::marcarAsistencia,RolesApp.ROLE_ORGANIZADOR);
+                    post("eliminar/{id}", EventoControlador::eliminarEvento, RolesApp.ROLE_ADMIN);
 
 
                 });
