@@ -1,7 +1,6 @@
 (() => {
 
     console.log("Cargando detalles...");
-    //const idEvento = location.pathname.split("/").pop();
     const idEvento = new URLSearchParams(window.location.search).get('id');
 
     async function cargarDetalleEvento() {
@@ -74,7 +73,6 @@
             btnEditar.href = `crearEventos.html?id=${evento.id}`;
 
             //btnEditar.setAttribute("href", `/Eventos/procesar-modificar/${evento.id}`);
-            //btnEditar.setAttribute("href", `/Eventos/procesar-modificar/${evento.id}`);
             container.appendChild(btnEditar);
         }
 
@@ -141,6 +139,17 @@
             hora.append(" Hora: " + evento.hora);
             console.log(evento.hora);
 
+            //LUGAR
+            const lugar = document.createElement("p");
+            lugar.className = "text-label";
+
+            const iconLugar = document.createElement("i");
+            iconLugar.className = "bi bi-geo-alt-fil";
+
+            lugar.appendChild(iconoReloj);
+            lugar.append(" Hora: " + evento.hora);
+            console.log(evento.lugar);
+
             // CUPO MAXIMO
             const totalInscritos = document.createElement("p");
             totalInscritos.className = "text-label";
@@ -165,19 +174,16 @@
 
             // BOTON
             const botones = await crearBotones(evento);
-            eventBody.appendChild(botones);
-
-
-            //btnInscribir.setAttribute("href", `/Eventos/inscribir/${evento.id}`);
 
             eventBody.appendChild(organizador);
             eventBody.appendChild(fecha);
             eventBody.appendChild(hora);
+            eventBody.appendChild(lugar);
             eventBody.appendChild(totalInscritos);
             eventBody.appendChild(containerDescripcion);
             containerDescripcion.appendChild(labelDescripcion);
             containerDescripcion.appendChild(descripcion);
-            eventBody.appendChild(btnInscribir);
+            eventBody.appendChild(botones);
             card.appendChild(cardHeader);
             card.appendChild(eventBody);
             detalleEvento.appendChild(card);

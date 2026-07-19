@@ -32,3 +32,40 @@ async function obtenerCantidadInscritos(idEvento) {
         console.error('Fetch error:', error);
     }
 }
+
+async function usuarioEsAdmin() {
+
+        try {
+            const respuesta = await fetch(`/Api/usuarioEsAdmin`);
+
+            if (!respuesta.ok) {
+                throw new Error(`HTTP error! Status: ${respuesta.status}`);
+            }
+
+            console.log(respuesta);
+            return await respuesta.json();
+        
+
+        } catch (error){
+            console.error('Fetch error: ', error);
+        }
+
+    }
+
+    async function usuarioEsOrganizador() {
+
+        try {
+            const respuesta = await fetch(`/Api/usuarioEsOrganizador`);
+            
+            if (!respuesta.ok) {
+                throw new Error(`HTTP error! Status: ${respuesta.status}`);
+            }
+
+            console.log(respuesta);
+            return await respuesta.json();
+        
+        } catch (error){
+            console.error('Fetch error: ', error);
+        }
+
+    }
