@@ -174,6 +174,12 @@ public class UsuarioControlador {
             Usuario usuario = UsuarioServices.getInstancia().find(idUsuario);
 
             assert usuario != null;
+
+            if (usuario.getListaRoles().contains(RolesApp.ROLE_ADMIN)){
+                ctx.status(403).result("No se pueden cambiar los roles de un administrador");
+                return;
+            }
+
             if (usuario.getListaRoles().contains(RolesApp.ROLE_ORGANIZADOR)) {
                 usuario.getListaRoles().remove(RolesApp.ROLE_ORGANIZADOR);
             } else {
@@ -193,6 +199,12 @@ public class UsuarioControlador {
             Usuario usuario = UsuarioServices.getInstancia().find(idUsuario);
 
             assert usuario != null;
+
+            if (usuario.getListaRoles().contains(RolesApp.ROLE_ADMIN)){
+                ctx.status(403).result("No se puede bloquear un administrador");
+                return;
+            }
+
             if (usuario.getListaRoles().contains(RolesApp.ROLE_BLOQUEADO)) {
                 usuario.getListaRoles().remove(RolesApp.ROLE_BLOQUEADO);
             } else {
