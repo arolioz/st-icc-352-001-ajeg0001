@@ -19,6 +19,10 @@ import java.time.LocalDateTime;
         @NamedQuery(
                 name = "EventoUsuario.findRegistroToken",
                 query = "SELECT eu FROM EventoUsuario eu WHERE eu.token = :token"
+        ),
+        @NamedQuery(
+                name = "EventoUsuario.findAsistenciaEvento",
+                query = "SELECT eu FROM EventoUsuario eu WHERE eu.evento.id = :idEvento and eu.asistencia = true "
         )
 })
 public class EventoUsuario {

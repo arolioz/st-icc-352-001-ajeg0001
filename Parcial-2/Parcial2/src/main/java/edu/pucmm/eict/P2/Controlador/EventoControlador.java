@@ -15,10 +15,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Date;
-import java.util.Objects;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public class EventoControlador {
     public static void procesarCrear(@NotNull Context ctx) throws ParseException {
@@ -214,6 +211,21 @@ public class EventoControlador {
             eu.setFechaAsistencia(LocalDateTime.now());
             EventoUsuarioServices.getInstancia().editar(eu);
         }
+    }
+
+    public static void estadisticasEvento(@NotNull Context ctx){
+        Long id = Long.parseLong(Objects.requireNonNull(ctx.formParam("id")));
+
+        Evento evento = EventoServices.getInstancia().find(id);
+        List<EventoUsuario> eu = EventoUsuarioServices.getInstancia().findAsistenciaEvento(id);
+
+        int totalInscritos = evento.getCupo();
+        int totalAsistencia = eu.size();
+
+        float porcentajeAsistencia = (float)(totalAsistencia/totalInscritos)*100;
+
+
+
     }
 
 }

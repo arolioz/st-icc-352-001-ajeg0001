@@ -5,6 +5,8 @@ import edu.pucmm.eict.P2.Entidades.EventoUsuario;
 import edu.pucmm.eict.P2.Entidades.Usuario;
 import jakarta.persistence.EntityManager;
 
+import java.util.List;
+
 public class EventoUsuarioServices extends  GestionDb<EventoUsuario>{
     private static EventoUsuarioServices instancia;
 
@@ -38,6 +40,19 @@ public class EventoUsuarioServices extends  GestionDb<EventoUsuario>{
             return em.createNamedQuery("EventoUsuario.findRegistroToken", EventoUsuario.class)
                     .setParameter("token", token)
                     .getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<EventoUsuario> findAsistenciaEvento(Long idEvento) {
+        EntityManager em = getEntityManager();
+
+        try {
+            return em.createNamedQuery("EventoUsuario.findAsistenciaEvento", EventoUsuario.class)
+                    .setParameter("idEvento", idEvento)
+                    .getResultList();
         } catch (Exception e) {
             e.printStackTrace();
             return null;
