@@ -85,6 +85,7 @@ public class EventoControlador {
                 eu.setUsuario(usuario);
                 eu.setEvento(evento);
                 eu.setToken(token);
+                eu.setFechaInscripcion(LocalDateTime.now());
                 EventoUsuarioServices.getInstancia().crear(eu);
                 EventoServices.getInstancia().editar(evento);
             }

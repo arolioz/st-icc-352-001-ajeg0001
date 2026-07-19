@@ -39,6 +39,7 @@ public class EventoUsuario {
     private String token;
     private Boolean asistencia;
     private LocalDateTime fechaAsistencia;
+    private LocalDateTime fechaInscripcion;
 
     public EventoUsuario(){
         this.asistencia = false;
@@ -82,5 +83,13 @@ public class EventoUsuario {
 
     public void setFechaAsistencia(LocalDateTime fechaAsistencia) {
         this.fechaAsistencia = fechaAsistencia;
+    }
+
+    public LocalDateTime getFechaInscripcion() {
+        return fechaInscripcion;
+    }
+
+    public void setFechaInscripcion(LocalDateTime fechaInscripcion) {
+        this.fechaInscripcion = fechaInscripcion;
     }
 }
