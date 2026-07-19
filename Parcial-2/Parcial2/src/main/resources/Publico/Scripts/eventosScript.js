@@ -12,9 +12,16 @@
             }
 
             const data = await respuesta.json();
-            console.log(data);
 
-            mostrarEventos(data);
+            const eventosDisponibles = data.filter(evento =>
+                evento.activo === true &&
+                evento.publicado === true &&
+                evento.eliminado === false
+            );
+
+            console.log(eventosDisponibles);
+
+            mostrarEventos(eventosDisponibles);
             
         } catch (error) {
             console.error('Fetch error:', error);
@@ -27,6 +34,13 @@
         const listaEventos = document.getElementById('listaEventos');
 
         listaEventos.innerHTML = '';
+
+        if (eventos.length === 0) {
+            listaEventos.innerHTML = `<h3 class="text-xl text-amber-950 text-center justify-center">
+                                        No hay eventos disponibles en este momento.
+                                     </h3>`;
+            return;
+        }
 
         for (const evento of eventos) {
             const idOrganizador = await obtenerOrganizadorEvento(evento.idOrganizador);
