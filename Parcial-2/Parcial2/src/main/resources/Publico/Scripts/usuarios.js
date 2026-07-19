@@ -42,19 +42,95 @@
         }
     }
 
+    function usuarioEsOrganizador(usuario) {
+
+        if (usuario.listaRoles.includes("ROLE_ORGANIZADOR")) {
+            return true;  
+        } else {
+            return false;
+        }
+    }
+
+    async function bloquearUsuario(idUsuario){
+
+        try {
+            const respuesta = await fetch(`/Usuarios/bloquear/${idUsuario}`, {
+            method: "POST"
+            });
+
+            if (!respuesta.ok){
+                throw new Error("Error cambiando estado");
+            }
+
+            cargarUsuarios();
+            console.log(idUsuario);
+
+        } catch (error) {
+            console.error(error);
+
+        }
+
+        
+    }
+
+
+    async function cambiarRolOrganizador(idUsuario) {
+
+        try {
+
+        const respuesta = await fetch(`/Usuarios/cambiarRol/${idUsuario}`, {
+            method: "POST"
+        });
+
+
+        if (!respuesta.ok){
+            throw new Error("Error cambiando rol");
+        }
+
+
+        cargarUsuarios();
+
+    } catch(error){
+        console.error(error);
+    }
+        
+    }
 
     function crearBotones(usuario) {
 
-        const boton = document.createElement("button");
-        boton.className = "boton1 color4"
+        const container = document.createElement("div");
+        container.className = "flex gap-2 justify-center";
+        
+        const botonOrganizador = document.createElement("button");
+        botonOrganizador.className = "boton1 color4 text-center block flex-1 !w-auto"
 
         if (usuarioEsOrganizador(usuario)) {
-            boton.textContent = "Quitar organizador";
+            botonOrganizador.textContent = "Quitar organizador";
         } else {
-            boton.textContent = "Hacer organizador";
+            botonOrganizador.textContent = "Hacer organizador";
         }
 
-        return boton;
+        botonOrganizador.addEventListener("click", () => {
+            cambiarRolOrganizador(usuario.id);
+        });
+
+        const btnBloquear = document.createElement("button");
+        btnBloquear.className = "boton1 color3 text-center block flex-1 !w-auto";
+
+        if (usuarioEstaBloqueado(usuario)) {
+            btnBloquear.textContent = "Desbloquear";
+        } else {
+            btnBloquear.textContent = "Bloquear";
+        }
+
+        btnBloquear.addEventListener("click", () => {
+            bloquearUsuario(usuario.id);
+        });
+
+        container.appendChild(botonOrganizador);
+        container.appendChild(btnBloquear);
+
+        return container;
 
     }
 
@@ -93,7 +169,8 @@
 
             const acciones = document.createElement("td");
             acciones.className = "p-3 font-semibold";
-            acciones.appendChild(crearBotones(usuario));
+            const botones =  crearBotones(usuario);
+            acciones.appendChild(botones);
 
             fila.appendChild(estado);
             fila.appendChild(acciones);
