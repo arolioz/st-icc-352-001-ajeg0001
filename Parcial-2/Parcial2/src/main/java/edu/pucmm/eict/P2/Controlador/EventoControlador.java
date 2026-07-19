@@ -182,7 +182,7 @@ public class EventoControlador {
     }
 
     public static void cambiarEstadoEvento(@NotNull Context ctx){
-        Long id = Long.valueOf(Objects.requireNonNull(ctx.formParam("id")));
+        Long id = Long.valueOf(Objects.requireNonNull(ctx.pathParam("id")));
 
         Evento e = EventoServices.getInstancia().find(id);
 
