@@ -106,6 +106,7 @@ public class Main {
                     post("/cambiarEstado/{id}",EventoControlador::cambiarEstadoEvento);
                     //TODO CAMBIAR A METODO POST
                     get("/marcarAsistencia/{token}",EventoControlador::marcarAsistencia);
+                    post("eliminar/{id}", EventoControlador::eliminarEvento);
 
 
                 });
