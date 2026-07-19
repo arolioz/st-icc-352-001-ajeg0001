@@ -193,21 +193,26 @@ public class EventoControlador {
             else{
                 e.setPublicado(false);
             }
+
+            EventoServices.getInstancia().editar(e);
         }
     }
 
     public  static void cancelarEvento(@NotNull Context ctx){
-        Long id = Long.valueOf(Objects.requireNonNull(ctx.formParam("id")));
+        Long id = Long.valueOf(Objects.requireNonNull(ctx.pathParam("id")));
 
         Evento e = EventoServices.getInstancia().find(id);
 
+        IO.println(e.getId());
         if (e != null){
             e.setActivo(false);
         }
+
+        EventoServices.getInstancia().editar(e);
     }
 
     public static void eliminarEvento(@NotNull Context ctx){
-        Long id = Long.valueOf(Objects.requireNonNull(ctx.formParam("id")));
+        Long id = Long.valueOf(Objects.requireNonNull(ctx.pathParam("id")));
 
         Evento e = EventoServices.getInstancia().find(id);
 
@@ -216,6 +221,8 @@ public class EventoControlador {
             e.setPublicado(false);
             e.setActivo(false);
         }
+
+        EventoServices.getInstancia().editar(e);
     }
 
     public static void marcarAsistencia(@NotNull Context ctx){

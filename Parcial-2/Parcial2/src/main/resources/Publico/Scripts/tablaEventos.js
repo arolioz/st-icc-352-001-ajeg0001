@@ -38,7 +38,7 @@
             }
 
 
-            cargarEventos();
+            await cargarEventos();
 
 
         }catch(error){
@@ -63,7 +63,7 @@
             }
 
 
-            cargarEventos();
+            await cargarEventos();
 
 
         }catch(error){

@@ -95,7 +95,7 @@ public class Evento {
         this.cupoMaximo = cupoMaximo;
     }
 
-    public void setActivo(Boolean lugar) {
+    public void setActivo(Boolean activo) {
         this.activo = activo;
     }
 
