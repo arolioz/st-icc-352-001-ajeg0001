@@ -49,10 +49,11 @@
     async function crearBotones(evento) {
 
         const container = document.createElement("div");
-        container.className = "flex gap-3";
+
+        container.className = "flex gap-3 w-full";
 
         const btnInscribir = document.createElement("button");
-        btnInscribir.className = "boton1 color4 text-center block";
+        btnInscribir.className = "boton1 color4 text-center block flex-1 !w-auto ";
         btnInscribir.textContent = "Inscribirse";
         btnInscribir.addEventListener("click", async () => {
 
@@ -68,7 +69,7 @@
         if (esAdmin || esOrganizador) {
 
             const btnEditar = document.createElement("a");
-            btnEditar.className = "boton1 color3 text-center block flex-1";
+            btnEditar.className = "boton1 color2 text-center block flex-1 !w-auto ";
             btnEditar.textContent = "Editar";
             btnEditar.href = `crearEventos.html?id=${evento.id}`;
 
@@ -144,10 +145,10 @@
             lugar.className = "text-label";
 
             const iconLugar = document.createElement("i");
-            iconLugar.className = "bi bi-geo-alt-fil";
+            iconLugar.className = "bi bi-geo-alt-fill";
 
-            lugar.appendChild(iconoReloj);
-            lugar.append(" Hora: " + evento.hora);
+            lugar.appendChild(iconLugar);
+            lugar.append(" Lugar: " + evento.lugar);
             console.log(evento.lugar);
 
             // CUPO MAXIMO

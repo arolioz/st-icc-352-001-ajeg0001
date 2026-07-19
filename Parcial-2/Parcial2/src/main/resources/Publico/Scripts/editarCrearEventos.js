@@ -2,6 +2,7 @@
     console.log("FORM EDITAR/CREAR");
 
     const idEvento =  new URLSearchParams(window.location.search).get("id");
+    console.log("EVENTO URL" + idEvento);
     const form = document.getElementById("idForm");
     const titulo = document.getElementById("idTituloFormulario");
     const btn = document.getElementById("btn");
@@ -11,7 +12,7 @@
         titulo.textContent = "Editar evento";
         btn.textContent = "Guardar cambios";
 
-        cargarEventoEditar();
+        cargarEventoEditar(idEvento);
         
     } 
 
@@ -29,6 +30,7 @@
                 );
 
             }
+            console.log(respuesta);
 
             return await respuesta.json();
 
@@ -43,11 +45,11 @@
     async function cargarEventoEditar(idEvento) {
 
         const evento = await obtenerEventos(idEvento);
-
+        console.log("CARGAR " + evento);
         document.getElementById("idEvento").value = evento.id;
         document.getElementById("titulo").value = evento.titulo;
         document.getElementById("descripcion").value = evento.descripcion;
-        document.getElementById("fecha").value = new Date(evento.fecha);
+        document.getElementById("fecha").value = new Date(evento.fecha).toISOString().split("T")[0];;
         document.getElementById("hora").value = evento.hora;
         document.getElementById("lugar").value = evento.lugar;
         document.getElementById("cupo").value = evento.cupoMaximo;
