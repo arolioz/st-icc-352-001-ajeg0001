@@ -165,6 +165,25 @@ public class UsuarioControlador {
         }
     }
 
+    public static void cambiarRolOrganizador(@NotNull Context ctx){
+        Usuario admin = ctx.sessionAttribute("usuario");
+
+        long idUsuario = Long.parseLong(Objects.requireNonNull(ctx.formParam("id")));
+
+        if (admin != null && admin.getListaRoles().contains(RolesApp.ROLE_ADMIN)){
+            Usuario usuario = UsuarioServices.getInstancia().find(idUsuario);
+
+            assert usuario != null;
+            if (usuario.getListaRoles().contains(RolesApp.ROLE_ORGANIZADOR)) {
+                usuario.getListaRoles().remove(RolesApp.ROLE_ORGANIZADOR);
+            } else {
+                usuario.getListaRoles().add(RolesApp.ROLE_ORGANIZADOR);
+            }
+
+            UsuarioServices.getInstancia().editar(usuario);
+        }
+    }
+
     public static void cambiarEstadoUsuario(@NotNull Context ctx){
         Usuario admin = ctx.sessionAttribute("usuario");
 

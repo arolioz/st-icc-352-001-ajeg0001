@@ -90,6 +90,7 @@ public class Main {
                    get("/Listar",UsuarioControlador::listarUsuarios,RolesApp.ROLE_ADMIN);
                    post("bloquear/{id}",UsuarioControlador::cambiarEstadoUsuario, RolesApp.ROLE_ADMIN);
                    get("mostrarQr/{idEvento}",UsuarioControlador::mostrarQr);
+                   post("cambiarRol/{id}", UsuarioControlador::cambiarRolOrganizador);
                });
             });
 
