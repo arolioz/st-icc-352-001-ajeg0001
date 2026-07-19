@@ -168,7 +168,7 @@ public class UsuarioControlador {
     public static void cambiarRolOrganizador(@NotNull Context ctx){
         Usuario admin = ctx.sessionAttribute("usuario");
 
-        long idUsuario = Long.parseLong(Objects.requireNonNull(ctx.formParam("id")));
+        long idUsuario = Long.parseLong(Objects.requireNonNull(ctx.pathParam("id")));
 
         if (admin != null && admin.getListaRoles().contains(RolesApp.ROLE_ADMIN)){
             Usuario usuario = UsuarioServices.getInstancia().find(idUsuario);
@@ -187,7 +187,7 @@ public class UsuarioControlador {
     public static void cambiarEstadoUsuario(@NotNull Context ctx){
         Usuario admin = ctx.sessionAttribute("usuario");
 
-        long idUsuario = Long.parseLong(Objects.requireNonNull(ctx.formParam("id")));
+        long idUsuario = Long.parseLong(Objects.requireNonNull(ctx.pathParam("id")));
 
         if (admin != null && admin.getListaRoles().contains(RolesApp.ROLE_ADMIN)){
             Usuario usuario = UsuarioServices.getInstancia().find(idUsuario);
