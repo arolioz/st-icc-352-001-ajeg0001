@@ -46,22 +46,78 @@
         }
     }
 
+    async function usuarioEstaInscrito(idEvento) {
+
+        try {
+             const respuesta = await fetch(`/Api/usuarioEstaInscrito/${idEvento}`);
+
+            if (!respuesta.ok) {
+                throw new Error(`HTTP error! Status: ${respuesta.status}`);
+            }
+
+            console.log(respuesta);
+            return await respuesta.json();
+        
+
+        } catch (error){
+            console.error('Fetch error: ', error);
+        }
+
+    }
+
+    async function cancelarInscripcion(idEvento) {
+
+        try {
+
+            const respuesta = await fetch(`/Eventos/cancelarInscripcion/${idEvento}`, {
+                method: "POST"
+            });
+
+            if (!respuesta.ok) {
+                throw new Error(`HTTP error! Status: ${respuesta.status}`);
+            }
+
+            cargarDetalleEvento();
+
+        } catch (error) {
+            console.error('Fetch error:', error);
+        }
+        
+    }
+
     async function crearBotones(evento) {
 
-        const container = document.createElement("div");
+        const inscrito = await usuarioEstaInscrito(evento.id);
 
+        const container = document.createElement("div");
         container.className = "flex gap-3 w-full";
 
-        const btnInscribir = document.createElement("button");
-        btnInscribir.className = "boton1 color4 text-center block flex-1 !w-auto ";
-        btnInscribir.textContent = "Inscribirse";
-        btnInscribir.addEventListener("click", async () => {
+        if (inscrito) {
+
+            const btnCancelar = document.createElement("button");
+            btnCancelar.className = "btn-cancelar";
+            btnCancelar.textContent = "Cancelar inscripción";
+
+            btnCancelar.addEventListener("click", () => {
+            cancelarInscripcion(evento.id);
+            });
+
+            container.appendChild(btnCancelar);
+
+        } else {
+
+            const btnInscribir = document.createElement("button");
+            btnInscribir.className = "boton1 color4 text-center block flex-1 !w-auto ";
+            btnInscribir.textContent = "Inscribirse";
+            btnInscribir.addEventListener("click", async () => {
 
             inscribirEvento(evento.id)
 
-        });
+            });
 
-        container.appendChild(btnInscribir);
+            container.appendChild(btnInscribir);
+
+        }
 
         const esAdmin = await usuarioEsAdmin();
         const esOrganizador = await usuarioEsOrganizador();

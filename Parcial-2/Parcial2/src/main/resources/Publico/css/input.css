@@ -59,3 +59,7 @@
 .event-body{
     @apply p-5 space-y-3 ;
 }
+
+.btn-cancelar{
+    @apply  bg-red-800 hover:bg-red-950 text-center block flex-1  rounded-md py-2 font-semibold text-white transition cursor-pointer 
+}
