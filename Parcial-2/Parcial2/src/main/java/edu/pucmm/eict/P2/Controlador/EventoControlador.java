@@ -76,6 +76,20 @@ public class EventoControlador {
         }
         Evento evento = EventoServices.getInstancia().find(eventId);
 
+
+        Date fechaEventoDate = evento.getFecha();
+
+        LocalDate fechaEvento = fechaEventoDate.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+
+        LocalDate hoy = LocalDate.now();
+
+        if (hoy.isAfter(fechaEvento)) {
+            ctx.status(401).result("Las inscripciones ya están cerradas");
+            return;
+        }
+
         if ((usuario != null && usuario.getListaRoles().contains(RolesApp.ROLE_USUARIO)) && evento.getCupo() < evento.getCupoMaximo() && evento != null && evento.getPublicado() == true){
             EventoUsuario tmpEU = EventoUsuarioServices.getInstancia().findUsuarioEnEvento(usuario.getId(),eventId);
 
@@ -155,7 +169,7 @@ public class EventoControlador {
             e.setLugar(lugar);
             e.setActivo(true);
 
-            if (e.getCupo() <= cupoMaximo){
+            if (e.getCupo() >= cupoMaximo){
                 e.setCupoMaximo(e.getCupo());
             }
             else{
