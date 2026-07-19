@@ -23,6 +23,10 @@ import java.time.LocalDateTime;
         @NamedQuery(
                 name = "EventoUsuario.findAsistenciaEvento",
                 query = "SELECT eu FROM EventoUsuario eu WHERE eu.evento.id = :idEvento and eu.asistencia = true "
+        ),
+        @NamedQuery(
+                name = "EventoUsuario.findInscripcionesEvento",
+                query = "SELECT eu FROM EventoUsuario eu WHERE eu.evento.id = :idEvento"
         )
 })
 public class EventoUsuario {

@@ -105,7 +105,7 @@ public class Main {
                     post("/cancelar/{id}",EventoControlador::cancelarEvento);
                     post("/cambiarEstado/{id}",EventoControlador::cambiarEstadoEvento);
                     //TODO CAMBIAR A METODO POST
-                    post("/marcarAsistencia/{token}",EventoControlador::marcarAsistencia);
+                    get("/marcarAsistencia/{token}",EventoControlador::marcarAsistencia);
 
 
                 });
@@ -120,6 +120,7 @@ public class Main {
                     get("usuarioEsOrganizador", UsuarioApi::esOrganizador);
                     get("usuarioEstaInscrito/{id}", UsuarioApi::usuarioEventoInscrito);
                     get("obtenerEvento/{id}", EventoApi::obtenerEvento);
+                    get("obtenerEstadisticaEvento/{id}",EventoApi::estadisticasEvento,RolesApp.ROLE_ORGANIZADOR);
                 });
             });
 

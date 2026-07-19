@@ -59,4 +59,17 @@ public class EventoUsuarioServices extends  GestionDb<EventoUsuario>{
         }
     }
 
+    public List<EventoUsuario> findInscripcionesEvento(Long idEvento) {
+        EntityManager em = getEntityManager();
+
+        try {
+            return em.createNamedQuery("EventoUsuario.findInscripcionesEvento", EventoUsuario.class)
+                    .setParameter("idEvento", idEvento)
+                    .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }
