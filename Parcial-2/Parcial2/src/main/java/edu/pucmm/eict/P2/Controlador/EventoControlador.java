@@ -89,10 +89,12 @@ public class EventoControlador {
             ctx.status(401).result("Las inscripciones ya están cerradas");
             return;
         }
-
+        IO.println("AQUI!");
+        IO.println(evento.getCupoMaximo());
         if ((usuario != null && usuario.getListaRoles().contains(RolesApp.ROLE_USUARIO)) && evento.getCupo() < evento.getCupoMaximo() && evento != null && evento.getPublicado() == true){
             EventoUsuario tmpEU = EventoUsuarioServices.getInstancia().findUsuarioEnEvento(usuario.getId(),eventId);
 
+            IO.println("AQUI2!");
             if (tmpEU == null){
                 String token = UUID.randomUUID().toString();
 

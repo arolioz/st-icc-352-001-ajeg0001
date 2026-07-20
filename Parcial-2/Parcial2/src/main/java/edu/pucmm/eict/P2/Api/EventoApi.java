@@ -2,8 +2,10 @@ package edu.pucmm.eict.P2.Api;
 
 import edu.pucmm.eict.P2.Entidades.Evento;
 import edu.pucmm.eict.P2.Entidades.EventoUsuario;
+import edu.pucmm.eict.P2.Entidades.Usuario;
 import edu.pucmm.eict.P2.Services.EventoServices;
 import edu.pucmm.eict.P2.Services.EventoUsuarioServices;
+import edu.pucmm.eict.P2.Services.UsuarioServices;
 import io.javalin.http.Context;
 import org.jetbrains.annotations.NotNull;
 
@@ -85,5 +87,25 @@ public class EventoApi {
 
         ctx.json(respuesta);
 
+    }
+
+    public static void obtenerUsuariosEvento(@NotNull Context ctx) {
+        Long id = Long.parseLong(ctx.pathParam("id"));
+        List<EventoUsuario> inscripcionesEvento = EventoUsuarioServices.getInstancia().findInscripcionesEvento(id);
+
+        List<Map<String, Object>> respuesta = new ArrayList<>();
+
+        for (EventoUsuario eu : inscripcionesEvento) {
+            Usuario u = eu.getUsuario();
+
+            Map<String, Object> usuarioMap = new HashMap<>();
+            usuarioMap.put("usuario", u.getUsuario());
+            usuarioMap.put("nombre", u.getNombre());
+            usuarioMap.put("asistio", eu.getAsistencia());
+
+            respuesta.add(usuarioMap);
+        }
+
+        ctx.json(respuesta);
     }
 }

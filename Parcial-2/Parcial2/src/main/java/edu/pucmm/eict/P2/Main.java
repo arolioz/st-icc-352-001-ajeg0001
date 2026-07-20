@@ -122,6 +122,7 @@ public class Main {
                     get("usuarioEstaInscrito/{id}", UsuarioApi::usuarioEventoInscrito);
                     get("obtenerEvento/{id}", EventoApi::obtenerEvento);
                     get("obtenerEstadisticaEvento/{id}",EventoApi::estadisticasEvento,RolesApp.ROLE_ORGANIZADOR);
+                    get("/obtenerUsuariosEvento/{id}",EventoApi::obtenerUsuariosEvento,RolesApp.ROLE_ORGANIZADOR);
                 });
             });
 
