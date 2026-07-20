@@ -18,11 +18,13 @@
             <img src="iconos/menu.svg" alt="Menu" class="lg:hidden cursor-pointer" id="menu-icon">
             <div class="lg:flex hidden grow justify-between">
                 <div>
-                <a href="inicio.html" class="nav-link">Inicio</a>
-                <a href="/Templates/crearEventos.html" class="nav-link">Crear eventos</a>
-                <a href="/Templates/listaEventos.html" class="nav-link">Eventos</a>
-                <a href="/Templates/listaUsuarios.html" class="nav-link">Lista Usuarios</a>
-                <a href="/Templates/tablaEventos.html" class="nav-link">Lista eventos</a>
+                    <a href="inicio.html" class="nav-link">Inicio</a>
+                    <a href="/Templates/listaEventos.html" class="nav-link">Eventos</a>
+
+                    <a href="/Templates/crearEventos.html" id="navCrearEvento" class="nav-link hidden">Crear eventos</a>
+
+                    <a href="/Templates/listaUsuarios.html" id="navUsuario" class="nav-link hidden">Usuarios</a>
+                    <a href="/Templates/tablaEventos.html" id="navEventos"class="nav-link">Gestionar eventos</a>
 
                 </div>
 
@@ -50,6 +52,12 @@
         </h3>
 
     </div>
+
+    <script src="/Scripts/funciones.js"></script>
+
+    <script>
+        configurarNavbar();
+    </script>
 
 </body>
 </html>

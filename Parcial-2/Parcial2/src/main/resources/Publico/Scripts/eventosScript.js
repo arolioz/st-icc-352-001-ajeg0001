@@ -14,9 +14,7 @@
             const data = await respuesta.json();
 
             const eventosDisponibles = data.filter(evento =>
-                evento.activo === true &&
-                evento.publicado === true &&
-                evento.eliminado === false
+             evento.publicado === true
             );
 
             console.log(eventosDisponibles);
