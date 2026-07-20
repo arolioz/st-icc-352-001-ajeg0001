@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio</title>
+    <link href="/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body class="min-h-screen bg-amber-50">
+
+<nav class="bg-amber-950 py-8 relative">
+    <div class="container mx-auto flex ">
+        <div class="flex grow">
+            <a href="#" class="text-amber-50 text-2xl font-bold">LOGO</a>
+        </div>
+
+        <img src="iconos/menu.svg" alt="Menu" class="lg:hidden cursor-pointer" id="menu-icon">
+        <div class="lg:flex hidden grow justify-between">
+            <div>
+                <a href="inicio.html" class="nav-link">Inicio</a>
+                <a href="/Templates/listaEventos.html" class="nav-link">Eventos</a>
+
+                <a href="/Templates/crearEventos.html" id="navCrearEvento" class="nav-link hidden">Crear eventos</a>
+
+                <a href="/Templates/listaUsuarios.html" id="navUsuario" class="nav-link hidden">Usuarios</a>
+                <a href="/Templates/tablaEventos.html" id="navEventos" class="nav-link hidden">Gestionar eventos</a>
+
+            </div>
+
+            <div>
+                <a href="login.html" id="btnLogin" class="text-amber-50 border border-amber-50 py-2 px-5 rounded-lg hover:bg-amber-50 hover:text-amber-950 transition duration-300 ease-in-out lg:mr-3">Iniciar sesión</a>
+                <a href="registrar.html" id="btnRegistrar" class="text-amber-950 bg-amber-50 border border-amber-50 py-2 px-5 rounded-lg hover:bg-[#c6956e] transition duration-300 ease-in-out">Registrarse</a>
+
+                <div id="infoUsuario" class="hidden flex items-center gap-2">
+                    <i class="bi bi-person-circle text-amber-50 text-2xl"></i>
+                    <span id="nombreUsuario" class="text-amber-50 font-semibold text-xl"></span>
+                </div>
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</nav>
+
+<div class="h-dvh flex flex-col items-center justify-center text-center">
+
+    <h1 class="text-6xl font-black text-amber-950 leading-tight py-3" id="titulo">
+        Codigo qr para el evento {nombre}.
+    </h1>
+    <img id="qr" width="720" height="720" src="" class="py-3">
+
+
+</div>
+
+<script src="/Scripts/funciones.js"></script>
+
+<script>
+    configurarNavbar();
+    configurarSesion();
+</script>
+<script src="/Scripts/verQr.js"></script>
+</body>
+</html>
