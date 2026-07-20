@@ -119,7 +119,7 @@
             btnInscribir.textContent = "Inscribirse";
             btnInscribir.addEventListener("click", async () => {
 
-            inscribirEvento(evento.id)
+                inscribirEvento(evento.id)
 
             });
 

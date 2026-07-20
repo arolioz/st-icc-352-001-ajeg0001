@@ -125,7 +125,7 @@
         const btnDetalle = document.createElement("a");
         btnDetalle.className = "btn2 color5 text-center block flex-1 !w-auto";
         btnDetalle.textContent = "Ver";
-        btnDetalle.href = `detalleEvento.html?id=${evento.id}`;
+        btnDetalle.href = `estadisticasEvento.html?id=${evento.id}`;
 
         // EDITAR
         const btnEditar = document.createElement("a");
