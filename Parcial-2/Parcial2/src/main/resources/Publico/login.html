@@ -9,32 +9,42 @@
 </head>
 
 <body class="min-h-screen bg-amber-50">
-    <nav class="bg-amber-950 py-8 relative">
-        <div class="container mx-auto flex ">
-            <div class="flex grow">
-                <a href="#" class="text-amber-50 text-2xl font-bold">LOGO</a>
+<nav class="bg-amber-950 py-8 relative">
+    <div class="container mx-auto flex ">
+        <div class="flex grow">
+            <a href="#" class="text-amber-50 text-2xl font-bold">LOGO</a>
+        </div>
+
+        <img src="iconos/menu.svg" alt="Menu" class="lg:hidden cursor-pointer" id="menu-icon">
+        <div class="lg:flex hidden grow justify-between">
+            <div>
+                <a href="inicio.html" class="nav-link">Inicio</a>
+                <a href="/Templates/listaEventos.html" class="nav-link">Eventos</a>
+
+                <a href="/Templates/crearEventos.html" id="navCrearEvento" class="nav-link hidden">Crear eventos</a>
+
+                <a href="/Templates/listaUsuarios.html" id="navUsuario" class="nav-link hidden">Usuarios</a>
+                <a href="/Templates/tablaEventos.html" id="navEventos" class="nav-link hidden">Gestionar eventos</a>
+
             </div>
 
-            <img src="iconos/menu.svg" alt="Menu" class="lg:hidden cursor-pointer" id="menu-icon">
-            <div class="lg:flex hidden grow justify-between">
-                <div>
-                    <a href="inicio.html" class="nav-link">Inicio</a>
-                    <a href="listaEventos.html" class="nav-link">Eventos</a>
-                    <a href="inicio.html" class="nav-link">Sobre nosotros</a>
+            <div>
+                <a href="login.html" id="btnLogin" class="text-amber-50 border border-amber-50 py-2 px-5 rounded-lg hover:bg-amber-50 hover:text-amber-950 transition duration-300 ease-in-out lg:mr-3">Iniciar sesión</a>
+                <a href="registrar.html" id="btnRegistrar" class="text-amber-950 bg-amber-50 border border-amber-50 py-2 px-5 rounded-lg hover:bg-[#c6956e] transition duration-300 ease-in-out">Registrarse</a>
+
+                <div id="infoUsuario" class="hidden flex items-center gap-2">
+                    <i class="bi bi-person-circle text-amber-50 text-2xl"></i>
+                    <span id="nombreUsuario" class="text-amber-50 font-semibold text-xl"></span>
                 </div>
-
-                <div>
-                    <a href="login.html" class="text-amber-50 border border-amber-50 py-2 px-5 rounded-lg hover:bg-amber-50 hover:text-amber-950 transition duration-300 ease-in-out lg:mr-3">Iniciar sesión</a>
-                    <a href="registrar.html" class="text-amber-950 bg-amber-50 border border-amber-50 py-2 px-5 rounded-lg hover:bg-amber-600 transition duration-300 ease-in-out">Registrarse</a>
-                </div>
-
-
             </div>
 
 
         </div>
 
-    </nav>
+
+    </div>
+
+</nav>
 
     <div class="card">
 
@@ -105,6 +115,12 @@
 
 
     <script src="./Scripts/registro.js"></script>
+    <script src="/Scripts/funciones.js"></script>
+
+    <script>
+        configurarNavbar();
+        configurarSesion();
+    </script>
 
 </body>
 </html>
