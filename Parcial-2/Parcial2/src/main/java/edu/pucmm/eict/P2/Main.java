@@ -91,6 +91,7 @@ public class Main {
                    post("bloquear/{id}",UsuarioControlador::cambiarEstadoUsuario, RolesApp.ROLE_ADMIN);
                    get("mostrarQr/{idEvento}",UsuarioControlador::mostrarQr, RolesApp.ROLE_USUARIO);
                    post("cambiarRol/{id}", UsuarioControlador::cambiarRolOrganizador,RolesApp.ROLE_ADMIN);
+                   get("cerrarSesion", UsuarioControlador::cerrarSesion,RolesApp.ROLE_USUARIO);
                });
             });
 
