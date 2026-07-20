@@ -8,7 +8,8 @@
 
         try {
 
-            const respuesta = await fetch(`/Api/obtenerEstadisticaEvento/${idEvento}`);
+            const respuesta = await fetch(`/Api/obtenerEvento/${idEvento}`);
+
             console.log(respuesta);
 
             if (!respuesta.ok) {
@@ -19,7 +20,7 @@
 
             console.log(data);
 
-            document.getElementById("titulo").textContent = `Codigo qr para del evento ${data.evento}`
+            document.getElementById("titulo").textContent = `Codigo qr para del evento ${data.titulo}`
 
             mostrarQr();
 
