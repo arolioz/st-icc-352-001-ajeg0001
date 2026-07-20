@@ -74,6 +74,33 @@
 
     }
 
+    
+    async function eliminarEvento(id){
+
+
+        try{
+
+            const respuesta = await fetch(`/Eventos/eliminar/${id}`,{
+                method:"POST"
+            });
+
+
+            if(!respuesta.ok){
+                throw new Error("Error eliminando evento");
+            }
+
+
+            await cargarEventos();
+
+
+        }catch(error){
+
+            console.error(error);
+
+        }
+
+    }
+
     function eventoEstaEliminado(evento) {
 
         return evento.eliminado;
@@ -96,19 +123,19 @@
 
         // VER DETALLE
         const btnDetalle = document.createElement("a");
-        btnDetalle.className = "boton1 color4 text-center block flex-1 !w-auto";
+        btnDetalle.className = "btn2 color5 text-center block flex-1 !w-auto";
         btnDetalle.textContent = "Ver";
         btnDetalle.href = `detalleEvento.html?id=${evento.id}`;
 
         // EDITAR
         const btnEditar = document.createElement("a");
-        btnEditar.className = "boton1 color2 text-center block flex-1 !w-auto";
+        btnEditar.className = "btn2 color4 text-center block flex-1 !w-auto";
         btnEditar.textContent = "Editar";
         btnEditar.href = `crearEventos.html?id=${evento.id}`;
 
         // PUBLICAR / DESPUBLICAR
         const btnEstado = document.createElement("button");
-        btnEstado.className = "boton1 color3 text-center block flex-1 !w-auto";
+        btnEstado.className = "btn2 color3 text-center block flex-1 !w-auto";
 
         if(eventoEstaPublicado(evento)) {
 
@@ -127,7 +154,7 @@
 
         // CANCELAR
         const btnCancelar = document.createElement("button");
-        btnCancelar.className = "btn2 text-center block flex-1 !w-auto";
+        btnCancelar.className = "btn2 color2 text-center block flex-1 !w-auto";
         btnCancelar.textContent = "Cancelar";
 
 
@@ -135,11 +162,29 @@
             cancelarEvento(evento.id);
         });
 
+        const btnEliminar = document.createElement("button");
+        btnEliminar.className = "btn2 color1 text-center block flex-1 !w-auto"
+        btnEliminar.textContent = "Eliminar";
 
-        container.appendChild(btnDetalle);
-        container.appendChild(btnEditar);
-        container.appendChild(btnEstado);
-        container.appendChild(btnCancelar);
+        btnEliminar.addEventListener("click", () => {
+            eliminarEvento(evento.id);
+        });
+
+        if (eventoEstaEliminado(evento)) {
+            return container;
+
+        } else if (eventoEstaCancelado(evento)) {
+            container.appendChild(btnEliminar);
+
+        } else {
+            container.appendChild(btnDetalle);
+            container.appendChild(btnEditar);
+            container.appendChild(btnEstado);
+            container.appendChild(btnCancelar);
+            container.appendChild(btnEliminar); 
+
+        }
+
 
         return container;
 
@@ -228,13 +273,13 @@
             const botones =  crearBotones(evento);
             acciones.appendChild(botones);
 
-           fila.appendChild(titulo);
-           fila.appendChild(organizador);
-           fila.appendChild(fecha);
-           fila.appendChild(hora);
-           fila.appendChild(lugar);
-           fila.appendChild(estado);
-           fila.appendChild(acciones);
+            fila.appendChild(titulo);
+            fila.appendChild(organizador);
+            fila.appendChild(fecha);
+            fila.appendChild(hora);
+            fila.appendChild(lugar);
+            fila.appendChild(estado);
+            fila.appendChild(acciones);
 
             tablaEventos.appendChild(fila);
 
