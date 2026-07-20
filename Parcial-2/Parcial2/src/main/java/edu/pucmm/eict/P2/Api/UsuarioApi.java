@@ -66,5 +66,15 @@ public class UsuarioApi {
         }
     }
 
+    public static void obtenerUsuarioActual(Context ctx) {
+        Usuario usuario = ctx.sessionAttribute("usuario");
+
+        if (usuario == null) {
+            return;
+        }
+
+        ctx.json(usuario);
+    }
+
 
 }

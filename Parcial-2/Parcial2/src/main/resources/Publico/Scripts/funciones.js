@@ -69,3 +69,58 @@ async function usuarioEsAdmin() {
         }
 
     }
+
+    async function obtenerUsuarioActual() {
+
+        try {
+            const respuesta = await fetch("/Api/usuarioActual");
+
+            if (!respuesta.ok) {
+                throw new Error(`HTTP error! Status: ${respuesta.status}`);
+            }
+
+            console.log(respuesta);
+            return await respuesta.json();
+
+        } catch (error){
+            console.error('Fetch error: ', error);
+        }
+
+    }
+
+    async function configurarSesion() {
+
+        const usuario = await obtenerUsuarioActual();
+
+        if (!usuario) {
+            return;
+        }
+
+        document.getElementById("btnLogin")?.classList.add("hidden");
+        document.getElementById("btnRegistrar")?.classList.add("hidden");
+
+        document.getElementById("nombreUsuario").textContent = usuario.nombre;
+        document.getElementById("infoUsuario").classList.remove("hidden");
+
+    }
+
+async function configurarNavbar() {
+
+    const usuario = await obtenerUsuarioActual();
+
+    if (!usuario) {
+        return;
+    }
+
+    const roles = usuario.listaRoles;
+
+    if (roles.includes("ROLE_ORGANIZADOR")) {
+        document.getElementById("navCrearEvento")?.classList.remove("hidden");
+    }
+
+    if (roles.includes("ROLE_ADMIN")) {
+        document.getElementById("navUsuario")?.classList.remove("hidden");
+
+        document.getElementById("navEventos")?.classList.remove("hidden");
+    }
+}
