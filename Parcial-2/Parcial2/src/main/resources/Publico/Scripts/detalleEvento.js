@@ -104,6 +104,14 @@
 
             container.appendChild(btnCancelar);
 
+            const btnQR = document.createElement("a");
+            btnQR.className = "boton1 color5 text-center block flex-1 !w-auto";
+            btnQR.textContent = "Mostrar QR";
+            btnQR.href = `verCodigoQr.html?id=${evento.id}`;
+
+            container.appendChild(btnQR);
+
+
         } else {
 
             const btnInscribir = document.createElement("button");
