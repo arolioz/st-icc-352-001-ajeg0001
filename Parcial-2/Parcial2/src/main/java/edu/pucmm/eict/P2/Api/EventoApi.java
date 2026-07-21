@@ -108,4 +108,14 @@ public class EventoApi {
 
         ctx.json(respuesta);
     }
+
+    public static void obtenerEventosUsuario(@NotNull Context ctx){
+        Usuario u = ctx.sessionAttribute("usuario");
+
+        if (u != null){
+            List<EventoUsuario> euL = EventoUsuarioServices.getInstancia().findEventosDeUsuario(u.getId());
+
+            ctx.json(euL);
+        }
+    }
 }

@@ -126,6 +126,8 @@ public class Main {
 
                     get("/usuarioActual", UsuarioApi::obtenerUsuarioActual);
                     get("/obtenerUsuariosEvento/{id}",EventoApi::obtenerUsuariosEvento,RolesApp.ROLE_ORGANIZADOR);
+
+                    get("/obtenerEventosUsuario",EventoApi::obtenerEventosUsuario,RolesApp.ROLE_USUARIO);
                 });
             });
 
