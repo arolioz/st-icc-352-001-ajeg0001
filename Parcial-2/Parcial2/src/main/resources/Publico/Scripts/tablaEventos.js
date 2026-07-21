@@ -224,7 +224,15 @@
             //FECHA
             const fecha = document.createElement("td");
             fecha.className = "p-3 font-semibold";
-            fecha.textContent = new Date(evento.fecha).toLocaleDateString();
+
+            const fechaUTC = new Date(evento.fecha);
+
+            const anio = fechaUTC.getUTCFullYear();
+            const mes = String(fechaUTC.getUTCMonth() + 1).padStart(2, '0'); // Los meses van de 0 a 11
+            const dia = String(fechaUTC.getUTCDate()).padStart(2, '0');
+
+            fecha.append(` Fecha: ${dia}/${mes}/${anio}`);
+
             
             //HORA
             const hora = document.createElement("td");

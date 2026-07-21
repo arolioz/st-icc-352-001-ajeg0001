@@ -191,7 +191,14 @@
             iconoCalendario.className = "bi bi-calendar-event";
 
             fecha.appendChild(iconoCalendario);
-            fecha.append(" Fecha: " + new Date(evento.fecha).toLocaleDateString());
+            const fechaUTC = new Date(evento.fecha);
+
+            const anio = fechaUTC.getUTCFullYear();
+            const mes = String(fechaUTC.getUTCMonth() + 1).padStart(2, '0'); // Los meses van de 0 a 11
+            const dia = String(fechaUTC.getUTCDate()).padStart(2, '0');
+
+            fecha.appendChild(iconoCalendario);
+            fecha.append(` Fecha: ${dia}/${mes}/${anio}`);
 
             //HORA
             const hora = document.createElement("p");
