@@ -115,7 +115,17 @@ public class EventoApi {
         if (u != null){
             List<EventoUsuario> euL = EventoUsuarioServices.getInstancia().findEventosDeUsuario(u.getId());
 
-            ctx.json(euL);
+            List<Evento> eventos = new ArrayList<>();
+
+            for (EventoUsuario tmp : euL){
+                Evento evento = tmp.getEvento();
+
+                if (evento != null){
+                    eventos.add(evento);
+                }
+            }
+
+            ctx.json(eventos);
         }
     }
 }
