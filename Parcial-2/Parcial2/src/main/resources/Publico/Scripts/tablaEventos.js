@@ -115,7 +115,9 @@
     }
 
 
-    function crearBotones(evento) {
+    async function crearBotones(evento) {
+
+        const esAdmin = await usuarioEsAdmin();
 
         const container = document.createElement("div");
         container.className = "flex gap-2 justify-center";
@@ -137,7 +139,7 @@
         const btnEstado = document.createElement("button");
         btnEstado.className = "btn2 color3 text-center block flex-1 !w-auto";
 
-        if(eventoEstaPublicado(evento)) {
+        if (eventoEstaPublicado(evento)) {
 
             btnEstado.textContent = "Despublicar";
 
@@ -181,7 +183,10 @@
             container.appendChild(btnEditar);
             container.appendChild(btnEstado);
             container.appendChild(btnCancelar);
-            container.appendChild(btnEliminar); 
+
+            if (esAdmin) {
+                container.appendChild(btnEliminar);
+            }
 
         }
 
@@ -278,7 +283,7 @@
 
             const acciones = document.createElement("td");
             acciones.className = "p-3 font-semibold";
-            const botones =  crearBotones(evento);
+            const botones =  await crearBotones(evento);
             acciones.appendChild(botones);
 
             fila.appendChild(titulo);
