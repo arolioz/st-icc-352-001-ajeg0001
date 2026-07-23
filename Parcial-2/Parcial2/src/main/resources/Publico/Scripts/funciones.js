@@ -99,7 +99,7 @@ async function usuarioEsAdmin() {
         document.getElementById("btnLogin")?.classList.add("hidden");
         document.getElementById("btnRegistrar")?.classList.add("hidden");
 
-        document.getElementById("nombreUsuario").textContent = usuario.nombre;
+        document.getElementById("nombreUsuario").textContent = usuario.usuario;
         document.getElementById("infoUsuario").classList.remove("hidden");
 
     }
