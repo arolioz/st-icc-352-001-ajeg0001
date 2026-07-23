@@ -211,8 +211,6 @@
         console.log("Eliminado:", evento.eliminado);
 
             const idOrganizador = await obtenerOrganizadorEvento(evento.idOrganizador);
-            //const cantidadInscritos = await obtenerCantidadInscritos(evento.id);
-
             const fila = document.createElement("tr");
             fila.className = "border-b text-center border-amber-950";
 
@@ -236,7 +234,7 @@
             const mes = String(fechaUTC.getUTCMonth() + 1).padStart(2, '0'); // Los meses van de 0 a 11
             const dia = String(fechaUTC.getUTCDate()).padStart(2, '0');
 
-            fecha.append(` Fecha: ${dia}/${mes}/${anio}`);
+            fecha.append(`${dia}/${mes}/${anio}`);
 
             
             //HORA
