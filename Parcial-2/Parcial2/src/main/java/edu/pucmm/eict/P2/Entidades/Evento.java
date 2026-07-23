@@ -1,5 +1,6 @@
 package edu.pucmm.eict.P2.Entidades;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,6 +19,7 @@ public class Evento {
     private String titulo;
     private String descripcion;
     private Date fecha;
+    @JsonFormat(pattern = "HH:mm")
     private LocalTime hora;
     private String lugar;
     private int cupoMaximo;
