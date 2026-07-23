@@ -115,6 +115,7 @@ async function configurarNavbar() {
     const roles = usuario.listaRoles;
 
     if (roles.includes("ROLE_ORGANIZADOR")) {
+        document.getElementById("navEventos")?.classList.remove("hidden");
         document.getElementById("navCrearEvento")?.classList.remove("hidden");
     }
 
