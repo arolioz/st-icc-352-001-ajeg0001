@@ -161,7 +161,12 @@
 
 
         btnCancelar.addEventListener("click", () => {
+            if (!confirm("¿Está seguro de que desea cancelar este evento?")) {
+                return;
+            }
             cancelarEvento(evento.id);
+
+            alert("Evento cancelado exitosamente");
         });
 
         const btnEliminar = document.createElement("button");
@@ -169,7 +174,13 @@
         btnEliminar.textContent = "Eliminar";
 
         btnEliminar.addEventListener("click", () => {
+            if (!confirm("¿Está seguro de que desea eliminar este evento?")) {
+                return;
+            }
+
             eliminarEvento(evento.id);
+
+            alert("Evento eliminado exitosamente");
         });
 
         if (eventoEstaEliminado(evento)) {
@@ -204,11 +215,6 @@
 
 
        for (const evento of eventos) {
-
-        console.log("Evento:", evento.titulo);
-        console.log("Activo:", evento.activo);
-        console.log("Publicado:", evento.publicado);
-        console.log("Eliminado:", evento.eliminado);
 
             const idOrganizador = await obtenerOrganizadorEvento(evento.idOrganizador);
             const fila = document.createElement("tr");

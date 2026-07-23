@@ -38,7 +38,7 @@
             if (!respuesta.ok) {
                 throw new Error(`HTTP error! Status: ${respuesta.status}`);
             }
-
+            alert("Se ha inscrito exitosamente al evento");
             cargarDetalleEvento();
 
         } catch (error) {
@@ -99,7 +99,10 @@
             btnCancelar.textContent = "Cancelar inscripción";
 
             btnCancelar.addEventListener("click", () => {
-            cancelarInscripcion(evento.id);
+                if (!confirm("¿Desea cancelar su inscripción al evento?")) {
+                    return;
+                }
+                cancelarInscripcion(evento.id);
             });
 
             container.appendChild(btnCancelar);
@@ -118,8 +121,17 @@
             btnInscribir.className = "boton1 color4 text-center block flex-1 !w-auto ";
             btnInscribir.textContent = "Inscribirse";
             btnInscribir.addEventListener("click", async () => {
+                const fechaEvento = new Date(evento.fecha);
+                const fechaActual = new Date();
 
-                inscribirEvento(evento.id)
+                fechaEvento.setHours(0, 0, 0, 0);
+                fechaActual.setHours(0, 0, 0, 0);
+
+                if (fechaEvento < fechaActual){
+                    alert("No es posible inscribirse es este evento");
+                } else{
+                    await inscribirEvento(evento.id)
+                }
 
             });
 
@@ -137,7 +149,6 @@
             btnEditar.textContent = "Editar";
             btnEditar.href = `crearEventos.html?id=${evento.id}`;
 
-            //btnEditar.setAttribute("href", `/Eventos/procesar-modificar/${evento.id}`);
             container.appendChild(btnEditar);
         }
 
