@@ -1,5 +1,6 @@
 package edu.pucmm.eict.P2.Api;
 
+import Util.RolesApp;
 import edu.pucmm.eict.P2.Entidades.Evento;
 import edu.pucmm.eict.P2.Entidades.EventoUsuario;
 import edu.pucmm.eict.P2.Entidades.Usuario;
@@ -127,5 +128,18 @@ public class EventoApi {
 
             ctx.json(eventos);
         }
+    }
+
+    public static void listaEventosRestringida(@NotNull Context ctx){
+        Usuario u = ctx.sessionAttribute("usuario");
+        if (u == null || !u.getListaRoles().contains(RolesApp.ROLE_ORGANIZADOR)){
+            ctx.status(403);
+            ctx.result("No tiene permitido ver la lista en esta vista");
+            return;
+        }
+
+        List<Evento> eventos = EventoServices.getInstancia().findAll();
+
+        ctx.json(eventos);
     }
 }

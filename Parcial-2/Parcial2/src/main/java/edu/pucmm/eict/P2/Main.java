@@ -128,6 +128,8 @@ public class Main {
                     get("/obtenerUsuariosEvento/{id}",EventoApi::obtenerUsuariosEvento,RolesApp.ROLE_ORGANIZADOR);
 
                     get("/obtenerEventosUsuario",EventoApi::obtenerEventosUsuario,RolesApp.ROLE_USUARIO);
+
+                    get("/listaEventosAdmin",EventoApi::listaEventosRestringida,RolesApp.ROLE_USUARIO);
                 });
             });
 

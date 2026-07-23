@@ -7,7 +7,7 @@
 
         try {
 
-            const respuesta = await fetch('/Api/listaEventos');
+            const respuesta = await fetch('/Api/listaEventosAdmin');
             console.log(respuesta);
             
             if (!respuesta.ok) {
