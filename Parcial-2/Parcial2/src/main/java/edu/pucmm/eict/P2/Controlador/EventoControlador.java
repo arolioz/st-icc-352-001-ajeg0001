@@ -179,6 +179,7 @@ public class EventoControlador {
             }
 
             EventoServices.getInstancia().editar(e);
+            ctx.redirect("/Templates/detalleEvento.html?id="+id);
         }
 
     }
