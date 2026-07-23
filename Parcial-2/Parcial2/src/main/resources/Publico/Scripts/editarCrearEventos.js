@@ -49,16 +49,15 @@
         document.getElementById("idEvento").value = evento.id;
         document.getElementById("titulo").value = evento.titulo;
         document.getElementById("descripcion").value = evento.descripcion;
+        const fecha = document.getElementById("fecha");
 
-        fecha.appendChild(iconoCalendario);
         const fechaUTC = new Date(evento.fecha);
 
         const anio = fechaUTC.getUTCFullYear();
         const mes = String(fechaUTC.getUTCMonth() + 1).padStart(2, '0'); // Los meses van de 0 a 11
         const dia = String(fechaUTC.getUTCDate()).padStart(2, '0');
 
-        fecha.appendChild(iconoCalendario);
-        fecha.append(` Fecha: ${dia}/${mes}/${anio}`);
+        fecha.value = `${anio}-${mes}-${dia}`;
 
         document.getElementById("hora").value = evento.hora;
         document.getElementById("lugar").value = evento.lugar;
