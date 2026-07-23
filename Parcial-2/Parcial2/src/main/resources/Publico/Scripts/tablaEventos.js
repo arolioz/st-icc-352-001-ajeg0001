@@ -187,7 +187,10 @@
             return container;
 
         } else if (eventoEstaCancelado(evento)) {
-            container.appendChild(btnEliminar);
+            if (esAdmin) {
+                container.appendChild(btnEliminar);
+
+            }
 
         } else {
             container.appendChild(btnDetalle);
