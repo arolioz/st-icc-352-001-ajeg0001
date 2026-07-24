@@ -99,12 +99,26 @@ async function usuarioEsAdmin() {
         document.getElementById("btnLogin")?.classList.add("hidden");
         document.getElementById("btnRegistrar")?.classList.add("hidden");
 
+        document.getElementById("btnLoginMovil")?.classList.add("hidden");
+        document.getElementById("btnRegistrarMovil")?.classList.add("hidden");
+
         document.getElementById("nombreUsuario").textContent = usuario.usuario;
         document.getElementById("infoUsuario").classList.remove("hidden");
+
+
+        document.getElementById("nombreUsuarioMovil").textContent = usuario.usuario;
+        document.getElementById("infoUsuarioMovil").classList.remove("hidden");
+
 
     }
 
 async function configurarNavbar() {
+    const btnMenu = document.getElementById("btnMenuMovil");
+    const menu = document.getElementById("menuMovil");
+
+    btnMenu.addEventListener("click", () => {
+        menu.classList.toggle("hidden");
+    });
 
     const usuario = await obtenerUsuarioActual();
 
@@ -115,13 +129,19 @@ async function configurarNavbar() {
     const roles = usuario.listaRoles;
 
     if (roles.includes("ROLE_ORGANIZADOR")) {
+        document.getElementById("navEventosMovil")?.classList.remove("hidden");
+        document.getElementById("navCrearEventoMovil")?.classList.remove("hidden");
+
         document.getElementById("navEventos")?.classList.remove("hidden");
         document.getElementById("navCrearEvento")?.classList.remove("hidden");
     }
 
     if (roles.includes("ROLE_ADMIN")) {
         document.getElementById("navUsuario")?.classList.remove("hidden");
-
         document.getElementById("navEventos")?.classList.remove("hidden");
+
+        document.getElementById("navUsuarioMovil")?.classList.remove("hidden");
+        document.getElementById("navEventosMovil")?.classList.remove("hidden");
     }
+
 }

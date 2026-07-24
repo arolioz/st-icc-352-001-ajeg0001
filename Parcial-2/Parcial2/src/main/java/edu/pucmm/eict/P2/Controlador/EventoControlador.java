@@ -256,5 +256,9 @@ public class EventoControlador {
             eu.setFechaAsistencia(LocalDateTime.now());
             EventoUsuarioServices.getInstancia().editar(eu);
         }
+        else{
+            ctx.status(400).result("No se puede marcar la asistencia mas de una vez");
+            return;
+        }
     }
 }

@@ -96,3 +96,7 @@
 .menu {
     @apply  w-full z-50 px-4 py-2 text-amber-950 hover:bg-[#c6956e]
 }
+
+.movil-menuItem{
+    @apply px-6 py-4 text-amber-50 hover:bg-[#c6956e]
+}
