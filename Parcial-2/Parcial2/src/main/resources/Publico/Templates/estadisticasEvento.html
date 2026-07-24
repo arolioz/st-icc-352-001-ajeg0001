@@ -12,20 +12,29 @@
 <nav class="bg-amber-950 py-8 relative">
     <div class="container mx-auto flex ">
         <div class="flex grow">
-            <a href="#" class="text-amber-50 text-2xl font-bold">LOGO</a>
+            <a class="text-amber-50 text-2xl font-bold">Aeternum Eventos</a>
         </div>
 
-        <img src="iconos/menu.svg" alt="Menu" class="lg:hidden cursor-pointer" id="menu-icon">
         <div class="lg:flex hidden grow justify-between">
-            <div>
+            <div class="flex items-center gap-4">
+
                 <a href="/inicio.html" class="nav-link">Inicio</a>
-                <a href="/Templates/listaEventos.html" class="nav-link">Eventos</a>
 
-                <a href="/Templates/crearEventos.html" id="navCrearEvento" class="nav-link hidden">Crear eventos</a>
+                <div class="relative group">
+                    <button class="nav-link flex items-center cursor-pointer">
+                        Eventos <i class="bi bi-caret-down-fill"></i>
+                    </button>
 
+                    <div class=" min-w-max absolute left-0 top-full hidden group-hover:flex flex-col bg-white shadow-lg">
+
+                        <a href="/Templates/listaEventos.html" class="menu">Eventos</a>
+                        <a href="/Templates/crearEventos.html" id="navCrearEvento" class="menu hidden">Crear eventos</a>
+                        <a href="/Templates/tablaEventos.html" id="navEventos" class="menu hidden">Gestionar eventos</a>
+                        <a href="/Templates/eventosUsuario.html" class="menu">Mis eventos</a>
+
+                    </div>
+                </div>
                 <a href="/Templates/listaUsuarios.html" id="navUsuario" class="nav-link hidden">Usuarios</a>
-                <a href="/Templates/tablaEventos.html" id="navEventos" class="nav-link hidden">Gestionar eventos</a>
-                <a href="/Templates/eventosUsuario.html" class="nav-link">Mis eventos</a>
             </div>
 
             <div>

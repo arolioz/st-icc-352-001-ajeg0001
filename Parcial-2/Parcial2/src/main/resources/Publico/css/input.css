@@ -92,3 +92,7 @@
 .card-table-event-body{
     @apply w-full bg-white rounded-b-xl p-8 drop-shadow-amber-950;
 }
+
+.menu {
+    @apply  w-full z-50 px-4 py-2 text-amber-950 hover:bg-[#c6956e]
+}

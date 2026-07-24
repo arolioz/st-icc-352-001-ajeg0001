@@ -216,8 +216,14 @@
   .inset-y-0 {
     inset-block: 0;
   }
+  .top-full {
+    top: 100%;
+  }
   .right-3 {
     right: calc(var(--spacing) * 3);
+  }
+  .left-0 {
+    left: 0;
   }
   .z-50 {
     z-index: 50;
@@ -301,6 +307,9 @@
   .max-w-md {
     max-width: var(--container-md);
   }
+  .min-w-max {
+    min-width: max-content;
+  }
   .flex-1 {
     flex: 1;
   }
@@ -338,6 +347,9 @@
   }
   .gap-3 {
     gap: calc(var(--spacing) * 3);
+  }
+  .gap-4 {
+    gap: calc(var(--spacing) * 4);
   }
   .gap-5 {
     gap: calc(var(--spacing) * 5);
@@ -514,6 +526,10 @@
     --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
   }
+  .shadow-lg {
+    --tw-shadow: 0 10px 15px -3px var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 4px 6px -4px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
+    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  }
   .drop-shadow-amber-950 {
     --tw-drop-shadow-size: drop-shadow(0 4px 6px var(--tw-drop-shadow-color, rgba(202, 138, 4, 0.5)));
     --tw-drop-shadow: drop-shadow(var(--drop-shadow-amber-950));
@@ -531,6 +547,13 @@
   .ease-in-out {
     --tw-ease: var(--ease-in-out);
     transition-timing-function: var(--ease-in-out);
+  }
+  .group-hover\:flex {
+    &:is(:where(.group):hover *) {
+      @media (hover: hover) {
+        display: flex;
+      }
+    }
   }
   .hover\:bg-\[\#c6956e\] {
     &:hover {
@@ -931,6 +954,18 @@
   --tw-drop-shadow-size: drop-shadow(0 4px 6px var(--tw-drop-shadow-color, rgba(202, 138, 4, 0.5)));
   --tw-drop-shadow: drop-shadow(var(--drop-shadow-amber-950));
   filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
+}
+.menu {
+  z-index: 50;
+  width: 100%;
+  padding-inline: calc(var(--spacing) * 4);
+  padding-block: calc(var(--spacing) * 2);
+  color: var(--color-amber-950);
+  &:hover {
+    @media (hover: hover) {
+      background-color: #c6956e;
+    }
+  }
 }
 @property --tw-border-spacing-x {
   syntax: "<length>";
