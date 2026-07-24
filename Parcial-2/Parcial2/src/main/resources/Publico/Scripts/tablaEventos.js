@@ -219,93 +219,93 @@
 
        for (const evento of eventos) {
 
-            const idOrganizador = await obtenerOrganizadorEvento(evento.idOrganizador);
-            const fila = document.createElement("tr");
-            fila.className = "border-b text-center border-amber-950";
+           if (!eventoEstaEliminado(evento)){
+               const idOrganizador = await obtenerOrganizadorEvento(evento.idOrganizador);
+               const fila = document.createElement("tr");
+               fila.className = "border-b text-center border-amber-950";
 
-            //TITULO
-            const titulo = document.createElement("td");
-            titulo.className = "p-3 font-semibold";
-            titulo.textContent = evento.titulo;
+               //TITULO
+               const titulo = document.createElement("td");
+               titulo.className = "p-3 font-semibold";
+               titulo.textContent = evento.titulo;
 
-            //ORGANIZADOR
-            const organizador = document.createElement("td");
-            organizador.className = "p-3 font-semibold";
-            organizador.textContent = idOrganizador;
+               //ORGANIZADOR
+               const organizador = document.createElement("td");
+               organizador.className = "p-3 font-semibold";
+               organizador.textContent = idOrganizador;
 
-            //FECHA
-            const fecha = document.createElement("td");
-            fecha.className = "p-3 font-semibold";
+               //FECHA
+               const fecha = document.createElement("td");
+               fecha.className = "p-3 font-semibold";
 
-            const fechaUTC = new Date(evento.fecha);
+               const fechaUTC = new Date(evento.fecha);
 
-            const anio = fechaUTC.getUTCFullYear();
-            const mes = String(fechaUTC.getUTCMonth() + 1).padStart(2, '0'); // Los meses van de 0 a 11
-            const dia = String(fechaUTC.getUTCDate()).padStart(2, '0');
+               const anio = fechaUTC.getUTCFullYear();
+               const mes = String(fechaUTC.getUTCMonth() + 1).padStart(2, '0'); // Los meses van de 0 a 11
+               const dia = String(fechaUTC.getUTCDate()).padStart(2, '0');
 
-            fecha.append(`${dia}/${mes}/${anio}`);
-
-            
-            //HORA
-            const hora = document.createElement("td");
-            hora.className = "p-3 font-semibold";
-            hora.textContent = evento.hora;
+               fecha.append(`${dia}/${mes}/${anio}`);
 
 
-            //LUGAR
-            const lugar = document.createElement("td");
-            lugar.className = "p-3 font-semibold";
-            lugar.textContent = evento.lugar;
+               //HORA
+               const hora = document.createElement("td");
+               hora.className = "p-3 font-semibold";
+               hora.textContent = evento.hora;
 
 
-            //ESTADO 
-            const estado = document.createElement("td");
-            estado.className = "p-3 font-semibold";
-
-            if (eventoEstaEliminado(evento)) {
-
-                estado.textContent = "Eliminado";
-                estado.className = "text-red-900";
+               //LUGAR
+               const lugar = document.createElement("td");
+               lugar.className = "p-3 font-semibold";
+               lugar.textContent = evento.lugar;
 
 
-            } else if (eventoEstaCancelado(evento)) {
+               //ESTADO
+               const estado = document.createElement("td");
+               estado.className = "p-3 font-semibold";
 
-                estado.textContent = "Cancelado";
-                estado.className = "text-red-600";
+               if (eventoEstaEliminado(evento)) {
 
-
-            } else if (eventoEstaPublicado(evento)) {
-
-                estado.textContent = "Publicado";
-                estado.className = "text-green-700";
+                   estado.textContent = "Eliminado";
+                   estado.className = "text-red-900";
 
 
-            } else {
+               } else if (eventoEstaCancelado(evento)) {
 
-                estado.textContent = "No publicado";
-                estado.className = "text-yellow-700";
-
-            }
+                   estado.textContent = "Cancelado";
+                   estado.className = "text-red-600";
 
 
-            const acciones = document.createElement("td");
-            acciones.className = "p-3 font-semibold";
-            const botones =  await crearBotones(evento);
-            acciones.appendChild(botones);
+               } else if (eventoEstaPublicado(evento)) {
 
-            fila.appendChild(titulo);
-            fila.appendChild(organizador);
-            fila.appendChild(fecha);
-            fila.appendChild(hora);
-            fila.appendChild(lugar);
-            fila.appendChild(estado);
-            fila.appendChild(acciones);
-
-            tablaEventos.appendChild(fila);
+                   estado.textContent = "Publicado";
+                   estado.className = "text-green-700";
 
 
+               } else {
 
-        }
+                   estado.textContent = "No publicado";
+                   estado.className = "text-yellow-700";
+
+               }
+
+
+               const acciones = document.createElement("td");
+               acciones.className = "p-3 font-semibold";
+               const botones =  await crearBotones(evento);
+               acciones.appendChild(botones);
+
+               fila.appendChild(titulo);
+               fila.appendChild(organizador);
+               fila.appendChild(fecha);
+               fila.appendChild(hora);
+               fila.appendChild(lugar);
+               fila.appendChild(estado);
+               fila.appendChild(acciones);
+
+               tablaEventos.appendChild(fila);
+           }
+       }
+
 
 
 

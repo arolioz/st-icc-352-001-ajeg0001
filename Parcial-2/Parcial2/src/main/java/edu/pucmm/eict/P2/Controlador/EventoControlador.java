@@ -209,6 +209,7 @@ public class EventoControlador {
         IO.println(e.getId());
         if (e != null){
             e.setActivo(false);
+            e.setPublicado(false);
         }
 
         EventoServices.getInstancia().editar(e);
