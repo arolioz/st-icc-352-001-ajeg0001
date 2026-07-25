@@ -36,6 +36,7 @@
             });
 
             if (!respuesta.ok) {
+                alert("No se pudo inscribir el evento");
                 throw new Error(`HTTP error! Status: ${respuesta.status}`);
             }
             alert("Se ha inscrito exitosamente al evento");
@@ -74,6 +75,7 @@
             });
 
             if (!respuesta.ok) {
+                alert("No se puede cancelar la inscripcion");
                 throw new Error(`HTTP error! Status: ${respuesta.status}`);
             }
 
@@ -107,6 +109,7 @@
 
             container.appendChild(btnCancelar);
 
+
             const btnQR = document.createElement("a");
             btnQR.className = "boton1 color5 text-center block flex-1 !w-auto";
             btnQR.textContent = "Mostrar QR";
@@ -122,17 +125,27 @@
             btnInscribir.textContent = "Inscribirse";
             btnInscribir.addEventListener("click", async () => {
                 const fechaEvento = new Date(evento.fecha);
-                const fechaActual = new Date();
+                const hoy = new Date();
+                await inscribirEvento(evento.id);
+                /*
+                const eventoUTC = Date.UTC(
+                    fechaEvento.getUTCFullYear(),
+                    fechaEvento.getUTCMonth(),
+                    fechaEvento.getUTCDate()
+                );
 
-                fechaEvento.setHours(0, 0, 0, 0);
-                fechaActual.setHours(0, 0, 0, 0);
+                const hoyUTC = Date.UTC(
+                    hoy.getUTCFullYear(),
+                    hoy.getUTCMonth(),
+                    hoy.getUTCDate()
+                );
 
-                if (fechaEvento < fechaActual){
-                    alert("No es posible inscribirse es este evento");
-                } else{
-                    await inscribirEvento(evento.id)
+                if (eventoUTC < hoyUTC) {
+                    alert("No es posible inscribirse en este evento");
+                } else {
+                    await inscribirEvento(evento.id);
                 }
-
+                */
             });
 
             container.appendChild(btnInscribir);

@@ -89,12 +89,11 @@ public class EventoControlador {
             ctx.status(401).result("Las inscripciones ya están cerradas");
             return;
         }
-        IO.println("AQUI!");
-        IO.println(evento.getCupoMaximo());
+
         if ((usuario != null && usuario.getListaRoles().contains(RolesApp.ROLE_USUARIO)) && evento.getCupo() < evento.getCupoMaximo() && evento != null && evento.getPublicado() == true){
             EventoUsuario tmpEU = EventoUsuarioServices.getInstancia().findUsuarioEnEvento(usuario.getId(),eventId);
 
-            IO.println("AQUI2!");
+
             if (tmpEU == null){
                 String token = UUID.randomUUID().toString();
 
@@ -124,8 +123,20 @@ public class EventoControlador {
 
         Evento evento = EventoServices.getInstancia().find(eventId);
 
+
+
         if ((usuario != null && usuario.getListaRoles().contains(RolesApp.ROLE_USUARIO)) && evento != null){
             EventoUsuario tmpEU = EventoUsuarioServices.getInstancia().findUsuarioEnEvento(usuario.getId(),eventId);
+
+            LocalDate hoy = LocalDate.now();
+            LocalDate fechaEvento = evento.getFecha().toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate();
+
+            if (hoy.isAfter(fechaEvento) || hoy.equals(fechaEvento)) {
+                ctx.status(401).result("No se puede cancelar la inscripcion");
+                return;
+            }
 
             if (tmpEU != null){
                 EventoUsuarioServices.getInstancia().eliminar(tmpEU.getId());
