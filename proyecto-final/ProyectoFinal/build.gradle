@@ -15,9 +15,14 @@ repositories {
 }
 
 dependencies {
+    implementation("io.javalin:javalin:7.2.2")
+    implementation("org.slf4j:slf4j-simple:2.0.17")
+
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    implementation 'dev.morphia.morphia:morphia-core:2.5.0'
 }
 
 test {
