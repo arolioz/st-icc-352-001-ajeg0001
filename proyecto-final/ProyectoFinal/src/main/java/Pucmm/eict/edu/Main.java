@@ -3,6 +3,7 @@ package Pucmm.eict.edu;
 import Pucmm.eict.edu.Services.DbService;
 import Pucmm.eict.edu.Services.UsuarioService;
 import io.javalin.Javalin;
+import org.bson.types.ObjectId;
 
 public class Main {
     public void main(){
@@ -10,7 +11,7 @@ public class Main {
            config.routes.get("/", ctx -> {
                ctx.result("Hola mundo!");
                DbService.inicializar();
-               UsuarioService.getInstancia().crearUsuario("Test2","ickkck");
+               UsuarioService.getInstancia().eliminarUsuario(new ObjectId("6a83a184fee1166c3ffedfbb"));
            });
         });
 
