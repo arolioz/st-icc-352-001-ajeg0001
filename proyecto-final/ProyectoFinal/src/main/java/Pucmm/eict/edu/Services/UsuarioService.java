@@ -25,6 +25,29 @@ public class UsuarioService {
         return instancia;
     }
 
+    private static final String HASH_DUMMY =
+            "$2a$12$C6UzMDM.H6dfI/f/IKcEeO7bF7oQwPXVfj0KcgYcJgD.wqm4Y2Vhu";
+
+    public static Usuario autenteificarUsuario(String usuario, String password) {
+        Datastore ds = DbConfig.getDatastore();
+
+
+
+        if (usuario == null || usuario.isBlank() || password == null || password.isBlank()) {
+            return null;
+        }
+
+        Usuario u = ds.find(Usuario.class)
+                .filter(Filters.eq("user", usuario))
+                .first();
+
+
+        String hash = (u != null) ? u.getPassword() : HASH_DUMMY;
+
+        return BCrypt.checkpw(password, hash) ? u : null;
+
+    }
+
     public void crearUsuario(String user, String password){
         Datastore ds = DbConfig.getDatastore();
 
