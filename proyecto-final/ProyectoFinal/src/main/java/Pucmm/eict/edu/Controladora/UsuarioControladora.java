@@ -3,11 +3,18 @@ package Pucmm.eict.edu.Controladora;
 import Pucmm.eict.edu.Entidades.Usuario;
 import Pucmm.eict.edu.Services.UsuarioService;
 import io.javalin.http.Context;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
 import org.jetbrains.annotations.NotNull;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import static Pucmm.eict.edu.Main.LLAVE_SECRETA;
 
 public class UsuarioControladora {
     public static void procesarLogin(@NotNull Context ctx) {
@@ -23,7 +30,7 @@ public class UsuarioControladora {
         }
 
         Map<String, Object> respuesta = new LinkedHashMap<>();
-        respuesta.put("token", "ESTO ES UN TEST DEL TOKEN");
+        respuesta.put("token", JwtControladora.generarToken(u));
 
         Map<String, Object> usuario = new LinkedHashMap<>();
         usuario.put("usuario", u.getUser());
@@ -37,4 +44,6 @@ public class UsuarioControladora {
 
 
     }
+
+
 }
