@@ -55,11 +55,11 @@
                 console.log(data);
 
                 localStorage.setItem("token", data.token);
-                localStorage.setItem("id",data.id);
+                localStorage.setItem("id",data.usuario.id);
                 localStorage.setItem("usuario", data.usuario.usuario);
                 localStorage.setItem("roles", data.usuario.roles);
 
-                window.location.href = 'formulario.html';
+                //window.location.href = 'formulario.html';
 
             }
         } catch (e) {

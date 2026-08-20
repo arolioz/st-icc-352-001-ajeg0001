@@ -11,6 +11,8 @@ import static io.javalin.apibuilder.ApiBuilder.post;
 
 public class Main {
     void main(){
+        DbService.inicializar();
+
         var app = Javalin.create(config -> {
             config.staticFiles.add(staticFileConfig -> {
                 staticFileConfig.directory = "/Publico";

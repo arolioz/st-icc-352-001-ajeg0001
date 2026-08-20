@@ -1,10 +1,16 @@
 package Pucmm.eict.edu.Services;
 
 import Pucmm.eict.edu.Entidades.Usuario;
+import Pucmm.eict.edu.Util.RolesApp;
 import Pucmm.eict.edu.config.DbConfig;
 import dev.morphia.Datastore;
 import dev.morphia.config.MorphiaConfig;
 import org.mindrot.jbcrypt.BCrypt;
+
+import javax.management.relation.Role;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 public class DbService {
     public static void inicializar() {
@@ -15,7 +21,12 @@ public class DbService {
             String claveAdmin = System.getenv()
                     .getOrDefault("ADMIN_PASSWORD", "admin");
 
-            ds.save(new Usuario("admin", BCrypt.hashpw(claveAdmin, BCrypt.gensalt(12))));
+            Usuario admin = new Usuario("admin", BCrypt.hashpw(claveAdmin, BCrypt.gensalt(12)));
+            List<RolesApp> rolesAdmin = new ArrayList<>();
+
+            admin.setListaRoles(Set.of(RolesApp.ROLE_ADMIN,RolesApp.ROLE_ENCUESTADOR,RolesApp.ROLE_USUARIO));
+
+            ds.save(admin);
 
             ds.save(new Usuario("Test", BCrypt.hashpw("test", BCrypt.gensalt(12))));
 

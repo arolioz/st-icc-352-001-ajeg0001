@@ -26,12 +26,14 @@ public class Usuario {
     public Usuario(String user, String password){
         this.user = user;
         this.password = password;
+        this.listaRoles = Set.of(RolesApp.ROLE_USUARIO);
     }
 
     public Usuario(String user, String password, ObjectId id){
         this.user = user;
         this.password = password;
         this.id = id;
+        this.listaRoles = Set.of(RolesApp.ROLE_USUARIO);
     }
 
     public ObjectId getId() { return id; }
