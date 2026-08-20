@@ -1,18 +1,30 @@
 package Pucmm.eict.edu;
 
+import Pucmm.eict.edu.Controladora.UsuarioControladora;
 import Pucmm.eict.edu.Services.DbService;
 import Pucmm.eict.edu.Services.UsuarioService;
 import io.javalin.Javalin;
 import org.bson.types.ObjectId;
 
+import static io.javalin.apibuilder.ApiBuilder.*;
+import static io.javalin.apibuilder.ApiBuilder.post;
+
 public class Main {
-    public void main(){
+    void main(){
         var app = Javalin.create(config -> {
-           config.routes.get("/", ctx -> {
-               ctx.result("Hola mundo!");
-               DbService.inicializar();
-               UsuarioService.getInstancia().modificarUsuario(new ObjectId("6a8339ba4f147b218b416348"), "Aaron");
-           });
+            config.staticFiles.add(staticFileConfig -> {
+                staticFileConfig.directory = "/Publico";
+                staticFileConfig.hostedPath = "/";
+            });
+
+
+            config.routes.apiBuilder(() ->{
+                path("/api", () -> {
+                    path("/login", () -> {
+                        post("/", UsuarioControladora::procesarLogin);
+                    });
+                });
+            });
         });
 
         app.start(7001);
