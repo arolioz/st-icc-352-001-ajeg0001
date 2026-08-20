@@ -50,7 +50,8 @@
                 console.log(data);
 
                 localStorage.setItem("token", data.token);
-                localStorage.setItem("usuario", data.usuario);
+                localStorage.setItem("usuario", data.usuario.usuario);
+                localStorage.setItem("roles", data.usuario.roles);
 
                 window.location.href = 'formulario.html';
 
