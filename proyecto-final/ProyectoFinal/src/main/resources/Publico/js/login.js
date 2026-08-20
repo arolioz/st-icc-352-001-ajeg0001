@@ -38,7 +38,6 @@
     async function autenticarUsuario(usuario, password) {
 
          try {
-            const data = { token: "123456", usuario: hola};
             const respuesta = await fetch('/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json'},
@@ -50,8 +49,9 @@
 
                 console.log(data);
 
-                console.log(localStorage.setItem("token", data.token));
-                console.log(localStorage.setItem("usuario", data.usuario));
+                localStorage.setItem("token", data.token);
+                localStorage.setItem("usuario", data.usuario.usuario);
+                localStorage.setItem("roles", data.usuario.roles);
 
                 window.location.href = 'formulario.html';
 
