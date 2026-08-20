@@ -21,7 +21,7 @@ public class UsuarioControladora {
         Map<String, String> body = ctx.bodyAsClass(Map.class);
         String user = body.get("usuario");
         String password = body.get("password");
-        Usuario u = UsuarioService.autenteificarUsuario(user,password);
+        Usuario u = UsuarioService.getInstancia().autenteificarUsuario(user,password);
 
         if (u == null) {
             IO.println("ERROR GARRAFAL");
@@ -40,9 +40,6 @@ public class UsuarioControladora {
         respuesta.put("usuario", usuario);
 
         ctx.json(respuesta);
-
-
-
     }
 
 

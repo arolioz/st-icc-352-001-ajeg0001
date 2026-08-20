@@ -3,26 +3,30 @@ package Pucmm.eict.edu;
 import Pucmm.eict.edu.Controladora.UsuarioControladora;
 import Pucmm.eict.edu.Services.DbService;
 import Pucmm.eict.edu.Services.UsuarioService;
+import Pucmm.eict.edu.Util.RolesApp;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 import io.javalin.http.ForbiddenResponse;
 import io.javalin.http.HandlerType;
 import io.javalin.http.UnauthorizedResponse;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.MalformedJwtException;
+import io.javalin.security.RouteRole;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.bson.types.ObjectId;
 import org.jetbrains.annotations.NotNull;
 
+import javax.crypto.SecretKey;
 import java.security.SignatureException;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import static io.javalin.apibuilder.ApiBuilder.*;
 import static io.javalin.apibuilder.ApiBuilder.post;
 
 public class Main {
-    public static final String LLAVE_SECRETA = "ejemplo_de_llave_generada_icc352";
+    public static final String LLAVE_SECRETA = "ejemplo_de_llave_generada_icc35210231213123123";
+    public static final SecretKey LLAVE = Keys.hmacShaKeyFor(LLAVE_SECRETA.getBytes());
 
     void main(){
         DbService.inicializar();
@@ -41,7 +45,7 @@ public class Main {
                         post("/", UsuarioControladora::procesarLogin);
                     });
                     path("/encuesta", () -> {
-                        get(ctx -> ctx.json("Esto es prueba"));
+                        get(ctx -> ctx.json(Map.of("mensaje", "Esto es prueba")), RolesApp.ROLE_ADMIN);
                     });
                 });
             });
@@ -51,40 +55,48 @@ public class Main {
     }
 
     private static void filtroJwt(Context ctx) {
-        System.out.println("Validando JWT en la petición...");
+        Set<RouteRole> permitidos = ctx.routeRoles();
 
-        // Permitir peticiones OPTIONS (preflight de CORS)
-        if (ctx.method() == HandlerType.OPTIONS) {
-            return;
-        }
-        if (ctx.path().startsWith("/api/login")) return;
+        if (ctx.method() == HandlerType.OPTIONS) return;
+        if (ctx.path().equals("/api/login")) return;
 
+        String header = ctx.header("Authorization");
+        String prefijo = "Bearer ";
 
-        String headerAutenticacion = ctx.header("Authorization");
-        String prefijo = "Bearer";
-
-        if (headerAutenticacion == null || !headerAutenticacion.startsWith(prefijo)) {
-            throw new UnauthorizedResponse("Debe autenticarse para acceder al servicio. Envíe el header 'Authorization: Bearer <token>'");
+        if (header == null || !header.startsWith(prefijo)) {
+            throw new UnauthorizedResponse("Debe autenticarse");
         }
 
-
-        String tramaJwt = headerAutenticacion.replace(prefijo, "").trim();
+        List<String> rolesToken;
         try {
             Claims claims = Jwts.parser()
-                    .verifyWith(Keys.hmacShaKeyFor(LLAVE_SECRETA.getBytes()))
+                    .verifyWith(LLAVE)
                     .build()
-                    .parseSignedClaims(tramaJwt)
+                    .parseSignedClaims(header.substring(prefijo.length()).trim())
                     .getPayload();
 
-            System.out.println("JWT válido recibido: " + claims.toString());
+            rolesToken = claims.get("roles", List.class);
 
-            // Almacenar claims en el contexto para uso posterior en los handlers
             ctx.attribute("jwt-claims", claims);
+            ctx.attribute("usuarioId", claims.getSubject());
+            ctx.attribute("roles", rolesToken);
 
         } catch (ExpiredJwtException e) {
-            throw new ForbiddenResponse("El token JWT ha expirado: " + e.getMessage());
-        } catch (MalformedJwtException e) {
-            throw new ForbiddenResponse("Token JWT inválido: " + e.getMessage());
+            throw new UnauthorizedResponse("El token expiro, vuelva a iniciar sesion");
+        } catch (JwtException e) {
+            throw new UnauthorizedResponse("Token invalido");
+        }
+
+
+        if (permitidos.isEmpty()) return;
+
+        boolean autorizado = permitidos.stream()
+                .map(r -> ((RolesApp) r).name())
+                .anyMatch(rolesToken::contains);
+
+        if (!autorizado) {
+            ctx.status(401);
+            throw new ForbiddenResponse("No tiene permisos para esta operacion");
         }
     }
 }

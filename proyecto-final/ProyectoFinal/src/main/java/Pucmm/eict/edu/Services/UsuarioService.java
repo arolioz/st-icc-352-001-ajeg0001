@@ -28,7 +28,7 @@ public class UsuarioService {
     private static final String HASH_DUMMY =
             "$2a$12$C6UzMDM.H6dfI/f/IKcEeO7bF7oQwPXVfj0KcgYcJgD.wqm4Y2Vhu";
 
-    public static Usuario autenteificarUsuario(String usuario, String password) {
+    public Usuario autenteificarUsuario(String usuario, String password) {
         Datastore ds = DbConfig.getDatastore();
 
 
