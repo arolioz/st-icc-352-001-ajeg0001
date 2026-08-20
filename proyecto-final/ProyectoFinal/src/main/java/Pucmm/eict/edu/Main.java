@@ -11,7 +11,7 @@ public class Main {
            config.routes.get("/", ctx -> {
                ctx.result("Hola mundo!");
                DbService.inicializar();
-               UsuarioService.getInstancia().eliminarUsuario(new ObjectId("6a83a184fee1166c3ffedfbb"));
+               UsuarioService.getInstancia().modificarUsuario(new ObjectId("6a8339ba4f147b218b416348"), "Aaron");
            });
         });
 
