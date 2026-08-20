@@ -38,11 +38,16 @@
     async function autenticarUsuario(usuario, password) {
 
          try {
-            const respuesta = await fetch('/login', {
+            const respuesta = await fetch('/api/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json'},
                 body: JSON.stringify({usuario,password})
             });
+
+
+            if (respuesta.status == 401){
+                alert("Usuario o contrasena incorrectos");
+            }
 
             if (respuesta.ok) {
                 const data = await respuesta.json();
@@ -50,6 +55,7 @@
                 console.log(data);
 
                 localStorage.setItem("token", data.token);
+                localStorage.setItem("id",data.id);
                 localStorage.setItem("usuario", data.usuario.usuario);
                 localStorage.setItem("roles", data.usuario.roles);
 
@@ -57,6 +63,7 @@
 
             }
         } catch (e) {
+
             console.error("Error al conectar con el servidor");
         }
     }

@@ -1,5 +1,6 @@
 package Pucmm.eict.edu.Entidades;
 
+import Pucmm.eict.edu.Util.RolesApp;
 import dev.morphia.annotations.Entity;
 import dev.morphia.annotations.Id;
 import dev.morphia.annotations.IndexOptions;
@@ -7,6 +8,7 @@ import dev.morphia.annotations.Indexed;
 import org.bson.types.ObjectId;
 
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Usuario {
@@ -15,6 +17,7 @@ public class Usuario {
     @Indexed(options = @IndexOptions(unique = true))
     private String user;
     private String password;
+    Set<RolesApp> listaRoles;
 
     public Usuario(){
 
@@ -44,5 +47,9 @@ public class Usuario {
     public String toString() {
         return "Usuario{id=" + id + ", usuario='" + this.user + "'}";
     }
+
+    public Set<RolesApp> getListaRoles() {return listaRoles;}
+
+    public void setListaRoles(Set<RolesApp> listaRoles) {this.listaRoles = listaRoles;}
 
 }
