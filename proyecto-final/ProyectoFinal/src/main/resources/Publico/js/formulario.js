@@ -15,6 +15,8 @@
         longitud: null
     };
 
+    let foto = null;
+
     function configurarDropdown() {
 
         opciones.forEach(opcion => {
@@ -49,11 +51,18 @@
                 return;
             }
 
+            if (!foto) {
+                alert("Debe tomar una foto antes de guardar");
+                return;
+            }
+
             try {
 
                 await obtenerubicacion();
 
                 guardarFormulario(nombre, sector, nivelEscolar);
+
+                reiniciarCamara();
 
             } catch (error) {
                 alert("No se pudo obtener la ubicación.");
@@ -74,7 +83,8 @@
             usuarioId: localStorage.getItem("id"),
             usuario: localStorage.getItem("usuario"),
             latitud: ubicacionActual.latitud,
-            longitud: ubicacionActual.longitud
+            longitud: ubicacionActual.longitud,
+            foto: foto
         };
 
         formularios.push(nuevoForm);
@@ -84,6 +94,11 @@
 
         alert("Formulario guardado correctamente");
 
+        document.getElementById('idForm').reset();
+        btnNivelEscolar.textContent = "Seleccione";
+        document.getElementById("idFoto").style.display = "none";
+        foto = null;
+
     }
 
     function obtenerubicacion() {
@@ -92,6 +107,7 @@
 
             if (!navigator.geolocation) {
                 console.log("El navegador no soporta geolocalización.");
+                reject("Geolocalización no soportada");
                 return;
             }
 
@@ -116,6 +132,59 @@
 
     }
 
+    function configurarCamara() {
+
+        const webcamElement = document.getElementById('webcam');
+        const canvasElement = document.getElementById('canvas');
+        const idFoto = document.getElementById("idFoto");
+        const btnFoto = document.getElementById("btnTomarFoto");
+
+        const webcam = new Webcam(webcamElement, 'user', canvasElement);
+
+        webcam.start()
+            .then(result =>{
+                console.log("webcam started");
+                btnFoto.disable = true;
+            })
+            .catch(error => {
+                console.log(error);
+                alert("Error al acceder a la camara");
+                btnFoto.disable = true;
+            });
+
+
+        btnFoto.addEventListener("click", () => {
+
+            if (!foto) {
+                foto = webcam.snap();
+                idFoto.src = foto;
+                webcamElement.style.display = "none";
+                idFoto.style.display = "block";
+                btnFoto.textContent = "Reintentar";
+
+            } else {
+                foto = null;
+                idFoto.src = "";
+                idFoto.style.display = "none";
+                webcamElement.style.display = "block";
+                btnFoto.textContent = "Tomar foto";
+            }
+        });
+
+        window.addEventListener("beforeunload", () => {
+            webcam.stop();
+        });
+    }
+
+    function reiniciarCamara() {
+
+        foto = null;
+        idFoto.src = "";
+        idFoto.style.display = "none";
+        btnFoto.textContent = "Tomar foto";
+    }
+
     configurarDropdown();
+    configurarCamara();
     procesarFormulario();
 })();
