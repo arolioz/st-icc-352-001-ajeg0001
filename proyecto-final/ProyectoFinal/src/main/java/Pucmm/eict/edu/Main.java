@@ -1,5 +1,6 @@
 package Pucmm.eict.edu;
 
+import Pucmm.eict.edu.Controladora.EncuestaControladora;
 import Pucmm.eict.edu.Controladora.UsuarioControladora;
 import Pucmm.eict.edu.Services.DbService;
 import Pucmm.eict.edu.Services.UsuarioService;
@@ -45,7 +46,14 @@ public class Main {
                         post("/", UsuarioControladora::procesarLogin);
                     });
                     path("/encuesta", () -> {
-                        get(ctx -> ctx.json(Map.of("mensaje", "Esto es prueba")), RolesApp.ROLE_ADMIN);
+                        get(EncuestaControladora::listarEncuestas, RolesApp.ROLE_ADMIN);
+                        post(EncuestaControladora::crearEncuesta,RolesApp.ROLE_ENCUESTADOR,RolesApp.ROLE_ADMIN);
+                        get("/usuario/usuarioId",EncuestaControladora::obtenerEncuestasUsuario,RolesApp.ROLE_ENCUESTADOR,RolesApp.ROLE_ADMIN);
+                        path("/{id}", () -> {
+                            delete(EncuestaControladora::eliminarEncuesta,RolesApp.ROLE_ENCUESTADOR,RolesApp.ROLE_ADMIN);
+                            get(EncuestaControladora::obtenerEncuestaById,RolesApp.ROLE_ENCUESTADOR,RolesApp.ROLE_ADMIN);
+                            put(EncuestaControladora::modificarEncuesta,RolesApp.ROLE_ENCUESTADOR,RolesApp.ROLE_ADMIN);
+                        });
                     });
                 });
             });
