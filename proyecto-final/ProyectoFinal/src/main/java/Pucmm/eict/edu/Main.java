@@ -53,7 +53,7 @@ public class Main {
                         post(EncuestaControladora::crearEncuesta,RolesApp.ROLE_ENCUESTADOR,RolesApp.ROLE_ADMIN);
                         get("/usuario/{usuarioId}",EncuestaControladora::obtenerEncuestasUsuario,RolesApp.ROLE_ENCUESTADOR,RolesApp.ROLE_ADMIN);
                         path("/{id}", () -> {
-                            delete(EncuestaControladora::eliminarEncuesta,RolesApp.ROLE_ENCUESTADOR,RolesApp.ROLE_ADMIN);
+                            delete(EncuestaControladora::eliminarEncuesta,RolesApp.ROLE_ADMIN);
                             get(EncuestaControladora::obtenerEncuestaById,RolesApp.ROLE_ENCUESTADOR,RolesApp.ROLE_ADMIN);
                             put(EncuestaControladora::modificarEncuesta,RolesApp.ROLE_ENCUESTADOR,RolesApp.ROLE_ADMIN);
                         });
