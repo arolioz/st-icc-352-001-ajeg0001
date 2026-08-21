@@ -68,6 +68,19 @@
         }
     }
 
+    function validarSesion() {
+       const token = localStorage.getItem("token");
+       const usuario = localStorage.getItem("usuario");
+       const idUsuario = localStorage.getItem("id");
+
+       if (token == null || !usuario || !idUsuario) {
+           window.location.href = "login.html";
+           return false;
+       }
+
+       return true;
+    }
+
     procesarLogin();
 
 })();
