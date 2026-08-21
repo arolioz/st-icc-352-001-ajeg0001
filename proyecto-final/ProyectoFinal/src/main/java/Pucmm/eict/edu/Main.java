@@ -5,6 +5,7 @@ import Pucmm.eict.edu.Controladora.UsuarioControladora;
 import Pucmm.eict.edu.Services.DbService;
 import Pucmm.eict.edu.Services.UsuarioService;
 import Pucmm.eict.edu.Util.RolesApp;
+import Pucmm.eict.edu.grpc.GrpcServidor;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 import io.javalin.http.ForbiddenResponse;
@@ -17,6 +18,7 @@ import org.bson.types.ObjectId;
 import org.jetbrains.annotations.NotNull;
 
 import javax.crypto.SecretKey;
+import java.io.IOException;
 import java.security.SignatureException;
 import java.util.List;
 import java.util.Map;
@@ -29,8 +31,9 @@ public class Main {
     public static final String LLAVE_SECRETA = "ejemplo_de_llave_generada_icc35210231213123123";
     public static final SecretKey LLAVE = Keys.hmacShaKeyFor(LLAVE_SECRETA.getBytes());
 
-    void main(){
+    void main() throws IOException {
         DbService.inicializar();
+        GrpcServidor.iniciar(9090);
 
         var app = Javalin.create(config -> {
             config.staticFiles.add(staticFileConfig -> {
@@ -43,12 +46,12 @@ public class Main {
             config.routes.apiBuilder(() ->{
                 path("/api", () -> {
                     path("/login", () -> {
-                        post("/", UsuarioControladora::procesarLogin);
+                        post(UsuarioControladora::procesarLogin);
                     });
                     path("/encuesta", () -> {
                         get(EncuestaControladora::listarEncuestas, RolesApp.ROLE_ADMIN);
                         post(EncuestaControladora::crearEncuesta,RolesApp.ROLE_ENCUESTADOR,RolesApp.ROLE_ADMIN);
-                        get("/usuario/usuarioId",EncuestaControladora::obtenerEncuestasUsuario,RolesApp.ROLE_ENCUESTADOR,RolesApp.ROLE_ADMIN);
+                        get("/usuario/{usuarioId}",EncuestaControladora::obtenerEncuestasUsuario,RolesApp.ROLE_ENCUESTADOR,RolesApp.ROLE_ADMIN);
                         path("/{id}", () -> {
                             delete(EncuestaControladora::eliminarEncuesta,RolesApp.ROLE_ENCUESTADOR,RolesApp.ROLE_ADMIN);
                             get(EncuestaControladora::obtenerEncuestaById,RolesApp.ROLE_ENCUESTADOR,RolesApp.ROLE_ADMIN);

@@ -1,0 +1,58 @@
+// Ubicacion: src/main/proto/encuesta.proto
+syntax = "proto3";
+
+package encuesta;
+
+option java_multiple_files = true;
+option java_package = "Pucmm.eict.edu.grpc";
+option java_outer_classname = "EncuestaProto";
+
+// ---------------------------------------------------------------
+// Servicio: las dos operaciones que pide el requerimiento 16
+// ---------------------------------------------------------------
+service EncuestaService {
+
+
+  rpc CrearEncuesta (CrearEncuestaRequest) returns (EncuestaResponse);
+
+  // 16.1 - Listado de los formularios publicados por un usuario
+  rpc ListarPorUsuario (ListarPorUsuarioRequest) returns (ListaEncuestasResponse);
+}
+
+// ---------------------------------------------------------------
+// Tipos
+// ---------------------------------------------------------------
+
+
+message CrearEncuestaRequest {
+  string uuid                = 1;
+  string nombre              = 2;
+  string sector              = 3;
+  string nivel_escolar = 4;
+  double latitud             = 5;
+  double longitud            = 6;
+  string foto_base64         = 7;
+}
+
+message ListarPorUsuarioRequest {
+  string usuario_id = 1;
+}
+
+message EncuestaResponse {
+  string id                  = 1;
+  string uuid                = 2;
+  string nombre              = 3;
+  string sector              = 4;
+  string nivel_escolar = 5;
+  double latitud             = 6;
+  double longitud            = 7;
+  string foto_base64         = 8;
+  string usuario_id          = 9;
+  string usuario_nombre      = 10;
+  string fecha_registro      = 11;
+  string estado              = 12;
+}
+
+message ListaEncuestasResponse {
+  repeated EncuestaResponse encuestas = 1;
+}

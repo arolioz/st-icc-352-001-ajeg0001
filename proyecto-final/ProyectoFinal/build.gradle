@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'application'
     id 'com.gradleup.shadow' version '9.4.2'
+    id 'com.google.protobuf' version '0.9.4'
 }
 
 group = 'edu.pucmm.eict'
@@ -32,6 +33,31 @@ dependencies {
     implementation 'dev.morphia.morphia:morphia-core:2.5.0'
 
     implementation 'org.mindrot:jbcrypt:0.4'
+
+    runtimeOnly 'io.grpc:grpc-netty-shaded:1.75.0'
+    implementation 'io.grpc:grpc-protobuf:1.62.2'
+    implementation 'io.grpc:grpc-stub:1.62.2'
+    implementation 'io.grpc:grpc-services:1.62.2' // Para habilitar la reflexión del servidor https://github.com/grpc/grpc-java/blob/master/documentation/server-reflection-tutorial.md#enable-server-reflection
+    compileOnly 'org.apache.tomcat:annotations-api:6.0.53' // necessary for Java 9+
+    implementation 'com.google.protobuf:protobuf-java:4.28.2'
+}
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.25.1"
+    }
+    plugins {
+        grpc {
+            artifact = 'io.grpc:protoc-gen-grpc-java:1.62.2'
+        }
+    }
+    generateProtoTasks {
+        all()*.plugins {
+            grpc {}
+        }
+    }
+
+    //generatedFilesBaseDir = "$projectDir/generated"
 }
 
 shadowJar {
