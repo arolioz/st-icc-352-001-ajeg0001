@@ -51,7 +51,7 @@ public class Main {
             });
         });
 
-        app.start(7001);
+        app.start(7000);
     }
 
     private static void filtroJwt(Context ctx) {
