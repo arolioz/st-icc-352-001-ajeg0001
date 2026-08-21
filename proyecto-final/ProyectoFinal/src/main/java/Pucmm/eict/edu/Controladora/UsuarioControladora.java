@@ -42,5 +42,10 @@ public class UsuarioControladora {
         ctx.json(respuesta);
     }
 
-
+    public static void crearUsuario(@NotNull Context ctx){
+        Map<String, String> body = ctx.bodyAsClass(Map.class);
+        String user = body.get("usuario");
+        String password = body.get("password");
+        UsuarioService.getInstancia().crearUsuario(user,password);
+    }
 }
