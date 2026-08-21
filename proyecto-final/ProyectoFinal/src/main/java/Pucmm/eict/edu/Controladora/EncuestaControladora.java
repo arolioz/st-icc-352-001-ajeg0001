@@ -70,7 +70,16 @@ public class EncuestaControladora {
         }
     }
 
-    public static void obtenerEncuestasUsuario(@NotNull Context ctx) {
+    public static void obtenerEncuestasUsuario(@NotNull Context ctx) throws Exception {
+        Map<String, Object> body = ctx.bodyAsClass(Map.class);
+        String idUsuarioString = body.get("idUsuario").toString();
+        ObjectId id = new ObjectId(idUsuarioString);
+
+        List<Encuesta> encuestas = EncuestaServices.getInstancia().listarEncuestas();
+
+        if (encuestas != null){
+            ctx.json(encuestas);
+        }
     }
 
     public static void eliminarEncuesta(@NotNull Context ctx) {
