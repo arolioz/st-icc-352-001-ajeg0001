@@ -10,10 +10,12 @@ import dev.morphia.query.filters.Filters;
 import org.bson.types.ObjectId;
 import org.mindrot.jbcrypt.BCrypt;
 
+import java.time.Instant;
 import java.util.List;
 
 public class EncuestaServices {
     private static EncuestaServices instancia;
+    public record Resultado(Encuesta encuesta, boolean yaExistia) {}
 
     public EncuestaServices() {}
 
@@ -24,20 +26,29 @@ public class EncuestaServices {
         return instancia;
     }
 
-    public void crearEncuesta(Encuesta encuesta){
+    public Resultado crear(Encuesta e) {
+        if (e.getUuid() == null || e.getUuid().isBlank()) {
+            throw new IllegalArgumentException("El uuid es obligatorio");
+        }
+
         Datastore ds = DbConfig.getDatastore();
 
-        if (encuesta == null){
-            return;
+        if (e.getFechaRegistro() == null) {
+            e.setFechaRegistro(Instant.now());
         }
 
         try {
-            ds.save(encuesta);
-        } catch (MongoWriteException e) {
-            if (e.getError().getCategory() == ErrorCategory.DUPLICATE_KEY) {
-            } else {
-                throw e;
+            return new Resultado(ds.save(e), false);
+
+        } catch (MongoWriteException ex) {
+            if (ex.getError().getCategory() == ErrorCategory.DUPLICATE_KEY) {
+
+                Encuesta existente = ds.find(Encuesta.class)
+                        .filter(Filters.eq("uuid", e.getUuid()))
+                        .first();
+                return new Resultado(existente, true);
             }
+            throw ex;
         }
     }
 

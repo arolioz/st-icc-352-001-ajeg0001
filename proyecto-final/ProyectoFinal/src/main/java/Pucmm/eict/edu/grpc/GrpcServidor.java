@@ -7,6 +7,11 @@ import java.io.IOException;
 
 public class GrpcServidor {
     public static void iniciar(int puerto) throws IOException {
+        java.util.logging.Logger
+                .getLogger("io.grpc.netty.shaded.io.grpc.netty.NettyServerTransport")
+                .setLevel(java.util.logging.Level.WARNING);
+
+
         ServerBuilder.forPort(puerto)
                 .addService(new EncuestaGrpcImpl())
                 .addService(ProtoReflectionService.newInstance())  // para probar con Postman
