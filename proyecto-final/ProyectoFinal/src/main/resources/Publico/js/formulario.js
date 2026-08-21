@@ -16,6 +16,10 @@
     };
 
     let foto = null;
+    const webcamElement = document.getElementById('webcam');
+    const canvasElement = document.getElementById('canvas');
+    const idFoto = document.getElementById("idFoto");
+    const btnFoto = document.getElementById("btnTomarFoto");
 
     function configurarDropdown() {
 
@@ -120,7 +124,7 @@
                 },
                 (error) => {
 
-                    console.error("Error obteniendo ubicación:", error);
+                    console.error("Error obteniendo ubicación:", error.message);
                     reject(error);
                 }
 
@@ -134,22 +138,17 @@
 
     function configurarCamara() {
 
-        const webcamElement = document.getElementById('webcam');
-        const canvasElement = document.getElementById('canvas');
-        const idFoto = document.getElementById("idFoto");
-        const btnFoto = document.getElementById("btnTomarFoto");
-
         const webcam = new Webcam(webcamElement, 'user', canvasElement);
 
         webcam.start()
             .then(result =>{
                 console.log("webcam started");
-                btnFoto.disable = true;
+                btnFoto.disabled = false;
             })
             .catch(error => {
                 console.log(error);
                 alert("Error al acceder a la camara");
-                btnFoto.disable = true;
+                btnFoto.disabled = true;
             });
 
 
@@ -181,6 +180,7 @@
         foto = null;
         idFoto.src = "";
         idFoto.style.display = "none";
+        webcamElement.style.display = "block";
         btnFoto.textContent = "Tomar foto";
     }
 
