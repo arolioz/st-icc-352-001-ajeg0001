@@ -46,7 +46,29 @@ public class EncuestaGrpcImpl extends EncuestaServiceGrpc.EncuestaServiceImplBas
     @Override
     public void listarPorUsuario(ListarPorUsuarioRequest req,
                                  StreamObserver<ListaEncuestasResponse> respuesta) {
-        respuesta.onNext(ListaEncuestasResponse.newBuilder().build());
+
+        String usuarioId = req.getUsuarioId();
+        System.out.println("[gRPC] listarPorUsuario recibio: '" + usuarioId + "'");
+
+        if (!ObjectId.isValid(usuarioId)) {
+            respuesta.onError(io.grpc.Status.INVALID_ARGUMENT
+                    .withDescription("usuarioId invalido o vacio: '" + usuarioId + "'")
+                    .asRuntimeException());
+            return;
+        }
+
+        ListaEncuestasResponse.Builder lista = ListaEncuestasResponse.newBuilder();
+
+        for (Encuesta e : EncuestaServices.getInstancia().listarPorUsuario(new ObjectId(usuarioId))) {
+            lista.addEncuestas(EncuestaResponse.newBuilder()
+                    .setId(e.getId().toHexString())
+                    .setUuid(e.getUuid())
+                    .setNombre(e.getNombre())
+                    .setSector(e.getSector() == null ? "" : e.getSector())
+                    .build());
+        }
+
+        respuesta.onNext(lista.build());
         respuesta.onCompleted();
     }
 }

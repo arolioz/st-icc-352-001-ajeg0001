@@ -110,4 +110,12 @@ public class EncuestaServices {
 
         return e;
     }
+
+    public List<Encuesta> listarPorUsuario(ObjectId usuarioId) {
+        return DbConfig.getDatastore()
+                .find(Encuesta.class)
+                .filter(Filters.eq("usuarioId", usuarioId))
+                .iterator()
+                .toList();
+    }
 }
