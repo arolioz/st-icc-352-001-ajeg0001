@@ -59,26 +59,13 @@
                 localStorage.setItem("usuario", data.usuario.usuario);
                 localStorage.setItem("roles", data.usuario.roles);
 
-                //window.location.href = 'formulario.html';
+                window.location.href = 'formulario.html';
 
             }
         } catch (e) {
 
             console.error("Error al conectar con el servidor");
         }
-    }
-
-    function validarSesion() {
-       const token = localStorage.getItem("token");
-       const usuario = localStorage.getItem("usuario");
-       const idUsuario = localStorage.getItem("id");
-
-       if (token == null || !usuario || !idUsuario) {
-           window.location.href = "login.html";
-           return false;
-       }
-
-       return true;
     }
 
     procesarLogin();
