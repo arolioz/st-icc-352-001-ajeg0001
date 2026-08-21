@@ -15,7 +15,7 @@
 
     <div id="idMensaje" class="alert alert-warning d-none" role="alert"></div>
 
-    <form id="loginForm" method="post" action="procesar-login">
+    <form id="idForm" method="post" action="procesar-login">
         <div class="mb-3">
             <label for="idNombre" class="form-label">Nombre</label>
             <input type="text" class="form-control" id="idNombre" name="nombre">
@@ -48,6 +48,12 @@
 
         </div>
 
+        <div class="mb-3">
+            <label for="idUsuario" class="form-label">Registrado por</label>
+            <input type="text" class="form-control" id="idUsuario" disabled>
+
+        </div>
+
         <div class="d-flex gap-3 justify-content-center mt-4">
             <button type="submit" class="btn btn-primary">
                 Enviar
@@ -61,7 +67,7 @@
     </form>
 </div>
 
-
+<script src="/js/autenticacion.js"></script>
 <script src="/js/formulario.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
