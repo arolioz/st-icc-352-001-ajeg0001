@@ -58,10 +58,19 @@
 
         usuarios.forEach(usuario => {
 
+            console.log("Usuario completo:", usuario);
+            console.log("ID:", usuario.id);
+
+            const roles = (usuario.listaRoles ?? [])
+                .map(r => r.nombre ?? r)
+                .join(", ") || "Sin roles";
+
+
             const fila = document.createElement("tr");
 
             fila.innerHTML = `
-                <td>${usuario.user}</td>
+                <td>${usuario.user}
+                <td>${roles}</td>
             `;
 
             const acciones = document.createElement("td");
@@ -69,6 +78,10 @@
             const btnRol = document.createElement("button");
             btnRol.className = "btn btn-secondary btn-sm me-2";
             btnRol.textContent = "Cambiar rol";
+
+            btnRol.addEventListener("click", () => {
+                cambiarRol(usuario.id);
+            });
 
             const btnEditar = document.createElement("button");
             btnEditar.className = "btn btn-primary btn-sm me-2";
@@ -85,6 +98,38 @@
             fila.appendChild(acciones);
             tabla.appendChild(fila);
         });
+
+    }
+
+    async function cambiarRol(idUsuario) {
+        if (!confirm("¿Desea cambiar el rol de este usuario?")) {
+            return;
+        }
+
+        try {
+
+            const respuesta = await fetch(`/api/usuario/${idUsuario}`, {
+                method: "PUT",
+                headers: {
+                    "Authorization": "Bearer " + localStorage.getItem("token"),
+                    "Accept": "application/json"
+                }
+            });
+
+            if (!respuesta.ok) {
+                throw new Error(`HTTP error! Status: ${respuesta.status}`);
+            }
+
+            alert("Rol cambiado correctamente");
+
+            await cargarUsuarios();
+
+        } catch (error) {
+
+            console.error("Error cambiando rol:", error);
+            alert("No se pudo cambiar el rol");
+
+        }
 
     }
 
