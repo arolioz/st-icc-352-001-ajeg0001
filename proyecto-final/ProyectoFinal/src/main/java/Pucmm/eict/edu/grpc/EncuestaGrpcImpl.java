@@ -70,6 +70,7 @@ public class EncuestaGrpcImpl extends EncuestaServiceGrpc.EncuestaServiceImplBas
                     .setId(e.getId().toHexString())
                     .setUuid(e.getUuid())
                     .setNombre(e.getNombre())
+                    .setNivelEscolar(e.getNivelEscolar())
                     .setSector(e.getSector() == null ? "" : e.getSector())
                     .build());
         }

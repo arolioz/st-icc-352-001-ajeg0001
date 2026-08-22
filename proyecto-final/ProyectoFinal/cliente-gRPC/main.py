@@ -339,7 +339,7 @@ class ClienteGrpc(QMainWindow):
                 self.tabla.setItem(fila, 1, QTableWidgetItem(e.sector))
                 self.tabla.setItem(
                     fila, 2,
-                    QTableWidgetItem(encuesta_pb2.NivelEscolar.Name(e.nivel_escolar)))
+                    QTableWidgetItem(e.nivel_escolar))
                 self.tabla.setItem(fila, 3, QTableWidgetItem(e.uuid))
 
             self.informar(f"{len(respuesta.encuestas)} encuestas recibidas")
