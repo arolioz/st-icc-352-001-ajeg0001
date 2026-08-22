@@ -177,7 +177,12 @@ class ClienteGrpc(QMainWindow):
         self.txt_sector = QLineEdit()
 
         self.cbo_nivel = QComboBox()
-        self.cbo_nivel.addItem("Test")
+        self.cbo_nivel.addItem("Basico")
+        self.cbo_nivel.addItem("Medio")
+        self.cbo_nivel.addItem("Grado Universitario")
+        self.cbo_nivel.addItem("Postgrado")
+        self.cbo_nivel.addItem("Doctorado")
+
 
         self.spn_lat = QDoubleSpinBox()
         self.spn_lat.setRange(-90, 90)
