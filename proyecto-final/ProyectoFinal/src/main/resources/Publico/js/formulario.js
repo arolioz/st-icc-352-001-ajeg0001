@@ -184,7 +184,79 @@
         btnFoto.textContent = "Tomar foto";
     }
 
-    configurarDropdown();
-    configurarCamara();
-    procesarFormulario();
+    function cargarDatosFormulario(formulario) {
+
+        document.getElementById("idNombre").value = formulario.nombre;
+        document.getElementById("idSector").value = formulario.sector;
+        document.getElementById("idNivelEscolar").value = formulario.nivelEscolar;
+        document.getElementById("btnNivelEscolar").textContent = formulario.nivelEscolar;
+        document.getElementById("idUsuario").value = formulario.usuario;
+        document.getElementById("idFoto").src = formulario.foto;
+        document.getElementById("idFoto").style.display = "block";
+    }
+
+    function determinarAccionForm() {
+
+        const accion = localStorage.getItem("accionForm");
+
+        if (!accion) {
+            return;
+        }
+
+        const uuid = localStorage.getItem("form");
+
+        if (!uuid) {
+            alert("No hay formularios disponibles");
+            return;
+        }
+
+        const formularios = JSON.parse(localStorage.getItem("formularios")) || [];
+
+        const formulario = formularios.find(form => form.uuid == uuid);
+
+        if (!formulario) {
+            alert("Formulario no encontrado");
+            return;
+        }
+
+        cargarDatosFormulario(formulario);
+
+        switch (accion) {
+            case "visualizar":
+                visualizarForm();
+                break;
+        }
+
+        localStorage.removeItem("accionForm");
+        localStorage.removeItem("form");
+
+    }
+
+    function visualizarForm() {
+
+        document.getElementById("idNombre").readOnly = true;
+        document.getElementById("idSector").readOnly = true;
+        document.getElementById("idNivelEscolar").disabled = true;
+        document.getElementById("btnNivelEscolar").disabled = true;
+        document.getElementById("idUsuario").readOnly = true;
+        document.getElementById("webcam").style.display = "none";
+        document.getElementById("btnTomarFoto").style.display = "none";
+        document.getElementById("btnEnviar").style.display = "none";
+    }
+
+    function iniciarFormulario() {
+        configurarDropdown();
+        procesarFormulario();
+
+        const accion = localStorage.getItem("accionForm");
+
+        if (accion) {
+            determinarAccionForm();
+        } else {
+            configurarCamara();
+        }
+    }
+
+    iniciarFormulario();
+
 })();
