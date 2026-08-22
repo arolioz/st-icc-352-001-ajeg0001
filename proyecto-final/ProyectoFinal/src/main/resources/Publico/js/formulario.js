@@ -41,6 +41,7 @@
 
         const idForm = document.getElementById('idForm');
         const btnCancelar = document.getElementById("btnCancelar");
+        const accion = localStorage.getItem("accionForm");
 
         btnCancelar.addEventListener("click", () => {
             window.location.href = "crudFormulario.html";
@@ -57,6 +58,11 @@
 
             if (!nombre || !sector || !nivelEscolar) {
                 alert("Todos los campos son obligatorios");
+                return;
+            }
+
+            if (accion === "editar") {
+                actualizarFormulario(nombre, sector, nivelEscolar);
                 return;
             }
 
@@ -229,11 +235,14 @@
         switch (accion) {
             case "visualizar":
                 visualizarForm();
+                localStorage.removeItem("accionForm");
+                localStorage.removeItem("form");
+                break;
+
+            case "editar":
+                editarForm();
                 break;
         }
-
-        localStorage.removeItem("accionForm");
-        localStorage.removeItem("form");
 
     }
 
@@ -247,6 +256,47 @@
         document.getElementById("webcam").style.display = "none";
         document.getElementById("btnTomarFoto").style.display = "none";
         document.getElementById("btnEnviar").style.display = "none";
+    }
+
+    function editarForm() {
+
+        document.getElementById("idNombre").readOnly = false;
+        document.getElementById("idSector").readOnly = false;
+        document.getElementById("idNivelEscolar").disabled = false;
+        document.getElementById("btnNivelEscolar").disabled = false;
+        document.getElementById("idUsuario").readOnly = true;
+
+        document.getElementById("idFoto").style.display = "block";
+        document.getElementById("webcam").style.display = "none";
+        document.getElementById("btnTomarFoto").style.display = "none";
+
+        document.getElementById("btnEnviar").style.display = "block";
+        document.getElementById("btnEnviar").textContent = "Guardar cambios";
+    }
+
+    function actualizarFormulario(nombre, sector, nivelEscolar) {
+
+        const uuid = localStorage.getItem("form");
+        const formularios = JSON.parse(localStorage.getItem("formularios")) || [];
+        const formulario = formularios.find(form => form.uuid === uuid);
+
+        if (!formulario) {
+            alert("Formulario no encontrado");
+            return;
+        }
+
+        formulario.nombre = nombre;
+        formulario.sector = sector;
+        formulario.nivelEscolar = nivelEscolar;
+
+        localStorage.setItem("formularios", JSON.stringify(formularios));
+
+        localStorage.removeItem("accionForm");
+        localStorage.removeItem("form");
+
+        alert("Formulario actualizado correctamente");
+
+        window.location.href = "CrudFormulario.html";
     }
 
     function iniciarFormulario() {
