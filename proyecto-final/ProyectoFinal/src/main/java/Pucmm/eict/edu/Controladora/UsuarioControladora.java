@@ -2,17 +2,18 @@ package Pucmm.eict.edu.Controladora;
 
 import Pucmm.eict.edu.Entidades.Usuario;
 import Pucmm.eict.edu.Services.UsuarioService;
+import Pucmm.eict.edu.Util.RolesApp;
+import io.javalin.http.BadRequestResponse;
 import io.javalin.http.Context;
+import io.javalin.http.NotFoundResponse;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import org.bson.types.ObjectId;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static Pucmm.eict.edu.Main.LLAVE_SECRETA;
 
@@ -47,5 +48,37 @@ public class UsuarioControladora {
         String user = body.get("usuario");
         String password = body.get("password");
         UsuarioService.getInstancia().crearUsuario(user,password);
+    }
+
+    public static void eliminarUsuario(@NotNull Context ctx){
+        String id = ctx.pathParam("id");
+
+        UsuarioService.getInstancia().eliminarUsuario(new ObjectId(id));
+    }
+
+    public static void listarUsuarios(@NotNull Context ctx) throws Exception {
+        ctx.json(UsuarioService.getInstancia().listarUsuarios());
+    }
+
+    public static void cambiarRolEncuestador(@NotNull Context ctx){
+
+
+        String idUsuario = ctx.pathParam("id");
+
+        Usuario usuario = UsuarioService.getInstancia().obtenerUsuario(new ObjectId(idUsuario));
+
+        assert usuario != null;
+
+        if (usuario.getListaRoles().contains(RolesApp.ROLE_ADMIN)){
+            ctx.status(403).result("No se pueden cambiar los roles de un administrador");
+            return;
+        }
+        if (usuario.getListaRoles().contains(RolesApp.ROLE_ENCUESTADOR)) {
+            usuario.getListaRoles().remove(RolesApp.ROLE_ENCUESTADOR);
+        } else {
+            usuario.getListaRoles().add(RolesApp.ROLE_ENCUESTADOR);
+        }
+
+        UsuarioService.getInstancia().modificarRoles(new ObjectId(idUsuario), usuario.getListaRoles());
     }
 }

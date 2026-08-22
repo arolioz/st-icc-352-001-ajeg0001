@@ -1,6 +1,7 @@
 package Pucmm.eict.edu.Services;
 
 import Pucmm.eict.edu.Entidades.Usuario;
+import Pucmm.eict.edu.Util.RolesApp;
 import Pucmm.eict.edu.config.DbConfig;
 import com.mongodb.ErrorCategory;
 import com.mongodb.MongoWriteException;
@@ -10,7 +11,7 @@ import org.bson.types.ObjectId;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.List;
-import java.util.concurrent.ExecutionException;
+import java.util.Set;
 
 public class UsuarioService {
 
@@ -132,5 +133,25 @@ public class UsuarioService {
         Usuario usuario = new Usuario(user, BCrypt.hashpw(password, BCrypt.gensalt(12)), id);
 
         ds.save(usuario);
+    }
+
+    public Usuario modificarRoles(ObjectId id, Set<RolesApp> listaRoles) {
+        Datastore ds = DbConfig.getDatastore();
+
+        Usuario u = ds.find(Usuario.class).filter(Filters.eq("_id", id)).first();
+        if (u == null) {
+            throw new IllegalArgumentException("Usuario no encontrado");
+        }
+
+        u.setListaRoles(listaRoles);
+
+        try {
+            return ds.save(u);
+        } catch (MongoWriteException e) {
+            if (e.getError().getCategory() == ErrorCategory.DUPLICATE_KEY) {
+                throw new IllegalArgumentException("Ya existe un usuario con ese nombre");
+            }
+            throw e;
+        }
     }
 }
