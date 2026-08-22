@@ -63,6 +63,11 @@
             btnVer.className = "btn btn-secondary btn-sm ms-2";
             btnVer.textContent = "Visualizar";
 
+            btnVer.addEventListener("click", () => {
+                visualizarFormulario(form);
+
+            });
+
             const btnEditar = document.createElement("button");
             btnEditar.type = "button";
             btnEditar.className = "btn btn-primary btn-sm ms-2";
@@ -91,8 +96,16 @@
 
         });
 
+        function visualizarFormulario(form) {
+            localStorage.setItem("accionForm", "visualizar");
+            localStorage.setItem("form", form.uuid);
+
+            console.log("Acción:", localStorage.getItem("accionForm"));
+            console.log("UUID:", localStorage.getItem("form"));
 
 
+            window.location.href = "formulario.html";
+        }
 
     }
 
