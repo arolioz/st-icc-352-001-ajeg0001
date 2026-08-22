@@ -121,4 +121,16 @@ public class UsuarioService {
             throw e;
         }
     }
+
+    public void crearUsuarioConId(String user, String password, ObjectId id) {
+        Datastore ds = DbConfig.getDatastore();
+
+        if (user == null || password == null){
+            return;
+        }
+
+        Usuario usuario = new Usuario(user, BCrypt.hashpw(password, BCrypt.gensalt(12)), id);
+
+        ds.save(usuario);
+    }
 }

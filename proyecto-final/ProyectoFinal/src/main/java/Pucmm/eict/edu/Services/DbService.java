@@ -5,6 +5,8 @@ import Pucmm.eict.edu.Util.RolesApp;
 import Pucmm.eict.edu.config.DbConfig;
 import dev.morphia.Datastore;
 import dev.morphia.config.MorphiaConfig;
+import dev.morphia.query.filters.Filters;
+import org.bson.types.ObjectId;
 import org.mindrot.jbcrypt.BCrypt;
 
 import javax.management.relation.Role;
@@ -30,10 +32,13 @@ public class DbService {
 
             ds.save(new Usuario("Test", BCrypt.hashpw("test", BCrypt.gensalt(12))));
 
+
             System.out.println("Base de datos creada con el usuario: admin");
         } else {
             System.out.println("Base de datos encontrada");
         }
+
+        agregarUsuarioGrpc(ds);
     }
 
     public static boolean probarConexion() {
@@ -43,6 +48,22 @@ public class DbService {
         } catch (Exception e) {
             System.err.println("[Init] Fallo la conexion a Mongo: " + e.getMessage());
             return false;
+        }
+    }
+
+    private static void agregarUsuarioGrpc(Datastore ds) {
+        Usuario u = ds.find(Usuario.class)
+                .filter(Filters.eq("user", "cliente-grpc"))
+                .first();
+
+        if (u == null) {
+            String clave = System.getenv().getOrDefault("GRPC_PASSWORD", "grpc123");
+
+            u = new Usuario("cliente-grpc", BCrypt.hashpw(clave, BCrypt.gensalt(12)), new ObjectId("000000000000000000000001"));
+            u.setListaRoles(Set.of(RolesApp.ROLE_ENCUESTADOR,RolesApp.ROLE_USUARIO));
+
+            ds.save(u);
+            System.out.println("[Init] Usuario cliente-grpc creado");
         }
     }
 }

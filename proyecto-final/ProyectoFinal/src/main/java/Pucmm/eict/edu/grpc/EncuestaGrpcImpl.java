@@ -1,28 +1,34 @@
 package Pucmm.eict.edu.grpc;
 
 import Pucmm.eict.edu.Entidades.Encuesta;
+import Pucmm.eict.edu.Entidades.Usuario;
 import Pucmm.eict.edu.Services.EncuestaServices;
+import Pucmm.eict.edu.Services.UsuarioService;
 import io.grpc.stub.StreamObserver;
 import org.bson.types.ObjectId;
 
 public class EncuestaGrpcImpl extends EncuestaServiceGrpc.EncuestaServiceImplBase {
 
-    private static final String USUARIO_PRUEBA = "6a877d7a6e2fd0198d27cf06";
+
 
     @Override
     public void crearEncuesta(CrearEncuestaRequest req,
                               StreamObserver<EncuestaResponse> respuesta) {
         try {
+
+
+
+
             Encuesta e = new Encuesta(
                     req.getUuid(),
                     req.getNombre(),
                     req.getSector(),
-                    null,
+                    req.getNivelEscolar(),
                     req.getLatitud(),
                     req.getLongitud(),
                     req.getFotoBase64(),
-                    new ObjectId(USUARIO_PRUEBA),
-                    "admin"
+                    new ObjectId("000000000000000000000001"),
+                    "cliente-grpc"
             );
 
             EncuestaServices.Resultado r = EncuestaServices.getInstancia().crear(e);
