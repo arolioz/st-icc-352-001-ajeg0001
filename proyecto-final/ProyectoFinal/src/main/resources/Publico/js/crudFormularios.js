@@ -73,7 +73,9 @@
             btnEditar.className = "btn btn-primary btn-sm ms-2";
             btnEditar.textContent = "Editar";
 
-            //
+            btnEditar.addEventListener("click", () => {
+               editarFormulario(form);
+            });
 
             const btnEliminar = document.createElement("button");
             btnEliminar.type = "button";
@@ -98,6 +100,17 @@
 
         function visualizarFormulario(form) {
             localStorage.setItem("accionForm", "visualizar");
+            localStorage.setItem("form", form.uuid);
+
+            console.log("Acción:", localStorage.getItem("accionForm"));
+            console.log("UUID:", localStorage.getItem("form"));
+
+
+            window.location.href = "formulario.html";
+        }
+
+        function editarFormulario(form) {
+            localStorage.setItem("accionForm", "editar");
             localStorage.setItem("form", form.uuid);
 
             console.log("Acción:", localStorage.getItem("accionForm"));
