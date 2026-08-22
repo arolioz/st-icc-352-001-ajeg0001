@@ -40,10 +40,20 @@
     function procesarFormulario() {
 
         const idForm = document.getElementById('idForm');
+        const btnCancelar = document.getElementById("btnCancelar");
+        const accion = localStorage.getItem("accionForm");
+
+        console.log("Acción:", accion);
+
+        btnCancelar.addEventListener("click", () => {
+            window.location.href = "crudFormulario.html";
+        });
 
         idForm.addEventListener('submit', async (event) => {
 
             event.preventDefault();
+
+            console.log("SE PRESIONÓ GUARDAR");
 
             const nombre = document.getElementById("idNombre").value;
             const sector = document.getElementById('idSector').value;
@@ -52,6 +62,11 @@
 
             if (!nombre || !sector || !nivelEscolar) {
                 alert("Todos los campos son obligatorios");
+                return;
+            }
+
+            if (accion === "editar") {
+                actualizarFormulario(nombre, sector, nivelEscolar);
                 return;
             }
 
@@ -65,6 +80,7 @@
                 await obtenerubicacion();
 
                 guardarFormulario(nombre, sector, nivelEscolar);
+                window.location.href = "crudFormulario.html";
 
                 reiniciarCamara();
 
@@ -184,7 +200,123 @@
         btnFoto.textContent = "Tomar foto";
     }
 
-    configurarDropdown();
-    configurarCamara();
-    procesarFormulario();
+    function cargarDatosFormulario(formulario) {
+
+        document.getElementById("idNombre").value = formulario.nombre;
+        document.getElementById("idSector").value = formulario.sector;
+        document.getElementById("idNivelEscolar").value = formulario.nivelEscolar;
+        document.getElementById("btnNivelEscolar").textContent = formulario.nivelEscolar;
+        document.getElementById("idUsuario").value = formulario.usuario;
+        document.getElementById("idFoto").src = formulario.foto;
+        document.getElementById("idFoto").style.display = "block";
+    }
+
+    function determinarAccionForm() {
+
+        const accion = localStorage.getItem("accionForm");
+
+        if (!accion) {
+            return;
+        }
+
+        const uuid = localStorage.getItem("form");
+
+        if (!uuid) {
+            alert("No hay formularios disponibles");
+            return;
+        }
+
+        const formularios = JSON.parse(localStorage.getItem("formularios")) || [];
+
+        const formulario = formularios.find(form => form.uuid == uuid);
+
+        if (!formulario) {
+            alert("Formulario no encontrado");
+            return;
+        }
+
+        cargarDatosFormulario(formulario);
+
+        switch (accion) {
+            case "visualizar":
+                visualizarForm();
+                localStorage.removeItem("accionForm");
+                localStorage.removeItem("form");
+                break;
+
+            case "editar":
+                editarForm();
+                break;
+        }
+
+    }
+
+    function visualizarForm() {
+
+        document.getElementById("idNombre").readOnly = true;
+        document.getElementById("idSector").readOnly = true;
+        document.getElementById("idNivelEscolar").disabled = true;
+        document.getElementById("btnNivelEscolar").disabled = true;
+        document.getElementById("idUsuario").readOnly = true;
+        document.getElementById("webcam").style.display = "none";
+        document.getElementById("btnTomarFoto").style.display = "none";
+        document.getElementById("btnEnviar").style.display = "none";
+    }
+
+    function editarForm() {
+
+        document.getElementById("idNombre").readOnly = false;
+        document.getElementById("idSector").readOnly = false;
+        document.getElementById("idNivelEscolar").disabled = false;
+        document.getElementById("btnNivelEscolar").disabled = false;
+        document.getElementById("idUsuario").readOnly = true;
+
+        document.getElementById("idFoto").style.display = "block";
+        document.getElementById("webcam").style.display = "none";
+        document.getElementById("btnTomarFoto").style.display = "none";
+
+        document.getElementById("btnEnviar").style.display = "block";
+        document.getElementById("btnEnviar").textContent = "Guardar cambios";
+    }
+
+    function actualizarFormulario(nombre, sector, nivelEscolar) {
+
+        const uuid = localStorage.getItem("form");
+        const formularios = JSON.parse(localStorage.getItem("formularios")) || [];
+        const formulario = formularios.find(form => form.uuid === uuid);
+
+        if (!formulario) {
+            alert("Formulario no encontrado");
+            return;
+        }
+
+        formulario.nombre = nombre;
+        formulario.sector = sector;
+        formulario.nivelEscolar = nivelEscolar;
+
+        localStorage.setItem("formularios", JSON.stringify(formularios));
+
+        localStorage.removeItem("accionForm");
+        localStorage.removeItem("form");
+
+        alert("Formulario actualizado correctamente");
+
+        window.location.href = "crudFormulario.html";
+    }
+
+    function iniciarFormulario() {
+        configurarDropdown();
+        procesarFormulario();
+
+        const accion = localStorage.getItem("accionForm");
+
+        if (accion) {
+            determinarAccionForm();
+        } else {
+            configurarCamara();
+        }
+    }
+
+    iniciarFormulario();
+
 })();
