@@ -40,6 +40,11 @@
     function procesarFormulario() {
 
         const idForm = document.getElementById('idForm');
+        const btnCancelar = document.getElementById("btnCancelar");
+
+        btnCancelar.addEventListener("click", () => {
+            window.location.href = "crudFormulario.html";
+        });
 
         idForm.addEventListener('submit', async (event) => {
 
