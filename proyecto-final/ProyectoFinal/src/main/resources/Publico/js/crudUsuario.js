@@ -3,6 +3,7 @@
     console.log("CRUD USUARIOS");
 
     if (!verificarSesionAdmin()) {
+        alert("Debe ser administrador para ver esta pagina");
         return;
     }
 
@@ -10,7 +11,12 @@
 
         try {
 
-            const respuesta = await fetch("/api/usuario");
+            const respuesta = await fetch("/api/usuario", {
+                headers: {
+                    "Authorization": "Bearer " + localStorage.getItem("token"),
+                    "Accept": "application/json"
+                }
+            });
 
             if (!respuesta.ok) {
 

@@ -12,18 +12,27 @@ function validarSesion() {
     return true;
 }
 
-function verificarSesionAdmin() {
+function obtenerRoles() {
+    const crudo = localStorage.getItem("roles");
+    if (!crudo) return [];
 
-    if (!validarSesion()) {
-        return false;
+    try {
+        const valor = JSON.parse(crudo);
+        return Array.isArray(valor) ? valor : [valor];
+    } catch {
+        // por si se guardo como texto separado por comas
+        return crudo.split(",").map(r => r.trim());
     }
+}
 
-    const roles = localStorage.getItem("roles");
+function verificarSesionAdmin() {
+    if (!validarSesion()) return false;
 
-    if (roles != "ADMIN") {
+    if (!obtenerRoles().includes("ROLE_ADMIN")) {
         //window.location.href = "formulario.html";
         return false;
     }
+
     return true;
 }
 
