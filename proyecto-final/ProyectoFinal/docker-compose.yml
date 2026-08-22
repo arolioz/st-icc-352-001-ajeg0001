@@ -10,3 +10,10 @@ services:
       - DB_URL=${DB_URL}
       - PORT=7000
     restart: unless-stopped
+  cliente-grpc:
+    build: .venv
+    ports:
+      - "7001:7001"
+    environment:
+      - PORT=7001
+    restart: unless-stopped
