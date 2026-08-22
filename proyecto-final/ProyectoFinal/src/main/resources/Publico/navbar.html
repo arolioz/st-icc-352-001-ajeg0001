@@ -1,0 +1,44 @@
+
+  <nav class="navbar navbar-expand-lg bg-dark border-bottom border-body fixed-top py-3" data-bs-theme="dark">
+    <div class="container-fluid">
+
+      <a class="btn btn-outline-light" href="/">
+        <i class="bi bi-clipboard"></i>
+        Encuesta
+      </a>
+
+      <button class="navbar-toggler" type="button"  data-bs-toggle="collapse" data-bs-target="#idContenidoNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="idContenidoNavbar">
+        <div class="navbar-nav ms-auto">
+          <a class="nav-link"  href="formulario.html">Nueva encuesta</a>
+          <a class="nav-link" href="CrudFormulario.html">Encuestas</a>
+
+          <div class="nav-item dropdown">
+
+            <a class="nav-link dropdown-toggle"
+               data-bs-toggle="dropdown"
+               href="#">
+
+              <i class="bi bi-person-fill"></i>
+
+              <span id="idUsuario">
+                Iniciar sesión
+              </span>
+
+            </a>
+
+            <ul class="dropdown-menu">
+
+              <li><a class="dropdown-item" href="login.html">Cambiar Usuario</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" onclick="cerrarSesion()">Cerrar sesion</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
