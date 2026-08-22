@@ -43,6 +43,8 @@
         const btnCancelar = document.getElementById("btnCancelar");
         const accion = localStorage.getItem("accionForm");
 
+        console.log("Acción:", accion);
+
         btnCancelar.addEventListener("click", () => {
             window.location.href = "crudFormulario.html";
         });
@@ -50,6 +52,8 @@
         idForm.addEventListener('submit', async (event) => {
 
             event.preventDefault();
+
+            console.log("SE PRESIONÓ GUARDAR");
 
             const nombre = document.getElementById("idNombre").value;
             const sector = document.getElementById('idSector').value;
@@ -76,6 +80,7 @@
                 await obtenerubicacion();
 
                 guardarFormulario(nombre, sector, nivelEscolar);
+                window.location.href = "crudFormulario.html";
 
                 reiniciarCamara();
 
@@ -296,7 +301,7 @@
 
         alert("Formulario actualizado correctamente");
 
-        window.location.href = "CrudFormulario.html";
+        window.location.href = "crudFormulario.html";
     }
 
     function iniciarFormulario() {
