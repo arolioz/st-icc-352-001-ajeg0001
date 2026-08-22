@@ -13,9 +13,36 @@
 
       <div class="collapse navbar-collapse" id="idContenidoNavbar">
         <div class="navbar-nav ms-auto">
-          <a class="nav-link"  href="formulario.html">Nueva encuesta</a>
-          <a class="nav-link" href="crudFormulario.html">Encuestas</a>
-          <a class="nav-link" href="crudUsuario.html">Usuario</a>
+          <a class="nav-link px-3"  href="formulario.html">Nueva encuesta</a>
+          <a class="nav-link px-3" href="crudFormulario.html">Mis encuestas</a>
+
+          <div id="menuAdmin" class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#">
+              <i class="bi bi-file-lock2-fill"></i>
+              Administración
+            </a>
+
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li>
+                <a class="dropdown-item"
+                   href="crudUsuario.html">
+
+                  <i class="bi bi-people-fill me-2"></i>
+                  Gestionar Usuarios
+                </a>
+              </li>
+
+              <li>
+                <a class="dropdown-item"
+                   href="#">
+
+                  <i class="bi bi-clipboard-check"></i>
+                  Formularios enviados
+                </a>
+              </li>
+            </ul>
+
+          </div>
 
           <div class="nav-item dropdown">
 
@@ -31,11 +58,12 @@
 
             </a>
 
-            <ul class="dropdown-menu">
+            <ul class="dropdown-menu dropdown-menu-end">
 
               <li><a class="dropdown-item" href="login.html">Cambiar Usuario</a></li>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" onclick="cerrarSesion()">Cerrar sesion</a></li>
+
             </ul>
           </div>
         </div>

@@ -21,7 +21,7 @@ function verificarSesionAdmin() {
     const roles = localStorage.getItem("roles");
 
     if (roles != "ADMIN") {
-        window.location.href = "formulario.html";
+        //window.location.href = "formulario.html";
         return false;
     }
     return true;

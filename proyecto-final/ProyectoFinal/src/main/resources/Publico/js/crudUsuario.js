@@ -2,6 +2,10 @@
 
     console.log("CRUD USUARIOS");
 
+    if (!verificarSesionAdmin()) {
+        return;
+    }
+
     async function cargarUsuarios() {
 
         try {
