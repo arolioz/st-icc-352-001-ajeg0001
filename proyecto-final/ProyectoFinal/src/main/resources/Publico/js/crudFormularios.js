@@ -82,6 +82,14 @@
             btnEliminar.className = "btn btn-danger btn-sm ms-2";
             btnEliminar.textContent = "Eliminar";
 
+            btnEliminar.addEventListener("click", () => {
+
+                localStorage.setItem("accionForm", "eliminar");
+                localStorage.setItem("form", form.uuid);
+
+                eliminarFormulario();
+            });
+
             const btnEnviar = document.createElement("button");
             btnEnviar.type = "button";
             btnEnviar.className = "btn btn-success btn-sm ms-2";
@@ -120,6 +128,29 @@
             window.location.href = "formulario.html";
         }
 
+        function eliminarFormulario() {
+            const uuid = localStorage.getItem("form");
+
+            if (!uuid) {
+                alert("Formulario no encontrado");
+                return;
+            }
+
+            if (!confirm("¿Está seguro de que desea eliminar este formulario?")) {
+                return;
+            }
+
+            const formularios = JSON.parse(localStorage.getItem("formularios")) || [];
+
+            const formulariosActualizados = formularios.filter(form => form.uuid !== uuid);
+
+            localStorage.setItem("formularios", JSON.stringify(formulariosActualizados));
+
+            localStorage.removeItem("accionForm");
+            localStorage.removeItem("form");
+
+            cargarFormularios();
+        }
     }
 
     cargarFormularios();
