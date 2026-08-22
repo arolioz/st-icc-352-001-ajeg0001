@@ -58,6 +58,14 @@ public class Main {
                             put(EncuestaControladora::modificarEncuesta,RolesApp.ROLE_ENCUESTADOR,RolesApp.ROLE_ADMIN);
                         });
                     });
+                    path("/usuario", () -> {
+                        get(UsuarioControladora::listarUsuarios, RolesApp.ROLE_ADMIN);
+                        post(UsuarioControladora::crearUsuario,RolesApp.ROLE_ADMIN);
+                        path("/{id}", () -> {
+                            delete(UsuarioControladora::eliminarUsuario,RolesApp.ROLE_ADMIN);
+                            put(UsuarioControladora::cambiarRolEncuestador,RolesApp.ROLE_ADMIN);
+                        });
+                    });
                 });
             });
         });
