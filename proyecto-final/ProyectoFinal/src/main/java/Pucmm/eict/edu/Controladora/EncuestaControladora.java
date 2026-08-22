@@ -83,11 +83,26 @@ public class EncuestaControladora {
     }
 
     public static void eliminarEncuesta(@NotNull Context ctx) {
+        String id = ctx.pathParam("id");
+
+        EncuestaServices.getInstancia().eliminarEncuesta(new ObjectId(id));
     }
 
     public static void obtenerEncuestaById(@NotNull Context ctx) {
+        String id = ctx.pathParam("id");
+
+        EncuestaServices.getInstancia().obtenerEncuesta(new ObjectId(id));
     }
 
     public static void modificarEncuesta(@NotNull Context ctx) {
+        String id = ctx.pathParam("id");
+        Map<String, Object> body = ctx.bodyAsClass(Map.class);
+
+        Encuesta e = EncuestaServices.getInstancia().obtenerEncuesta(new ObjectId(id));
+        e.setNombre(texto(body.get("nombre")));
+        e.setSector(texto(body.get("sector")));
+        e.setNivelEscolar(texto(body.get("nivelEscolar")));
+
+        EncuestaServices.getInstancia().modificarEncuesta(new ObjectId(id),e);
     }
 }
