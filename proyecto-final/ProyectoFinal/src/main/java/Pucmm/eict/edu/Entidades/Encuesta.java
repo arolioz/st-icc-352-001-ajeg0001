@@ -1,5 +1,7 @@
 package Pucmm.eict.edu.Entidades;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import dev.morphia.annotations.Entity;
 import dev.morphia.annotations.Id;
 import dev.morphia.annotations.IndexOptions;
@@ -11,6 +13,7 @@ import java.time.Instant;
 @Entity
 public class Encuesta {
     @Id
+    @JsonSerialize(using = ToStringSerializer.class)
     private ObjectId id;
 
     @Indexed(options = @IndexOptions(unique = true))
@@ -26,9 +29,11 @@ public class Encuesta {
     private String fotoBase64;
 
     @Indexed
+    @JsonSerialize(using = ToStringSerializer.class)
     private ObjectId usuarioId;
     private String usuarioNombre;
 
+    @JsonSerialize(using = ToStringSerializer.class)
     private Instant fechaRegistro;
 
     public Encuesta() {}

@@ -71,11 +71,11 @@ public class EncuestaControladora {
     }
 
     public static void obtenerEncuestasUsuario(@NotNull Context ctx) throws Exception {
-        Map<String, Object> body = ctx.bodyAsClass(Map.class);
-        String idUsuarioString = body.get("idUsuario").toString();
-        ObjectId id = new ObjectId(idUsuarioString);
+        String idUsuario = ctx.pathParam("usuarioId");
 
-        List<Encuesta> encuestas = EncuestaServices.getInstancia().listarEncuestas();
+        ObjectId id = new ObjectId(idUsuario);
+
+        List<Encuesta> encuestas = EncuestaServices.getInstancia().listarPorUsuario(id);
 
         if (encuestas != null){
             ctx.json(encuestas);
