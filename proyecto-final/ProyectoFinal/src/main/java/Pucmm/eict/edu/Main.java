@@ -47,8 +47,29 @@ public class Main {
 
                 ws("/sincronizacion", ws -> {
                     ws.onConnect(ctx -> {
-                        System.out.println("[ws] Conectado: " + ctx.sessionId());
-                        ctx.send("Bienvenido");
+                        String token = ctx.queryParam("token");
+
+                        if (token == null || token.isBlank()) {
+                            ctx.closeSession(4001, "Falta el token");
+                            return;
+                        }
+
+                        try {
+                            Claims claims = Jwts.parser()
+                                    .verifyWith(Main.LLAVE)
+                                    .build()
+                                    .parseSignedClaims(token)
+                                    .getPayload();
+
+                            ctx.attribute("usuarioId", claims.getSubject());
+                            ctx.attribute("usuarioNombre", claims.get("user", String.class));
+
+                            System.out.println("[ws] Conectado: " + claims.get("user", String.class));
+                            ctx.send("Bienvenido " + claims.get("user", String.class));
+
+                        } catch (Exception e) {
+                            ctx.closeSession(4001, "Token invalido o expirado");
+                        }
                     });
 
                     ws.onMessage(ctx -> {
