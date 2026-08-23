@@ -170,6 +170,11 @@
 
     }
 
+    async function crearUsuario() {
+
+        
+    }
+
     cargarUsuarios();
 
 

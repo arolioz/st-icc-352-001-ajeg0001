@@ -1,6 +1,8 @@
 package Pucmm.eict.edu.Entidades;
 
 import Pucmm.eict.edu.Util.RolesApp;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import dev.morphia.annotations.Entity;
 import dev.morphia.annotations.Id;
 import dev.morphia.annotations.IndexOptions;
@@ -13,6 +15,7 @@ import java.util.Set;
 @Entity
 public class Usuario {
     @Id
+    @JsonSerialize(using = ToStringSerializer.class)
     private ObjectId id;
     @Indexed(options = @IndexOptions(unique = true))
     private String user;
