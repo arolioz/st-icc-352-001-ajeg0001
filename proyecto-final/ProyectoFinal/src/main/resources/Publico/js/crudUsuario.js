@@ -83,9 +83,6 @@
                 cambiarRol(usuario.id);
             });
 
-            const btnEditar = document.createElement("button");
-            btnEditar.className = "btn btn-primary btn-sm me-2";
-            btnEditar.textContent = "Editar";
 
             const btnEliminar = document.createElement("button");
             btnEliminar.className = "btn btn-danger btn-sm";
@@ -155,6 +152,10 @@
 
             if (!respuesta.ok) {
                 throw new Error(`HTTP error! Status: ${respuesta.status}`);
+            }
+
+            if (respuesta.status === 403) {
+                alert("No se puede eliminar un usuario administrador");
             }
 
             alert("Usuario eliminado correctamente");
