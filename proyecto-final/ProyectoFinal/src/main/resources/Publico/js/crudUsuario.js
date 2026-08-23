@@ -39,6 +39,12 @@
 
     function mostrarUsuarios(usuarios) {
 
+        const btnCrear = document.getElementById("btnCrearUsuario");
+
+        btnCrear.addEventListener("click", () => {
+            window.location.href = "crearUsuario.html";
+        });
+
         const tabla = document.getElementById("idTablaUsuarios");
 
         tabla.innerHTML = "";
@@ -93,7 +99,6 @@
             });
 
             acciones.appendChild(btnRol);
-            acciones.appendChild(btnEditar);
             acciones.appendChild(btnEliminar);
 
             fila.appendChild(acciones);
@@ -171,10 +176,6 @@
 
     }
 
-    async function crearUsuario() {
-
-        
-    }
 
     cargarUsuarios();
 
