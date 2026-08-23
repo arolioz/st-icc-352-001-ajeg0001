@@ -50,6 +50,11 @@ public class Main {
                 staticFileConfig.hostedPath = "/";
             });
 
+            config.jetty.modifyWebSocketServletFactory(factory -> {
+                factory.setMaxTextMessageSize(5 * 1024 * 1024);      // 5 MB
+                factory.setIdleTimeout(java.time.Duration.ofMinutes(10));
+            });
+
             config.routes.before("/api/*", Main::filtroJwt);
             config.routes.get("/", ctx -> {ctx.redirect("crudFormulario.html");});
             config.routes.apiBuilder(() ->{

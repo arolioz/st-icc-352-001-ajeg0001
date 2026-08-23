@@ -31,11 +31,10 @@ function conectar() {
         socket.onmessage = (evento) => recibirAck(evento.data);
  
         socket.onerror = () => reject(new Error('No se pudo abrir el WebSocket'));
- 
+
         socket.onclose = (evento) => {
             avisar('cerrado', `${evento.code} — ${evento.reason}`);
- 
-            // se despiertan las esperas colgadas para no trabar nada
+
             for (const [uuid, resolver] of esperando) {
                 resolver({ uuid, ok: false, motivo: 'conexion cerrada' });
             }
@@ -67,7 +66,7 @@ function enviarYEsperar(encuesta) {
     return new Promise((resolve) => {
  
         esperando.set(encuesta.uuid, resolve);
- 
+
         socket.send(JSON.stringify({
             uuid: encuesta.uuid,
             nombre: encuesta.nombre,
@@ -75,7 +74,7 @@ function enviarYEsperar(encuesta) {
             nivelEscolar: encuesta.nivelEscolar,
             latitud: encuesta.latitud,
             longitud: encuesta.longitud,
-            fotoBase64: encuesta.fotoBase64 || ''
+            fotoBase64: encuesta.foto.split(',')[1] || ""
         }));
  
         // si el servidor no contesta, no dejamos la promesa colgada
@@ -130,7 +129,7 @@ self.onmessage = (evento) => {
             avisar('error', 'Mensaje desconocido: ' + tipo);
     }
 };
- 
+
 function avisar(estado, mensaje = null, datos = null) {
     self.postMessage({ estado, mensaje, datos });
 }

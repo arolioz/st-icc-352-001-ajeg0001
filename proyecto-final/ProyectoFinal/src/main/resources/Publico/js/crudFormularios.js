@@ -171,7 +171,8 @@
     }
 
     worker.onmessage = (evento) => {
-
+        console.log('worker:', evento.data);
+        
         const { estado, datos } = evento.data;
         if (estado !== 'ack') return;
 
