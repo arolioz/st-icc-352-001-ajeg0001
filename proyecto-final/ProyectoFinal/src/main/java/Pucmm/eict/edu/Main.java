@@ -44,6 +44,21 @@ public class Main {
             config.routes.before("/api/*", Main::filtroJwt);
             config.routes.get("/", ctx -> {ctx.redirect("crudFormulario.html");});
             config.routes.apiBuilder(() ->{
+
+                ws("/sincronizacion", ws -> {
+                    ws.onConnect(ctx -> {
+                        System.out.println("[ws] Conectado: " + ctx.sessionId());
+                        ctx.send("Bienvenido");
+                    });
+
+                    ws.onMessage(ctx -> {
+                        System.out.println("[ws] Recibido: " + ctx.message());
+                        ctx.send("Eco: " + ctx.message());
+                    });
+
+                    ws.onClose(ctx -> System.out.println("[ws] Cerrada"));
+                });
+
                 path("/api", () -> {
                     path("/login", () -> {
                         post(UsuarioControladora::procesarLogin);
