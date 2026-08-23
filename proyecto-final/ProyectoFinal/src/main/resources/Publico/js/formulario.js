@@ -104,7 +104,8 @@
             usuario: localStorage.getItem("usuario"),
             latitud: ubicacionActual.latitud,
             longitud: ubicacionActual.longitud,
-            foto: foto
+            foto: foto,
+            id : null
         };
 
         formularios.push(nuevoForm);

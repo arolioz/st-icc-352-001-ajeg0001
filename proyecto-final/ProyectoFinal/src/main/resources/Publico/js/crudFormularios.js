@@ -1,5 +1,8 @@
 (() => {
     console.log("CRUD FORMULARIOS");
+    const worker = new Worker('js/worker.js');
+    const token = localStorage.getItem('token');
+    worker.postMessage({ tipo: 'token', valor: token });
 
     function cargarFormularios() {
 
@@ -91,6 +94,10 @@
             });
 
             const btnEnviar = document.createElement("button");
+            btnEnviar.onclick = () => {
+                btnEnviar.disabled = true;
+                worker.postMessage({ tipo: 'enviar', valor: form });
+            };
             btnEnviar.type = "button";
             btnEnviar.className = "btn btn-success btn-sm ms-2";
             btnEnviar.textContent = "Enviar al servidor";
@@ -152,6 +159,27 @@
             cargarFormularios();
         }
     }
+
+    worker.onmessage = (evento) => {
+
+        const { estado, datos } = evento.data;
+        if (estado !== 'ack') return;
+
+
+        if (datos.ok) {
+            const todas = JSON.parse(localStorage.getItem('formularios') || '[]');
+            const i = todas.findIndex(e => e.uuid === datos.uuid);
+            if (i >= 0) {
+                todas[i].id = datos.id;
+                localStorage.setItem('formularios', JSON.stringify(todas));
+            }
+            avisar('Encuesta sincronizada', 'ok');
+        } else {
+            avisar('No se pudo enviar: ' + datos.motivo, 'error');
+        }
+
+        cargarFormularios();
+    };
 
     cargarFormularios();
 
