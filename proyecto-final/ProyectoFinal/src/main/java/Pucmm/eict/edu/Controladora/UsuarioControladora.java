@@ -45,8 +45,14 @@ public class UsuarioControladora {
 
     public static void crearUsuario(@NotNull Context ctx){
         Map<String, String> body = ctx.bodyAsClass(Map.class);
-        String user = body.get("usuario");
+        String user = body.get("user");
         String password = body.get("password");
+
+        IO.println("Intentando crear usuario: " + user + ", " + password);
+        if (user == null || password == null || user.isEmpty() || password.isEmpty()){
+            ctx.status(403);
+            return;
+        }
         UsuarioService.getInstancia().crearUsuario(user,password);
     }
 
