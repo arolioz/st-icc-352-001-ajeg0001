@@ -57,11 +57,11 @@
 
         formularios.forEach(form => {
             const fila = document.createElement("tr");
-
+            console.log("ID:", form.id);
             //console.log(form);
 
-            console.log("Foto:", form.foto);
-            console.log("FotoBase64:", form.fotoBase64);
+            //console.log("Foto:", form.foto);
+            //console.log("FotoBase64:", form.fotoBase64);
 
             fila.innerHTML = `
 
@@ -99,10 +99,46 @@
             btnEliminar.className = "btn btn-danger btn-sm ms-2";
             btnEliminar.textContent = "Eliminar";
 
+            btnEliminar.addEventListener("click", () => {
+               eliminarFormulario(form.id);
+            });
+
             filaAcciones.appendChild(btnEliminar);
             fila.appendChild(filaAcciones);
             tabla.appendChild(fila);
         });
+    }
+
+    async function eliminarFormulario(idForm) {
+
+        if (!confirm("¿Está seguro de que desea eliminar este formulario?")) {
+            return;
+        }
+
+        try {
+
+            const respuesta = await fetch(`/api/encuesta/${idForm}`, {
+                method: "DELETE",
+                headers: {
+                    "Authorization": "Bearer " + localStorage.getItem("token"),
+                    "Accept": "application/json"
+                }
+            });
+
+            if (!respuesta.ok) {
+                throw new Error(`HTTP error! Status: ${respuesta.status}`);
+            }
+
+            alert("Formulario eliminado correctamente");
+
+            await cargarFormularios();
+
+        } catch (error) {
+
+            console.error("Error eliminando formulario:", error);
+            alert("No se pudo eliminar el formulario");
+
+        }
     }
 
 
