@@ -54,8 +54,15 @@
 
             const filaEstado = document.createElement("td");
             const estado = document.createElement("span");
-            estado.textContent = "Pendiente";
-            estado.className = "text-warning";
+            if (form.id === null){
+                estado.textContent = "Pendiente";
+                estado.className = "text-warning";
+            }
+            else{
+                estado.textContent = "Sincronizada";
+                estado.className = "text-success";
+            }
+
             filaEstado.appendChild(estado);
             fila.appendChild(filaEstado);
 
@@ -102,10 +109,13 @@
             btnEnviar.className = "btn btn-success btn-sm ms-2";
             btnEnviar.textContent = "Enviar al servidor";
 
+
             filaAcciones.appendChild(btnVer);
-            filaAcciones.appendChild(btnEditar);
-            filaAcciones.appendChild(btnEliminar);
-            filaAcciones.appendChild(btnEnviar);
+            if (form.id === null){
+                filaAcciones.appendChild(btnEditar);
+                filaAcciones.appendChild(btnEliminar);
+                filaAcciones.appendChild(btnEnviar);
+            }
 
             fila.appendChild(filaAcciones);
             tabla.appendChild(fila);
