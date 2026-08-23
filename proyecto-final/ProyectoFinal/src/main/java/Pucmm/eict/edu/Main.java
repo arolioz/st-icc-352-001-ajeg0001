@@ -42,7 +42,7 @@ public class Main {
             });
 
             config.routes.before("/api/*", Main::filtroJwt);
-
+            config.routes.get("/", ctx -> {ctx.redirect("crudFormulario.html");});
             config.routes.apiBuilder(() ->{
                 path("/api", () -> {
                     path("/login", () -> {
