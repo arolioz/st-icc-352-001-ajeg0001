@@ -52,7 +52,12 @@ public class UsuarioControladora {
 
     public static void eliminarUsuario(@NotNull Context ctx){
         String id = ctx.pathParam("id");
+        Usuario usuario = UsuarioService.getInstancia().obtenerUsuario(new ObjectId(id));
 
+        if (usuario.getListaRoles().contains(RolesApp.ROLE_ADMIN)){
+            ctx.status(403).result("No se pueden eliminar un administrador");
+            return;
+        }
         UsuarioService.getInstancia().eliminarUsuario(new ObjectId(id));
     }
 
