@@ -39,12 +39,6 @@
 
     function mostrarUsuarios(usuarios) {
 
-        const btnCrear = document.getElementById("btnCrearUsuario");
-
-        btnCrear.addEventListener("click", () => {
-            window.location.href = "crearUsuario.html";
-        });
-
         const tabla = document.getElementById("idTablaUsuarios");
 
         tabla.innerHTML = "";
@@ -75,7 +69,7 @@
             const fila = document.createElement("tr");
 
             fila.innerHTML = `
-                <td>${usuario.user}
+                <td>${usuario.user}</td>
                 <td>${roles}</td>
             `;
 
@@ -156,12 +150,16 @@
             });
 
             if (!respuesta.ok) {
+
+                if (respuesta.status === 403) {
+                    alert("No se puede eliminar un usuario administrador");
+                }
+
                 throw new Error(`HTTP error! Status: ${respuesta.status}`);
+
             }
 
-            if (respuesta.status === 403) {
-                alert("No se puede eliminar un usuario administrador");
-            }
+
 
             alert("Usuario eliminado correctamente");
 
@@ -175,6 +173,12 @@
         }
 
     }
+
+    const btnCrear = document.getElementById("btnCrearUsuario");
+
+    btnCrear.addEventListener("click", () => {
+        window.location.href = "crearUsuario.html";
+    });
 
 
     cargarUsuarios();

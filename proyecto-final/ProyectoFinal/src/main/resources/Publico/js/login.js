@@ -59,7 +59,7 @@
                 localStorage.setItem("usuario", data.usuario.usuario);
                 localStorage.setItem("roles", data.usuario.roles);
 
-                window.location.href = 'formulario.html';
+                window.location.href = 'crudFormulario.html';
 
             }
         } catch (e) {
