@@ -91,6 +91,10 @@
             btnEliminar.className = "btn btn-danger btn-sm";
             btnEliminar.textContent = "Eliminar";
 
+            btnEliminar.addEventListener("click", () => {
+                eliminarUsuario(usuario.id);
+            });
+
             acciones.appendChild(btnRol);
             acciones.appendChild(btnEditar);
             acciones.appendChild(btnEliminar);
@@ -128,6 +132,39 @@
 
             console.error("Error cambiando rol:", error);
             alert("No se pudo cambiar el rol");
+
+        }
+
+    }
+
+    async function eliminarUsuario(idUsuario) {
+
+        if (!confirm("¿Desea eliminar este usuario?")) {
+            return;
+        }
+
+        try {
+
+            const respuesta = await fetch(`/api/usuario/${idUsuario}`, {
+                method: "DELETE",
+                headers: {
+                    "Authorization": "Bearer " + localStorage.getItem("token"),
+                    "Accept": "application/json"
+                }
+            });
+
+            if (!respuesta.ok) {
+                throw new Error(`HTTP error! Status: ${respuesta.status}`);
+            }
+
+            alert("Usuario eliminado correctamente");
+
+            await cargarUsuarios();
+
+        } catch (error) {
+
+            console.error("Error eliminando usuario:", error);
+            alert("No se pudo eliminar el usuario");
 
         }
 
