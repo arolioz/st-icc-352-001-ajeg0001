@@ -2,10 +2,13 @@ package Pucmm.eict.edu;
 
 import Pucmm.eict.edu.Controladora.EncuestaControladora;
 import Pucmm.eict.edu.Controladora.UsuarioControladora;
+import Pucmm.eict.edu.Entidades.Encuesta;
 import Pucmm.eict.edu.Services.DbService;
+import Pucmm.eict.edu.Services.EncuestaServices;
 import Pucmm.eict.edu.Services.UsuarioService;
 import Pucmm.eict.edu.Util.RolesApp;
 import Pucmm.eict.edu.grpc.GrpcServidor;
+import com.fasterxml.jackson.databind.JsonNode;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 import io.javalin.http.ForbiddenResponse;
@@ -16,16 +19,22 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.bson.types.ObjectId;
 import org.jetbrains.annotations.NotNull;
-
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javax.crypto.SecretKey;
 import java.io.IOException;
 import java.security.SignatureException;
+import java.time.Instant;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
+import static Pucmm.eict.edu.Controladora.EncuestaControladora.numero;
+import static Pucmm.eict.edu.Controladora.EncuestaControladora.texto;
 import static io.javalin.apibuilder.ApiBuilder.*;
 import static io.javalin.apibuilder.ApiBuilder.post;
+import static io.javalin.http.ContentType.JSON;
 
 public class Main {
     public static final String LLAVE_SECRETA = "ejemplo_de_llave_generada_icc35210231213123123";
@@ -73,8 +82,43 @@ public class Main {
                     });
 
                     ws.onMessage(ctx -> {
-                        System.out.println("[ws] Recibido: " + ctx.message());
-                        ctx.send("Eco: " + ctx.message());
+                        try {
+                            @SuppressWarnings("unchecked")
+                            Map<String, Object> m = ctx.messageAsClass(Map.class);
+
+                            String uuid = texto(m.get("uuid"));
+
+                            if (uuid == null || uuid.isBlank()) {
+                                ctx.send("{\"ok\":false,\"motivo\":\"falta el uuid\"}");
+                                return;
+                            }
+
+                            Encuesta e = new Encuesta();
+                            e.setUuid(uuid);
+                            e.setNombre(texto(m.get("nombre")));
+                            e.setSector(texto(m.get("sector")));
+                            e.setNivelEscolar(texto(m.get("nivelEscolar")));
+                            e.setLatitud(numero(m.get("latitud")));
+                            e.setLongitud(numero(m.get("longitud")));
+                            e.setFotoBase64(texto(m.get("fotoBase64")));
+
+                            e.setUsuarioId(new ObjectId(Objects.requireNonNull(ctx.attribute("usuarioId")).toString()));
+                            e.setUsuarioNombre(ctx.attribute("usuarioNombre"));
+                            e.setFechaRegistro(Instant.now());
+
+                            var r = EncuestaServices.getInstancia().crear(e);
+
+                            ctx.send(Map.of(
+                                    "uuid", uuid,
+                                    "ok", true,
+                                    "id", r.encuesta().getId().toHexString(),
+                                    "estado", r.yaExistia() ? "ya_existia" : "creada"
+                            ));
+
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                            ctx.send("{\"ok\":false,\"motivo\":\"" + ex.getMessage() + "\"}");
+                        }
                     });
 
                     ws.onClose(ctx -> System.out.println("[ws] Cerrada"));

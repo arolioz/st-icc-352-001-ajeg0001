@@ -56,11 +56,11 @@ public class EncuestaControladora {
 
     }
 
-    private static String texto(Object o) {
+    public static String texto(Object o) {
         return o == null ? null : o.toString();
     }
 
-    private static Double numero(Object o) {
+    public static Double numero(Object o) {
         if (o == null) return null;
         if (o instanceof Number n) return n.doubleValue();
         try {
