@@ -79,7 +79,7 @@
 
                 await obtenerubicacion();
 
-                guardarFormulario(nombre, sector, nivelEscolar);
+                await guardarFormulario(nombre, sector, nivelEscolar);
                 window.location.href = "crudFormulario.html";
 
                 reiniciarCamara();
@@ -91,12 +91,13 @@
         });
     }
 
-    function guardarFormulario(nombre, sector, nivelEscolar) {
+    async function guardarFormulario(nombre, sector, nivelEscolar) {
 
         const formularios = JSON.parse(localStorage.getItem("formularios")) || [];
+        const uuid = crypto.randomUUID();
 
         const nuevoForm = {
-            uuid: crypto.randomUUID(),
+            uuid: uuid,
             nombre: nombre,
             sector: sector,
             nivelEscolar: nivelEscolar,
@@ -104,12 +105,14 @@
             usuario: localStorage.getItem("usuario"),
             latitud: ubicacionActual.latitud,
             longitud: ubicacionActual.longitud,
-            foto: foto,
+            //foto: foto,
             id : null
         };
 
         formularios.push(nuevoForm);
         localStorage.setItem("formularios", JSON.stringify(formularios));
+
+        await guardarFoto(uuid, foto);
 
         console.log(JSON.parse(localStorage.getItem("formularios")));
 
@@ -201,18 +204,20 @@
         btnFoto.textContent = "Tomar foto";
     }
 
-    function cargarDatosFormulario(formulario) {
+    async function cargarDatosFormulario(formulario) {
 
         document.getElementById("idNombre").value = formulario.nombre;
         document.getElementById("idSector").value = formulario.sector;
         document.getElementById("idNivelEscolar").value = formulario.nivelEscolar;
         document.getElementById("btnNivelEscolar").textContent = formulario.nivelEscolar;
         document.getElementById("idUsuario").value = formulario.usuario;
-        document.getElementById("idFoto").src = formulario.foto;
+
+        const foto = await obtenerFoto(formulario.uuid);
+        document.getElementById("idFoto").src = foto;
         document.getElementById("idFoto").style.display = "block";
     }
 
-    function determinarAccionForm() {
+    async function determinarAccionForm() {
 
         const accion = localStorage.getItem("accionForm");
 
@@ -236,7 +241,7 @@
             return;
         }
 
-        cargarDatosFormulario(formulario);
+        await cargarDatosFormulario(formulario);
 
         switch (accion) {
             case "visualizar":
@@ -312,7 +317,7 @@
         const accion = localStorage.getItem("accionForm");
 
         if (accion) {
-            determinarAccionForm();
+            determinarAccionForm ();
         } else {
             configurarCamara();
         }

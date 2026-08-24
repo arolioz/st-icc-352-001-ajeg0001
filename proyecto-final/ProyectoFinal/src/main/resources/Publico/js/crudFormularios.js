@@ -11,7 +11,7 @@
     const token = localStorage.getItem('token');
     worker.postMessage({ tipo: 'token', valor: token });
 
-    function cargarFormularios() {
+    async function cargarFormularios() {
 
         const formularios = JSON.parse(localStorage.getItem("formularios")) || [];
 
@@ -33,9 +33,10 @@
             return;
         }
 
-        formularios.forEach(form => {
+        for (const form of formularios) {
             const fila= document.createElement("tr");
 
+            const foto = await obtenerFoto(form.uuid);
             fila.innerHTML = `
 
                 <td>
@@ -55,7 +56,7 @@
                 </td>
                 
                 <td>
-                    <img src="${form.foto}" width="80" height="60" class="rounded" style="object-fit: cover;">
+                    <img src="${foto}" width="80" height="60" class="rounded" style="object-fit: cover;">
                 </td>
             `;
 
@@ -128,7 +129,7 @@
             tabla.appendChild(fila);
 
 
-        });
+        }
 
         function visualizarFormulario(form) {
             localStorage.setItem("accionForm", "visualizar");
@@ -152,7 +153,7 @@
             window.location.href = "formulario.html";
         }
 
-        function eliminarFormulario() {
+        async function eliminarFormulario() {
             const uuid = localStorage.getItem("form");
 
             if (!uuid) {
@@ -169,7 +170,7 @@
             const formulariosActualizados = formularios.filter(form => form.uuid !== uuid);
 
             localStorage.setItem("formularios", JSON.stringify(formulariosActualizados));
-
+            await eliminarFoto(uuid);
             localStorage.removeItem("accionForm");
             localStorage.removeItem("form");
 

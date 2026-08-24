@@ -1,3 +1,5 @@
+importScripts('indexedDB.js');
+
 const TIEMPO_ESPERA_ACK = 20000;
 
 let token = null;
@@ -62,7 +64,14 @@ function recibirAck(crudo) {
     }
 }
  
-function enviarYEsperar(encuesta) {
+async function enviarYEsperar(encuesta) {
+
+    const foto = await obtenerFoto(encuesta.uuid);
+
+    if (!foto) {
+        console.warn(`No se encontró foto para ${encuesta.uuid}`);
+    }
+
     return new Promise((resolve) => {
  
         esperando.set(encuesta.uuid, resolve);
@@ -74,7 +83,7 @@ function enviarYEsperar(encuesta) {
             nivelEscolar: encuesta.nivelEscolar,
             latitud: encuesta.latitud,
             longitud: encuesta.longitud,
-            fotoBase64: encuesta.foto.split(',')[1] || ""
+            fotoBase64: foto.split(',')[1] || ""
         }));
  
         // si el servidor no contesta, no dejamos la promesa colgada
