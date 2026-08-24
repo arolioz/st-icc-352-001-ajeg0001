@@ -1,5 +1,10 @@
 (() => {
 
+    if (!verificarSesionAdmin()) {
+        alert("Debe ser administrador para ver esta pagina");
+        return;
+    }
+
     console.log("Entrando al Mapa");
 
     const idMapa = L.map("idMapa").setView([19.425299, -70.712168], 13);

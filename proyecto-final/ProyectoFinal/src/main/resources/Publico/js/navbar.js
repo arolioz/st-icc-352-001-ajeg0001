@@ -13,6 +13,12 @@
                 document.getElementById("idUsuario").textContent = usuario;
             }
 
+            const menuAdmin = document.getElementById("menuAdmin");
+
+            if (!verificarSesionAdmin()) {
+                menuAdmin.remove();
+            }
+
         })
         .catch(error => {
             console.error("Error cargando navbar:", error);

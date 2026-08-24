@@ -45,3 +45,9 @@ function cerrarSesion() {
 
     window.location.href = "login.html";
 }
+
+function verificarSesionEncuestador() {
+    if (!validarSesion()) return false;
+
+    return obtenerRoles().includes("ROLE_ENCUESTADOR");
+}

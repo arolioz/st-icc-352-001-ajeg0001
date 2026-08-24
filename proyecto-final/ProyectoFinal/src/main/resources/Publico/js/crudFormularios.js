@@ -1,5 +1,12 @@
 (() => {
     console.log("CRUD FORMULARIOS");
+
+    if (!verificarSesionAdmin() && !verificarSesionEncuestador()) {
+        alert("No tiene permisos para acceder a esta página");
+        window.location.href = "login.html";
+        return;
+    }
+
     const worker = new Worker('js/worker.js');
     const token = localStorage.getItem('token');
     worker.postMessage({ tipo: 'token', valor: token });
